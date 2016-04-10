@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hive.Steps;
 
 namespace Hive.Bugs
 {
-    enum PlayerColor
-    {
-        Empty,
-        Black,
-        White
-    }
-
     internal abstract class Bug
     {
         public PlayerColor Color { get; private set; }
+
         protected Bug(PlayerColor color)
         {
             Color = color;
         }
 
-        public abstract GridCoords[] GetPossibleMoves(GameState state);
+        protected abstract StepPattern GetStepPattern(GameState state);
+
+        public Move[] GetPossibleMoves(GameState state)
+        {
+            
+        }
+
+        private Move[] GetPillbugMoves 
     }
 }

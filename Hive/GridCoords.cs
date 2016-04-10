@@ -19,6 +19,39 @@ namespace Hive
             Z = z;
         }
 
+        public GridCoords[] GetSurroundingCoords()
+        {
+            return new[]
+            {
+                Add(1, 0, -1),
+                Add(1, -1, 0),
+                Add(0, -1, 1),
+                Add(-1, 0, 1),
+                Add(-1, 1, 0),
+                Add(0, 1, -1)
+            };
+        }
+
+        public GridCoords Add(GridCoords coords)
+        {
+            return new GridCoords(X + coords.X, Y + coords.Y, Z + coords.Z);
+        }
+
+        public GridCoords Add(int x, int y, int z)
+        {
+            return new GridCoords(X + x, Y + y, Z + z);
+        }
+
+        public GridCoords Substract(GridCoords coords)
+        {
+            return new GridCoords(X - coords.X, Y - coords.Y, Z - coords.Z);
+        }
+
+        public GridCoords Substract(int x, int y, int z)
+        {
+            return new GridCoords(X - x, Y - y, Z - z);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is GridCoords)

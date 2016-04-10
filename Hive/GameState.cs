@@ -9,7 +9,18 @@ namespace Hive
 {
     class GameState
     {
-        public Grid Grid { get; set; }
-        public Move LastMove { get; set; }
+        public Grid Grid { get; }
+        public IList<Move> Moves { get; } = new List<Move>();
+        public Move PreviousMove => Moves.Last();
+
+        public GameState()
+        {
+            Grid = new Grid();
+        }
+
+        public void ApplyMove(Move move)
+        {
+            Moves.Add(move);
+        }
     }
 }

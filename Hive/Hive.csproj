@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,10 +39,6 @@
       <HintPath>..\packages\Julas.Utils.2.0.5\lib\net452\Julas.Utils.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK.1.1.2225.0\lib\net20\OpenTK.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -58,23 +56,31 @@
     <Compile Include="Bugs\Ladybug.cs" />
     <Compile Include="Bugs\Mosquito.cs" />
     <Compile Include="Bugs\PillBug.cs" />
+    <Compile Include="Bugs\PlayerColor.cs" />
     <Compile Include="Bugs\QueenBee.cs" />
     <Compile Include="Bugs\SoldierAnt.cs" />
     <Compile Include="Bugs\Spider.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="Graphics\Hexagon.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="GridCoords.cs" />
-    <Compile Include="InputHandler.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderer.cs" />
+    <Compile Include="Steps\GroundToHive.cs" />
+    <Compile Include="Steps\HiveToGround.cs" />
+    <Compile Include="Steps\HiveToHive.cs" />
+    <Compile Include="Steps\IStep.cs" />
+    <Compile Include="Steps\JumpOverHive.cs" />
+    <Compile Include="Steps\StepPattern.cs" />
+    <Compile Include="Steps\GroundToGround.cs" />
+    <Compile Include="Steps\StepPatternSegment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

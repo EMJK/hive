@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hive
+namespace Hive.Graphics
 {
-    class GameBoard
+    class Hexagon
     {
     }
 }

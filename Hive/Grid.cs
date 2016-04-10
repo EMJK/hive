@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,12 +55,28 @@ namespace Hive
             return PlayerColor.Empty;
         }
 
-        public List<Tuple<GridCoords, Bug[]>> GetAllPopulatedFields()
+        public GridCoords[] GetFieldsForNewBug(PlayerColor color)
+        {
+            if (_bugs.Any())
+            {
+                var ret = _bugs.Keys // weź współrzędne wszystkich stosów pionków
+                    .Where(c => GetColor(c) == color) // na wierzchu których jest pionek danego gracza
+                    .SelectMany(c => c.GetSurroundingCoords()) // policz współrzędne sąsiednich pól dla każdego z nich
+                    .Distinct() // wywal duplikaty
+                    .Where(c => GetColor(c) == PlayerColor.Empty) // zostaw tylko puste pola
+                    .Where(c => !c.GetSurroundingCoords().Any(x => GetColor(x) == color.Opposite())) // i usuń te do których przylegają pionki przeciwnika
+                    .ToArray();
+                return ret;
+            }
+            return new[] {GridCoords.Zero};
+        }
+
+        public Tuple<GridCoords, Bug[]>[] GetAllPopulatedFields()
         {
             return _bugs
                 .Where(kvp => !kvp.Value.IsNullOrEmpty())
                 .Select(kvp => Tuple.Create(kvp.Key, kvp.Value.ToArray()))
-                .ToList();
+                .ToArray();
         }
 
         private Stack<Bug> GetStackForField(GridCoords coords)
