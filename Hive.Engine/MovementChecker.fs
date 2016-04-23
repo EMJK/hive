@@ -15,13 +15,15 @@ open SoldierAnt
 open Spider
 
 module MovementChecker = 
-    let private getGenerator (bug:Bug) =
+    let private getGenerator (bug:Bug) : MovementGenerator = 
         match bug.BugType with
         | Beetle -> Beetle.movementGenerator
-        | Grasshopper -> Grasshopper.movementGenerator
-        | Ladybug -> Ladybug.movementGenerator
-        | Mosquito -> Mosquito.movementGenerator
-        | PillBug -> PillBug.movementGenerator
-        | QueenBee -> QueenBee.movementGenerator
-        | SoldierAnt -> SoldierAnt.movementGenerator
-        | Spider -> Spider.movementGenerator
+//        | Grasshopper -> Grasshopper.movementGenerator
+//        | Ladybug -> Ladybug.movementGenerator
+//        | Mosquito -> Mosquito.movementGenerator
+//        | PillBug -> PillBug.movementGenerator
+//        | QueenBee -> QueenBee.movementGenerator
+//        | SoldierAnt -> SoldierAnt.movementGenerator
+//        | Spider -> Spider.movementGenerator
+
+    

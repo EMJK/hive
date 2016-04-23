@@ -24,4 +24,4 @@ module Types =
 
     type Winner = Draw | Player of PlayerColor
 
-    type MovementGenerator = Bug -> GameState -> MoveBug list
+    type MovementGenerator = FieldCoords -> Board -> MoveBug list

@@ -23,6 +23,11 @@ module FieldCoordsImpl =
             { X = coords.X - 1; Y = coords.Y + 0; Z = coords.Z + 1 };
             { X = coords.X - 1; Y = coords.Y + 1; Z = coords.Z + 0 };]
 
+        static member add a b =
+            { X = a.X + b.X; Y = a.Y + b.Y; Z = a.Z + b.Z }
+
+        static member neighborOffsets = List.ofArray FieldCoords.neighborMap
+
         static member sidesOf src dst =
             let targetDiff = FieldCoords.diff src dst 
             let targetIndex = Array.findIndex (fun x -> x = dst) FieldCoords.neighborMap
