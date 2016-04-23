@@ -12,7 +12,7 @@ module Grasshopper =
             then jumpToOffset (nextField :: sequence)
             else if List.length sequence = 2
             then None
-            else Some sequence
+            else Some (List.rev sequence)
         jumpToOffset [coords]
 
     let movementGenerator (coords: FieldCoords) (board: Board) =
