@@ -49,7 +49,15 @@
     <Compile Include="BoardImpl.fs" />
     <Compile Include="Rules.fs" />
     <Compile Include="Movement.fs" />
+    <Compile Include="Beetle.fs" />
+    <Compile Include="Grasshopper.fs" />
+    <Compile Include="Ladybug.fs" />
+    <Compile Include="Mosquito.fs" />
+    <Compile Include="PillBug.fs" />
     <Compile Include="QueenBee.fs" />
+    <Compile Include="SoldierAnt.fs" />
+    <Compile Include="Spider.fs" />
+    <Compile Include="MovementChecker.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

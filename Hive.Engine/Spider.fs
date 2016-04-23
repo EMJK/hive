@@ -4,4 +4,4 @@ open FieldCoordsImpl
 open BoardImpl
 open Movement
 
-module QueenBee = ()
+module Spider = ()
