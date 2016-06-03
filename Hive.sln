@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive", "Hive\Hive.csproj", 
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Hive.Engine", "Hive.Engine\Hive.Engine.fsproj", "{238FB476-0A6C-474D-AADC-107DACE259A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics", "Graphics\Graphics.csproj", "{16F9025B-CBAA-4DB9-A942-91FCF399094C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{238FB476-0A6C-474D-AADC-107DACE259A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{238FB476-0A6C-474D-AADC-107DACE259A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{238FB476-0A6C-474D-AADC-107DACE259A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16F9025B-CBAA-4DB9-A942-91FCF399094C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16F9025B-CBAA-4DB9-A942-91FCF399094C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16F9025B-CBAA-4DB9-A942-91FCF399094C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16F9025B-CBAA-4DB9-A942-91FCF399094C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

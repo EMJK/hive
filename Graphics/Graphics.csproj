@@ -4,16 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2A0389B4-38B9-4816-BB49-04E54C65E050}</ProjectGuid>
+    <ProjectGuid>{16F9025B-CBAA-4DB9-A942-91FCF399094C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hive</RootNamespace>
-    <AssemblyName>Hive</AssemblyName>
+    <RootNamespace>Graphics</RootNamespace>
+    <AssemblyName>Graphics</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,13 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Julas.Utils, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Julas.Utils.2.0.5\lib\net452\Julas.Utils.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Programy\Microsoft Visual Studio 14.0\Apps\1.1\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,41 +51,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bugs\Beetle.cs" />
-    <Compile Include="Bugs\Bug.cs" />
-    <Compile Include="Bugs\Grasshopper.cs" />
-    <Compile Include="Bugs\Ladybug.cs" />
-    <Compile Include="Bugs\Mosquito.cs" />
-    <Compile Include="Bugs\PillBug.cs" />
-    <Compile Include="Bugs\PlayerColor.cs" />
-    <Compile Include="Bugs\QueenBee.cs" />
-    <Compile Include="Bugs\SoldierAnt.cs" />
-    <Compile Include="Bugs\Spider.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="Graphics\Hexagon.cs" />
-    <Compile Include="Grid.cs" />
-    <Compile Include="GridCoords.cs" />
-    <Compile Include="Move.cs" />
+    <Compile Include="ContentPipe.cs" />
+    <Compile Include="Drawing.cs" />
+    <Compile Include="Board.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\GroundToHive.cs" />
-    <Compile Include="Steps\HiveToGround.cs" />
-    <Compile Include="Steps\HiveToHive.cs" />
-    <Compile Include="Steps\IStep.cs" />
-    <Compile Include="Steps\JumpOverHive.cs" />
-    <Compile Include="Steps\StepPattern.cs" />
-    <Compile Include="Steps\GroundToGround.cs" />
-    <Compile Include="Steps\StepPatternSegment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hive.Engine\Hive.Engine.fsproj">
-      <Project>{238fb476-0a6c-474d-aadc-107dace259a0}</Project>
-      <Name>Hive.Engine</Name>
-    </ProjectReference>
+    <None Include="Textures\bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\black-beetle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Textures\white-beetle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
