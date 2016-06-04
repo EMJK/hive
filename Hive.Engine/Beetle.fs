@@ -6,7 +6,7 @@ open Movement
 
 module Beetle = 
     let movementGenerator (coords: FieldCoords) (board: Board) =
-        FieldCoords.neighbors coords
-        |> List.map (fun x -> [coords;x])
-        |> List.filter (fun x -> Rules.freedomOfMovement x board)
+        let pool = [[coords]]
+        let step1 = Movement.spread board pool true
+        step1
         

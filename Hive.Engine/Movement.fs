@@ -31,3 +31,20 @@ module Movement =
                 emptyNeighbors
                 |> List.map (fun x -> move @ [x]))
         movesToTargets |> concat |> clean
+
+
+    let spread (board: Board) (pool: FieldCoords list list) (canClimb: bool) =
+        let singleSpread (pool: FieldCoords list) =
+            let nextFields = 
+                FieldCoords.neighbors (List.head pool)
+                |> List.filter (fun x -> not <| List.contains x pool)
+                |> List.filter (fun x -> canClimb || (not <| Board.isPopulated x board))
+                |> List.filter (fun x -> Rules.freedomOfMovement [(List.head pool); x] board)
+            if List.isEmpty nextFields
+            then []
+            else nextFields |> List.map (fun x -> x :: pool)
+        pool
+        |> List.map (fun x -> singleSpread x)
+        |> List.concat
+        |> List.filter (fun x -> not <| List.isEmpty x)
+        |> List.distinctBy (fun x -> List.head x)
