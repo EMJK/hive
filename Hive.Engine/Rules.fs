@@ -5,31 +5,51 @@ open BoardImpl
 
 module Rules = 
 
-    let oneHive (coords:FieldCoords) (board:Board) =
+    let oneHive (src: FieldCoords) (dst: FieldCoords) (board:Board) =
         let getGroupAt (coords:FieldCoords) (board:Board) =
             let rec expandGroup (found:FieldCoords list) (next:FieldCoords list) (board:Board) =
                 let newFields =
                     next
                     |> List.map FieldCoords.neighbors
-                    |> List.reduce List.append
+                    |> List.concat
                     |> List.except next
                     |> List.except found
                     |> List.distinct
                     |> List.filter (fun x -> Board.isPopulated x board)
-
                 if List.length newFields = 0
                 then found
                 else expandGroup (List.append found newFields) newFields board
-
             expandGroup [] [coords] board
 
-        let possibleNextState = snd (Board.pickBug coords board)
-        let startCoords = 
-            FieldCoords.neighbors coords
-            |> List.filter (fun x -> Board.isPopulated x possibleNextState)
-            |> List.head
-        let possibleIsland = getGroupAt startCoords possibleNextState
-        List.length possibleIsland = Board.populatedFieldCount possibleNextState        
+        let isSingleGroup (group: FieldCoords list) (board: Board) =
+            List.length group = Board.populatedFieldCount board
+
+        let canPick () =
+            let possibleNextState = snd (Board.pickBug src board)
+            let startCoords = 
+                FieldCoords.neighbors src
+                |> List.filter (fun x -> Board.isPopulated x possibleNextState)
+                |> List.tryHead
+            match startCoords with
+            | None -> false
+            | Some(src) ->
+                let possibleGroup = getGroupAt src possibleNextState
+                isSingleGroup possibleGroup possibleNextState
+
+        let canMove () =
+            if Board.isPopulated src board && not (Board.isPopulated dst board)
+            then
+                let populatedNeighbors (coords: FieldCoords)=
+                    FieldCoords.neighbors coords
+                    |> List.filter (fun x -> Board.isPopulated x board)
+                let srcNeighbors = populatedNeighbors src
+                let dstNeighbors = populatedNeighbors dst
+                let commonNeighbors = Set.intersect (Set.ofList srcNeighbors) (Set.ofList dstNeighbors)
+                Set.count commonNeighbors > 0
+            else false
+
+        canPick() && canMove()
+                    
 
     let freedomOfMovement (sequence: FieldCoords list) (board:Board) =
         let canMove src dst board =

@@ -12,9 +12,7 @@ module Types =
 
     type NewBug = { Bug: Bug; Field: FieldCoords }
 
-    type MoveBug = FieldCoords list
-
-    type Action = New of NewBug | Move of MoveBug
+    type Action = New of NewBug | Move of FieldCoords list
 
     type Move = { Player: PlayerColor; Action: Action }
 
@@ -24,4 +22,4 @@ module Types =
 
     type Winner = Draw | Player of PlayerColor
 
-    type MovementGenerator = FieldCoords -> Board -> MoveBug list
+    type MovementGenerator = FieldCoords -> Board -> FieldCoords list

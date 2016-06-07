@@ -4,13 +4,10 @@ open FieldCoordsImpl
 open BoardImpl
 
 module Movement =
-    let clean (movements: MoveBug list) =
+    let clean (movements: FieldCoords list list) =
         movements
         |> List.sortBy List.length
-        |> List.distinctBy (fun x -> (List.head x, List.tail x))
-
-    let concat (movements: MoveBug list list) =
-        List.reduce List.append movements
+        |> List.distinctBy (fun x -> (List.head x, List.tail x))        
 
     let movesOverPillBug (coords: FieldCoords) (state: GameState) =
         let board = state.Board
@@ -30,21 +27,29 @@ module Movement =
                     |> List.filter (fun x -> not (Board.isPopulated x board))
                 emptyNeighbors
                 |> List.map (fun x -> move @ [x]))
-        movesToTargets |> concat |> clean
-
+        let result = clean (List.concat movesToTargets)
+        result
+        |> List.filter (fun x ->
+            match x with
+            | [src;middle;_] -> Rules.oneHive src middle state.Board
+            | _ -> false)
 
     let spread (board: Board) (pool: FieldCoords list list) (canClimb: bool) =
+        let twoLastItems list = List.rev list |> (fun x -> x.Tail.Head, x.Head)
         let singleSpread (pool: FieldCoords list) =
             let nextFields = 
-                FieldCoords.neighbors (List.head pool)
+                FieldCoords.neighbors (List.last pool)
                 |> List.filter (fun x -> not <| List.contains x pool)
                 |> List.filter (fun x -> canClimb || (not <| Board.isPopulated x board))
-                |> List.filter (fun x -> Rules.freedomOfMovement [(List.head pool); x] board)
+                |> List.filter (fun x -> Rules.freedomOfMovement [(List.last pool); x] board)
             if List.isEmpty nextFields
             then []
-            else nextFields |> List.map (fun x -> x :: pool)
+            else nextFields |> List.map (fun x -> pool @ [x])
         pool
         |> List.map (fun x -> singleSpread x)
         |> List.concat
         |> List.filter (fun x -> not <| List.isEmpty x)
-        |> List.distinctBy (fun x -> List.head x)
+        |> List.filter (fun x ->
+            let src,dst = twoLastItems x
+            Rules.oneHive src dst board)
+        |> clean
