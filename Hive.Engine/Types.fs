@@ -22,4 +22,4 @@ module Types =
 
     type Winner = Draw | Player of PlayerColor
 
-    type MovementGenerator = FieldCoords -> Board -> FieldCoords list
+    type MovementGenerator = FieldCoords -> Board -> FieldCoords list list

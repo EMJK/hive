@@ -7,16 +7,15 @@ module Movement =
     let clean (movements: FieldCoords list list) =
         movements
         |> List.sortBy List.length
-        |> List.distinctBy (fun x -> (List.head x, List.tail x))        
+        |> List.distinctBy (fun x -> List.last x)        
 
-    let movesOverPillBug (coords: FieldCoords) (state: GameState) =
-        let board = state.Board
+    let movesOverPillBug (coords: FieldCoords) (board: Board) (pillBugColor: PlayerColor) =
         let movesToPillbugs = 
             FieldCoords.neighbors coords 
             |> List.filter (fun x ->
                 match Board.topBugAt x board with
                 | None -> false
-                | Some bug -> bug.BugType = PillBug)
+                | Some bug -> bug.BugType = PillBug && bug.Color = pillBugColor)
             |> List.map (fun x -> [coords;x])
         let movesToTargets = 
             movesToPillbugs
@@ -31,7 +30,7 @@ module Movement =
         result
         |> List.filter (fun x ->
             match x with
-            | [src;middle;_] -> Rules.oneHive src middle state.Board
+            | [src;middle;_] -> Rules.oneHive src middle board
             | _ -> false)
 
     let spread (board: Board) (pool: FieldCoords list list) (canClimb: bool) =
@@ -53,3 +52,5 @@ module Movement =
             let src,dst = twoLastItems x
             Rules.oneHive src dst board)
         |> clean
+
+    

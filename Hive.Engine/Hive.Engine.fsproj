@@ -64,7 +64,7 @@
     <Compile Include="SoldierAnt.fs" />
     <Compile Include="Spider.fs" />
     <Compile Include="Mosquito.fs" />
-    <Compile Include="MovementChecker.fs" />
+    <Compile Include="Engine.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
