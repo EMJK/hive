@@ -70,4 +70,14 @@ module BoardImpl =
             |> Map.toSeq
             |> Seq.forall (fun (_, stack) -> List.length stack > 0)
 
+        static member applyAction action board =
+            match action with
+            | New { Bug = bug; Field = coords } ->
+                Board.placeBug bug coords board
+            | Move move -> 
+                let (bug, tmpBoard) = Board.pickBug move.Head board
+                Board.placeBug bug (List.last move) board
+
+
+
                 

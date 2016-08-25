@@ -93,3 +93,40 @@ module Engine =
             |> Set.ofList
 
         allMoves
+
+    let hasQueen stack color =
+        stack
+        |> List.tryFind(fun bug -> bug.BugType = BugType.QueenBee && bug.Color = color)
+        |> Option.isSome
+    
+    let hasPlayerLost color state =
+        let board = state.Board
+        let queenCoords = 
+            Map.toSeq board.Map
+                |> Seq.filter (fun (_, bugs) -> hasQueen bugs PlayerColor.White)
+                |> Seq.map fst
+                |> Seq.tryHead
+        match queenCoords with
+        | None -> false
+        | Some(coords) -> 
+            FieldCoords.neighbors coords
+            |> Seq.forall (fun x -> Board.isPopulated x board)
+
+    let findWinner state =
+        let whiteLost = hasPlayerLost PlayerColor.White state
+        let blackLost = hasPlayerLost PlayerColor.Black state
+        if whiteLost && blackLost then Some(Draw)
+        elif whiteLost then Some(Player(PlayerColor.Black))
+        elif blackLost then Some(Player(PlayerColor.White))
+        else None        
+
+    let newGame () = { 
+        Board = { Map = Map.empty };
+        Moves = [];
+    }
+
+    let applyAction state action playerColor = 
+        let newBoard = Board.applyAction action state.Board
+        let moves = state.Moves @ [{ Player = playerColor; Action = action }]
+        { Board = newBoard; Moves = moves }
+        

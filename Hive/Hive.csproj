@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2A0389B4-38B9-4816-BB49-04E54C65E050}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hive</RootNamespace>
     <AssemblyName>Hive</AssemblyName>
@@ -35,7 +35,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Julas.Utils, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Julas.Utils.2.0.5\lib\net452\Julas.Utils.dll</HintPath>
       <Private>True</Private>
@@ -51,31 +55,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bugs\Beetle.cs" />
-    <Compile Include="Bugs\Bug.cs" />
-    <Compile Include="Bugs\Grasshopper.cs" />
-    <Compile Include="Bugs\Ladybug.cs" />
-    <Compile Include="Bugs\Mosquito.cs" />
-    <Compile Include="Bugs\PillBug.cs" />
-    <Compile Include="Bugs\PlayerColor.cs" />
-    <Compile Include="Bugs\QueenBee.cs" />
-    <Compile Include="Bugs\SoldierAnt.cs" />
-    <Compile Include="Bugs\Spider.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="Graphics\Hexagon.cs" />
-    <Compile Include="Grid.cs" />
-    <Compile Include="GridCoords.cs" />
+    <Compile Include="Action.cs" />
+    <Compile Include="Bug.cs" />
     <Compile Include="Move.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="PlayerColor.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="GridCoords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\GroundToHive.cs" />
-    <Compile Include="Steps\HiveToGround.cs" />
-    <Compile Include="Steps\HiveToHive.cs" />
-    <Compile Include="Steps\IStep.cs" />
-    <Compile Include="Steps\JumpOverHive.cs" />
-    <Compile Include="Steps\StepPattern.cs" />
-    <Compile Include="Steps\GroundToGround.cs" />
-    <Compile Include="Steps\StepPatternSegment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

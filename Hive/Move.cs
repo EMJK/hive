@@ -1,11 +1,13 @@
-﻿using Hive.Bugs;
+﻿using Hive;
 
-namespace Hive
+public class Move
 {
-    class Move
+    public GridCoords[] Sequence { get; }
+    public PlayerColor Color { get; }
+
+    public Move(GridCoords[] sequence, PlayerColor color)
     {
-        public Bug Bug { get; set; }
-        public GridCoords[] Sequence { get; set; }
-        public PlayerColor Player { get; set; }
+        Sequence = sequence;
+        Color = color;
     }
 }
