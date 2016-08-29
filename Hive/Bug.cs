@@ -4,13 +4,16 @@
     {
         public PlayerColor Color { get; }
         public BugType Type { get; }
-        public GridCoords Coords { get; }
 
-        public Bug(PlayerColor color, BugType type, GridCoords coords)
+        public Bug(PlayerColor color, BugType type)
         {
             Color = color;
             Type = type;
-            Coords = coords;
+        }
+
+        public override string ToString()
+        {
+            return $"{Color} {Type}";
         }
     }
 }

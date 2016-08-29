@@ -30,7 +30,7 @@ module FieldCoordsImpl =
 
         static member sidesOf src dst =
             let targetDiff = FieldCoords.diff src dst 
-            let targetIndex = Array.findIndex (fun x -> x = dst) FieldCoords.neighborMap
+            let targetIndex = Array.findIndex (fun x -> x = targetDiff) FieldCoords.neighborMap
             let leftIndex = FieldCoords.round (targetIndex - 1) FieldCoords.neighborMap.Length
             let rightIndex = FieldCoords.round (targetIndex + 1) FieldCoords.neighborMap.Length
             (FieldCoords.neighborMap.[leftIndex], FieldCoords.neighborMap.[rightIndex])

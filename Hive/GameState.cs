@@ -4,23 +4,25 @@ using System.Linq;
 using Hive.Engine;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
+using Julas.Utils;
 
 namespace Hive
 {
-    class GameState
+    public class Game
     {
         private Types.GameState _state;    
 
-        public Dictionary<GridCoords, List<BugType>> Bugs { get; private set; }
+        public Dictionary<GridCoords, List<Bug>> Bugs { get; private set; }
         public Dictionary<GridCoords, List<List<GridCoords>>> WhitePlayerMoves { get; private set; }
         public Dictionary<GridCoords, List<List<GridCoords>>> BlackPlayerMoves { get; private set; }
         public PlayerColor PreviousPlayer { get; private set; }
         public Winner Winner { get; private set; }
+        public string StringRepresentation => GetStringRepresentation();
 
-        public GameState() : this(Engine.Engine.newGame())
+        public Game() : this(Engine.Engine.newGame())
         { }
 
-        public GameState(Types.GameState state)
+        public Game(Types.GameState state)
         {
             _state = state;
             ReadState();
@@ -44,11 +46,32 @@ namespace Hive
                 _state,
                 Types.Action.NewMove(FindMove(color, from, to)),
                 MapCsharpColor(color));
+            ReadState();
         }
 
         public void MoveBug(PlayerColor color, List<GridCoords> sequence) => MoveBug(color, sequence.First(), sequence.Last());
 
+        private string GetStringRepresentation()
+        {
+            if (!Bugs.Any()) return "Board is empty";
+            var ret = Bugs
+                .OrderBy(x => x.Key.X)
+                .ThenBy(x => x.Key.Y)
+                .ThenBy(x => x.Key.Z)
+                .Select(x => new { Coords = x.Key, Stack = x.Value })
+                .Select(x => $"[{x.Coords.ToString()}] {String.Join(">", x.Stack.Select(b => b.ToString()))}");
+            return String.Join(Environment.NewLine, ret);
+        }
+
         private void ReadState()
+        {
+            ReadMoves();
+            PreviousPlayer = MapFsharpColor(_state.Moves.LastOrDefault()?.Player);
+            ReadWinner();
+            ReadBugs();
+        }
+
+        private void ReadMoves()
         {
             var whiteMoves = Engine.Engine.getPossibleMovesForPlayer(_state.Board, Types.PlayerColor.White);
             WhitePlayerMoves = whiteMoves.ToDictionary(
@@ -58,9 +81,10 @@ namespace Hive
             BlackPlayerMoves = blackMoves.ToDictionary(
                 x => new GridCoords(x.Item1),
                 x => x.Item2.Select(t => t.Select(c => new GridCoords(c)).ToList()).ToList());
+        }
 
-            PreviousPlayer = MapFsharpColor(_state.Moves.LastOrDefault()?.Player);
-
+        private void ReadWinner()
+        {
             var winner = Engine.Engine.findWinner(_state);
             if (FSharpOption<Types.Winner>.get_IsNone(winner))
             {
@@ -75,6 +99,15 @@ namespace Hive
                 var color = ((Types.Winner.Player)winner.Value).Item;
                 Winner = color.IsBlack ? Winner.Black : Winner.White;
             }
+        }
+
+        private void ReadBugs()
+        {
+            var board = _state.Board.Map;
+            Bugs = board.ToDictionary(
+                kvp => MapFsharpCoords(kvp.Key),
+                kvp => kvp.Value.Select(MapFsharpBug).ToList()
+            );
         }
 
         private PlayerColor MapFsharpColor(Types.PlayerColor color)
@@ -99,6 +132,27 @@ namespace Hive
         private GridCoords MapFsharpCoords(Types.FieldCoords coords)
         {
             return new GridCoords(coords);
+        }
+
+        private BugType MapFsharpBugType(Types.BugType type)
+        {
+            if (type == Types.BugType.Beetle) return BugType.Beetle;
+            if (type == Types.BugType.Grasshopper) return BugType.Grasshopper;
+            if (type == Types.BugType.Ladybug) return BugType.Ladybug;
+            if (type == Types.BugType.Mosquito) return BugType.Mosquito;
+            if (type == Types.BugType.PillBug) return BugType.PillBug;
+            if (type == Types.BugType.QueenBee) return BugType.QueenBee;
+            if (type == Types.BugType.SoldierAnt) return BugType.SoldierAnt;
+            if (type == Types.BugType.Spider) return BugType.Spider;
+            throw new ArgumentException();
+        }
+
+        private Bug MapFsharpBug(Types.Bug bug)
+        {
+            return new Bug(
+                MapFsharpColor(bug.Color),
+                MapFsharpBugType(bug.BugType)
+            );
         }
 
         private Types.Bug CreateBug(PlayerColor color, BugType bug)

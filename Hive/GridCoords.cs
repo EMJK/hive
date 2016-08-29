@@ -43,5 +43,10 @@ namespace Hive
         {
             return X ^ Y ^ Z;
         }
+
+        public override string ToString()
+        {
+            return $"X:{X}, Y:{Y}, Z:{Z}";
+        }
     }
 }

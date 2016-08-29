@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive", "Hive\Hive.csproj", "{2A0389B4-38B9-4816-BB49-04E54C65E050}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Hive.Engine", "Hive.Engine\Hive.Engine.fsproj", "{238FB476-0A6C-474D-AADC-107DACE259A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics", "Graphics\Graphics.csproj", "{16F9025B-CBAA-4DB9-A942-91FCF399094C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.Tests", "Hive.Tests\Hive.Tests.csproj", "{4DCD9BCD-45EE-4135-9181-6BE149BF6FF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{16F9025B-CBAA-4DB9-A942-91FCF399094C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16F9025B-CBAA-4DB9-A942-91FCF399094C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16F9025B-CBAA-4DB9-A942-91FCF399094C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DCD9BCD-45EE-4135-9181-6BE149BF6FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DCD9BCD-45EE-4135-9181-6BE149BF6FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DCD9BCD-45EE-4135-9181-6BE149BF6FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DCD9BCD-45EE-4135-9181-6BE149BF6FF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
