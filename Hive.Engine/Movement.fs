@@ -34,7 +34,7 @@ module Movement =
             | _ -> false)
 
     let spread (board: Board) (pool: FieldCoords list list) (canClimb: bool) =
-        let twoLastItems list = List.rev list |> (fun x -> x.Tail.Head, x.Head)
+        let twoLastItems lst = List.rev lst |> (fun x -> x.Tail.Head, x.Head)
         let singleSpread (pool: FieldCoords list) =
             let nextFields = 
                 FieldCoords.neighbors (List.last pool)

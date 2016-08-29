@@ -65,10 +65,10 @@ namespace Hive
 
         private void ReadState()
         {
-            ReadMoves();
-            PreviousPlayer = MapFsharpColor(_state.Moves.LastOrDefault()?.Player);
-            ReadWinner();
+            PreviousPlayer = MapFsharpColor(_state.Moves.LastOrDefault()?.Player);           
             ReadBugs();
+            ReadWinner();
+            ReadMoves();
         }
 
         private void ReadMoves()

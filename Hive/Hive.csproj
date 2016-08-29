@@ -59,7 +59,7 @@
     <Compile Include="Bug.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="PlayerColor.cs" />
-    <Compile Include="GameState.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="GridCoords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
