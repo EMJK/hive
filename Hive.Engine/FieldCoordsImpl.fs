@@ -12,8 +12,8 @@ module FieldCoordsImpl =
             { X = -1; Y = 1;  Z = 0  };
             { X = 0;  Y = 1;  Z = -1 }|]
 
-        static member diff src dst =
-            { X = src.X - dst.X; Y = src.Y - dst.Y; Z = src.Z - dst.Z }
+        static member offset src dst =
+            { X = dst.X - src.X; Y = dst.Y - src.Y; Z = dst.Z - src.Z }
 
         static member neighbors coords = [
             { X = coords.X + 1; Y = coords.Y + 0; Z = coords.Z - 1 };
@@ -29,8 +29,8 @@ module FieldCoordsImpl =
         static member neighborOffsets = List.ofArray FieldCoords.neighborMap
 
         static member sidesOf src dst =
-            let targetDiff = FieldCoords.diff src dst 
-            let targetIndex = Array.findIndex (fun x -> x = targetDiff) FieldCoords.neighborMap
+            let offset = FieldCoords.offset src dst
+            let targetIndex = Array.findIndex (fun x -> x = offset) FieldCoords.neighborMap
             let leftIndex = FieldCoords.round (targetIndex - 1) FieldCoords.neighborMap.Length
             let rightIndex = FieldCoords.round (targetIndex + 1) FieldCoords.neighborMap.Length
             (FieldCoords.neighborMap.[leftIndex], FieldCoords.neighborMap.[rightIndex])

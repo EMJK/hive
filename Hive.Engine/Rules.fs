@@ -24,31 +24,25 @@ module Rules =
         let isSingleGroup (group: FieldCoords list) (board: Board) =
             List.length group = Board.populatedFieldCount board
 
+        let (movedBug, stateAfterPickup) = (Board.pickBug src board)
+        let stateAfterPlacement = Board.placeBug movedBug dst stateAfterPickup
+
         let canPick () =
-            let possibleNextState = snd (Board.pickBug src board)
             let startCoords = 
-                FieldCoords.neighbors src
-                |> List.filter (fun x -> Board.isPopulated x possibleNextState)
-                |> List.tryHead
+                FieldCoords.neighbors src //pola sąsiednie do podnoszonego robaka
+                |> List.filter (fun x -> Board.isPopulated x board)
+                |> List.tryHead // bierzemy koordynaty pierwszego znalezionego sąsiada
             match startCoords with
             | None -> false
             | Some(src) ->
-                let possibleGroup = getGroupAt src possibleNextState
-                isSingleGroup possibleGroup possibleNextState
+                let possibleGroup = getGroupAt src stateAfterPickup
+                isSingleGroup possibleGroup stateAfterPickup
 
-        let canMove () =
-            if Board.isPopulated src board && not (Board.isPopulated dst board)
-            then
-                let populatedNeighbors (coords: FieldCoords)=
-                    FieldCoords.neighbors coords
-                    |> List.filter (fun x -> Board.isPopulated x board)
-                let srcNeighbors = populatedNeighbors src
-                let dstNeighbors = populatedNeighbors dst
-                let commonNeighbors = Set.intersect (Set.ofList srcNeighbors) (Set.ofList dstNeighbors)
-                Set.count commonNeighbors > 0
-            else false
+        let canPlace () =
+            let possibleGroup = getGroupAt dst stateAfterPlacement
+            isSingleGroup possibleGroup stateAfterPlacement
 
-        canPick() && canMove()
+        canPick() && canPlace()
                     
 
     let freedomOfMovement (sequence: FieldCoords list) (board:Board) =
@@ -70,23 +64,14 @@ module Rules =
     let teamPlacement (bug: Bug) (coords: FieldCoords) (board: Board) =
         if Board.isEmpty board 
         then true
+        elif Board.isPopulated coords board
+        then false
         else
-            let neighbors = FieldCoords.neighbors coords |> List.map (fun x -> Board.topBugAt x board)
-            let noEnemies =
-                neighbors
-                |> List.forall (fun x ->
-                    match x with
-                    | None -> true
-                    | Some(neighbor) -> not (neighbor.Color = bug.Color))
-            let atLeastOneFriend =
-                neighbors
-                |> List.filter (fun x -> 
-                    match x with
-                    | None -> false
-                    | Some neighbor -> neighbor.Color = bug.Color)
-                |> List.isEmpty 
-                |> not
-            noEnemies && atLeastOneFriend
+            let neighbors = 
+                FieldCoords.neighbors coords
+                |> List.map (fun x -> Board.topBugAt x board)
+                |> List.choose id
+            (not <| List.isEmpty neighbors) && neighbors |> List.forall (fun x -> x.Color = bug.Color)
 
     let getWinner (board: Board) =
         let findQueenBee color = 

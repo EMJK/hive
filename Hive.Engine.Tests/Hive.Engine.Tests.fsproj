@@ -54,6 +54,7 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Tools.fs" />
     <Compile Include="RulesTest.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
@@ -81,6 +82,13 @@
       <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hive.Engine\Hive.Engine.fsproj">
+      <Name>Hive.Engine</Name>
+      <Project>{238fb476-0a6c-474d-aadc-107dace259a0}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

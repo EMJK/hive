@@ -68,7 +68,7 @@ module BoardImpl =
         static member isEmpty board =
             board.Map
             |> Map.toSeq
-            |> Seq.forall (fun (_, stack) -> List.length stack > 0)
+            |> Seq.forall (fun (_, stack) -> List.length stack = 0)
 
         static member applyAction action board =
             match action with
