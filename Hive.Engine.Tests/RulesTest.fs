@@ -59,11 +59,11 @@ module RulesTest =
                     makeBug Beetle PlayerColor.White
                 ]
             ]
-        Assert.False(Hive.Engine.Rules.teamPlacement (makeBug Beetle PlayerColor.Black) (makeCoords -1 -1 2) board)
-        Assert.False(Hive.Engine.Rules.teamPlacement (makeBug Beetle PlayerColor.White) (makeCoords -1 -1 2) board)
-        Assert.True(Hive.Engine.Rules.teamPlacement (makeBug Beetle PlayerColor.Black) (makeCoords 0 -1 1) board)
-        Assert.False(Hive.Engine.Rules.teamPlacement (makeBug Beetle PlayerColor.White) (makeCoords 0 -1 1) board)
-        Assert.False(Hive.Engine.Rules.teamPlacement (makeBug Beetle PlayerColor.Black) (makeCoords 0 2 -2) board)
-        Assert.True(Hive.Engine.Rules.teamPlacement (makeBug Beetle PlayerColor.White) (makeCoords 0 2 -2) board)
-        Assert.False(Hive.Engine.Rules.teamPlacement (makeBug Beetle PlayerColor.Black) (makeCoords 1 0 -1) board)
-        Assert.False(Hive.Engine.Rules.teamPlacement (makeBug Beetle PlayerColor.White) (makeCoords 1 0 -1) board)
+        Assert.False(Hive.Engine.Rules.teamPlacement PlayerColor.Black (makeCoords -1 -1 2) board)
+        Assert.False(Hive.Engine.Rules.teamPlacement PlayerColor.White (makeCoords -1 -1 2) board)
+        Assert.True(Hive.Engine.Rules.teamPlacement  PlayerColor.Black (makeCoords 0 -1 1) board)
+        Assert.False(Hive.Engine.Rules.teamPlacement PlayerColor.White (makeCoords 0 -1 1) board)
+        Assert.False(Hive.Engine.Rules.teamPlacement PlayerColor.Black (makeCoords 0 2 -2) board)
+        Assert.True(Hive.Engine.Rules.teamPlacement  PlayerColor.White (makeCoords 0 2 -2) board)
+        Assert.False(Hive.Engine.Rules.teamPlacement PlayerColor.Black (makeCoords 1 0 -1) board)
+        Assert.False(Hive.Engine.Rules.teamPlacement PlayerColor.White (makeCoords 1 0 -1) board)

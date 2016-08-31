@@ -35,29 +35,22 @@ module Engine =
         if Board.isEmpty board
         then [{X=0;Y=0;Z=0}]
         else
-            let bugCoords = 
+            let bugCoords =
                 Map.toList board.Map
-                |> List.map (fun (c,s) -> (c, List.tryHead s))
-                |> List.choose (fun (c,b) ->
-                    match b with
-                    | None -> None
-                    | Some(x) -> Some(c,x))
-                |> List.filter (fun (c,b) -> b.Color = color)
-                |> List.map (fun (c,b) -> c)
-            let emptyFields = 
+                |> List.map (fun (c, b) -> (c, List.tryHead b))
+                |> List.filter (fun (c, b) -> b.IsSome)
+                |> List.map fst
+
+            let emptyNeighborCoords =  
                 bugCoords
-                |> List.map (fun x -> FieldCoords.neighbors x)
+                |> List.map FieldCoords.neighbors
                 |> List.concat
                 |> List.distinct
-                |> List.filter (fun x -> not <| Board.isPopulated x board)
+                |> List.filter (fun x -> not (Board.isPopulated x board))
 
-            emptyFields
-            |> List.filter (fun x -> 
-                FieldCoords.neighbors x
-                |> List.forall (fun x ->
-                    match Board.topBugAt x board with
-                    | None -> true
-                    | Some(x) -> x.Color = color))
+
+            emptyNeighborCoords
+                |> List.filter (fun x -> Rules.teamPlacement color x board)
 
     let getPossibleMovesForPlayer (board: Board) (color: PlayerColor) =
         let allBugs =

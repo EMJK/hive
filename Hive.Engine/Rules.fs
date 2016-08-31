@@ -61,17 +61,25 @@ module Rules =
             | [src;dst] -> canMove src dst newState
             | _ -> false)
 
-    let teamPlacement (bug: Bug) (coords: FieldCoords) (board: Board) =
+    let teamPlacement (color: PlayerColor) (coords: FieldCoords) (board: Board) =
         if Board.isEmpty board 
         then true
         elif Board.isPopulated coords board
         then false
+        elif board.Map.Count = 1
+        then 
+            board.Map
+            |> Map.toSeq
+            |> Seq.head
+            |> fst
+            |> FieldCoords.neighbors
+            |> List.exists (fun x -> x = coords)
         else
             let neighbors = 
                 FieldCoords.neighbors coords
                 |> List.map (fun x -> Board.topBugAt x board)
                 |> List.choose id
-            (not <| List.isEmpty neighbors) && neighbors |> List.forall (fun x -> x.Color = bug.Color)
+            (not <| List.isEmpty neighbors) && neighbors |> List.forall (fun x -> x.Color = color)
 
     let getWinner (board: Board) =
         let findQueenBee color = 
