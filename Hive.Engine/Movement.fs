@@ -33,24 +33,30 @@ module Movement =
             | [src;middle;_] -> Rules.oneHive src middle board
             | _ -> false)
 
-    let spread (board: Board) (pool: FieldCoords list list) (canClimb: bool) =
-        let twoLastItems lst = List.rev lst |> (fun x -> x.Tail.Head, x.Head)
-        let singleSpread (pool: FieldCoords list) =
+    let spread (board: Board) (paths: FieldCoords list list) (canClimb: bool) =        
+        let singleSpread (path: FieldCoords list) =
+            let lastStep path = 
+                let reversePath = List.rev path
+                (path.Tail.Head, path.Head)
             let nextFields = 
-                FieldCoords.neighbors (List.last pool)
-                |> List.filter (fun x -> not <| List.contains x pool)
-                |> List.filter (fun x -> canClimb || (not <| Board.isPopulated x board))
-                |> List.filter (fun x -> Rules.freedomOfMovement [(List.last pool); x] board)
-            if List.isEmpty nextFields
-            then []
-            else nextFields |> List.map (fun x -> pool @ [x])
-        pool
-        |> List.map (fun x -> singleSpread x)
+                FieldCoords.neighbors (List.last path)
+                |> List.filter (fun x -> not <| List.contains x path) // filtrujemy pola znajdujące się już na ścieżce
+            let sourceField = List.last path
+            let newPaths = 
+                nextFields
+                |> List.map (fun x -> path @ [x])
+            let filteredNewPaths =
+                newPaths
+                |> List.map (fun x -> (x, lastStep x))
+                |> List.filter (fun (path, lastStep) -> )
+
+        let 
+
+        let checkPathFreedomOfMovement path = true
+
+        paths
+        |> List.map singleSpread
         |> List.concat
-        |> List.filter (fun x -> not <| List.isEmpty x)
-        |> List.filter (fun x ->
-            let src,dst = twoLastItems x
-            Rules.oneHive src dst board)
         |> clean
 
     
