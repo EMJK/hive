@@ -46,7 +46,13 @@ module Movement =
         let checkOneHiveRule board path =
             let (src, dst) = firstAndLast path
             Rules.oneHive src dst board
-            
+
+        let checkClimbing board path =
+            match canClimb with
+            | true -> true
+            | false ->
+                let (_, dst) = lastStep path
+                not (Board.isPopulated dst board)
             
         let singleSpread (path: FieldCoords list) =
             let nextFields = 
@@ -55,12 +61,11 @@ module Movement =
             let newPaths = 
                 nextFields
                 |> List.map (fun x -> path @ [x])
-            let filteredPaths1 = newPaths |> List.filter (fun path -> checkOneHiveRule board path)
-            let filteredPaths2 = newPaths |> List.filter (fun path -> checkLastStepFreedomOfMovement board path)
 
             newPaths
                 |> List.filter (fun path -> checkOneHiveRule board path)
                 |> List.filter (fun path -> checkLastStepFreedomOfMovement board path)
+                |> List.filter (fun path -> checkClimbing board path)
 
         let spreadPaths = paths |> List.map singleSpread
         paths
