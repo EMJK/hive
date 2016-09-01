@@ -11,3 +11,8 @@ module Ladybug =
         let step2 = Movement.spread board step1 true
         let step3 = Movement.spread board step2 false
         step3
+        |> List.filter (
+            fun path ->
+                match path with
+                | [_; a; b; _] -> List.forall (fun coords -> Board.isPopulated coords board) [a; b]
+                | _ -> false)

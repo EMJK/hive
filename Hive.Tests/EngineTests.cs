@@ -18,7 +18,9 @@ namespace Hive.Tests
             game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(1, 0, -1));
             var beetleMoves = game.WhitePlayerMoves;
             Assert.Equal(1, beetleMoves.Count);
-            Assert.Equal(3, beetleMoves[new GridCoords(0,0,0)].Count);
+            var moves = beetleMoves[new GridCoords(0, 0, 0)];
+            Assert.Equal(3, moves.Count);
+            Assert.True(moves.All(move => move.Count == 2));
         }
 
         [Fact]
@@ -29,7 +31,22 @@ namespace Hive.Tests
             game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(1, 0, -1));
             var queenBeeMoves = game.WhitePlayerMoves;
             Assert.Equal(1, queenBeeMoves.Count);
-            Assert.Equal(2, queenBeeMoves[new GridCoords(0, 0, 0)].Count);
+            var moves = queenBeeMoves[new GridCoords(0, 0, 0)];
+            Assert.Equal(2, moves.Count);
+            Assert.True(moves.All(move => move.Count == 2));
+        }
+
+        [Fact]
+        public void GrasshopperMovementTest()
+        {
+            var game = new Game();
+            game.PlaceNewBug(PlayerColor.White, BugType.Grasshopper, new GridCoords(0, 0, 0));
+            game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(1, 0, -1));
+            var grasshopperMoves = game.WhitePlayerMoves;
+            Assert.Equal(1, grasshopperMoves.Count);
+            var moves = grasshopperMoves[new GridCoords(0, 0, 0)];
+            Assert.Equal(1, moves.Count);
+            Assert.True(moves.All(move => move.Count == 2));
         }
     }
 }

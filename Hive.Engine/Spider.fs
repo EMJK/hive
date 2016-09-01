@@ -11,3 +11,4 @@ module Spider =
         let step2 = Movement.spread board step1 false
         let step3 = Movement.spread board step2 false
         step3
+        |> List.filter(fun path -> path.Length = 3)
