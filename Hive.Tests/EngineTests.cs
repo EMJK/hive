@@ -17,7 +17,8 @@ namespace Hive.Tests
             game.PlaceNewBug(PlayerColor.White, BugType.Beetle, new GridCoords(0, 0, 0));
             game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(1, 0, -1));
             var beetleMoves = game.WhitePlayerMoves;
-            Assert.Equal(3, beetleMoves.Count);
+            Assert.Equal(1, beetleMoves.Count);
+            Assert.Equal(3, beetleMoves[new GridCoords(0,0,0)].Count);
         }
     }
 }

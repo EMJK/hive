@@ -5,44 +5,54 @@ open BoardImpl
 
 module Rules = 
 
-    let oneHive (src: FieldCoords) (dst: FieldCoords) (board:Board) =
+    let oneHive (src: FieldCoords) (dst: FieldCoords) (board: Board) =
         let getGroupAt (coords:FieldCoords) (board:Board) =
-            let rec expandGroup (found:FieldCoords list) (next:FieldCoords list) (board:Board) =
+            let rec expandGroup (group: FieldCoords list) (board: Board) =
                 let newFields =
-                    next
+                    group
                     |> List.map FieldCoords.neighbors
                     |> List.concat
-                    |> List.except next
-                    |> List.except found
+                    |> List.except group
                     |> List.distinct
                     |> List.filter (fun x -> Board.isPopulated x board)
-                if List.length newFields = 0
-                then found
-                else expandGroup (List.append found newFields) newFields board
-            expandGroup [] [coords] board
+                match newFields with
+                | [] -> group
+                | fields -> 
+                    let newGroup =
+                        group
+                        |> List.append fields
+                        |> List.distinct
+                    expandGroup newGroup board
+            
+            expandGroup [coords] board
 
         let isSingleGroup (group: FieldCoords list) (board: Board) =
             List.length group = Board.populatedFieldCount board
 
+        let isSingleGroupAt coords board =
+            let group = getGroupAt coords board
+            isSingleGroup group board
+
+        let isOneHive (board: Board) =
+            let bugCoords = 
+                board.Map
+                |> Map.toSeq
+                |> Seq.filter (fun (_, stack) -> not (List.isEmpty stack))
+                |> Seq.map fst
+                |> Seq.tryHead
+            match bugCoords with
+            | Some coords -> isSingleGroupAt coords board
+            | None -> true
+
         let (movedBug, stateAfterPickup) = (Board.pickBug src board)
         let stateAfterPlacement = Board.placeBug movedBug dst stateAfterPickup
 
-        let canPick () =
-            let startCoords = 
-                FieldCoords.neighbors src //pola sąsiednie do podnoszonego robaka
-                |> List.filter (fun x -> Board.isPopulated x board)
-                |> List.tryHead // bierzemy koordynaty pierwszego znalezionego sąsiada
-            match startCoords with
-            | None -> false
-            | Some(src) ->
-                let possibleGroup = getGroupAt src stateAfterPickup
-                isSingleGroup possibleGroup stateAfterPickup
+        let canPick = isOneHive stateAfterPickup
 
-        let canPlace () =
-            let possibleGroup = getGroupAt dst stateAfterPlacement
-            isSingleGroup possibleGroup stateAfterPlacement
+        let canPlace = isOneHive stateAfterPlacement
 
-        canPick() && canPlace()
+        let result = canPick && canPlace
+        result
                     
 
     let freedomOfMovement (sequence: FieldCoords list) (board:Board) =

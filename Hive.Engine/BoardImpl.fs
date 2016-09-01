@@ -62,6 +62,10 @@ module BoardImpl =
             let newMap = Map.add coords newStack board.Map
             { Map = newMap }
 
+        static member moveBug src dst board =
+            let (bug, tmpBoard) = Board.pickBug src board
+            Board.placeBug bug dst tmpBoard
+
         static member removeBug coords board =
             snd (Board.pickBug coords board)
 

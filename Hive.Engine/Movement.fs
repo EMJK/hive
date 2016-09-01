@@ -7,7 +7,7 @@ module Movement =
     let clean (movements: FieldCoords list list) =
         movements
         |> List.sortBy List.length
-        |> List.distinctBy (fun x -> List.last x)        
+        |> List.distinctBy (fun x -> (List.head x, List.last x))       
 
     let movesOverPillBug (coords: FieldCoords) (board: Board) (pillBugColor: PlayerColor) =
         let movesToPillbugs = 
@@ -33,27 +33,36 @@ module Movement =
             | [src;middle;_] -> Rules.oneHive src middle board
             | _ -> false)
 
-    let spread (board: Board) (paths: FieldCoords list list) (canClimb: bool) =        
+
+    let spread (board: Board) (paths: FieldCoords list list) (canClimb: bool) =
+        let firstAndLast path = (List.head path, List.last path)
+        let lastStep path = List.rev path |> (fun x -> (x.Tail.Head, x.Head))
+
+        let checkLastStepFreedomOfMovement board path =
+            let (src, dst) = lastStep path
+            let tmpBoard = Board.moveBug src dst board
+            Rules.freedomOfMovement [src; dst] board
+
+        let checkOneHiveRule board path =
+            let (src, dst) = firstAndLast path
+            Rules.oneHive src dst board
+            
+            
         let singleSpread (path: FieldCoords list) =
-            let lastStep path = 
-                let reversePath = List.rev path
-                (path.Tail.Head, path.Head)
             let nextFields = 
                 FieldCoords.neighbors (List.last path)
                 |> List.filter (fun x -> not <| List.contains x path) // filtrujemy pola znajdujące się już na ścieżce
-            let sourceField = List.last path
             let newPaths = 
                 nextFields
                 |> List.map (fun x -> path @ [x])
-            let filteredNewPaths =
-                newPaths
-                |> List.map (fun x -> (x, lastStep x))
-                |> List.filter (fun (path, lastStep) -> )
+            let filteredPaths1 = newPaths |> List.filter (fun path -> checkOneHiveRule board path)
+            let filteredPaths2 = newPaths |> List.filter (fun path -> checkLastStepFreedomOfMovement board path)
 
-        let 
+            newPaths
+                |> List.filter (fun path -> checkOneHiveRule board path)
+                |> List.filter (fun path -> checkLastStepFreedomOfMovement board path)
 
-        let checkPathFreedomOfMovement path = true
-
+        let spreadPaths = paths |> List.map singleSpread
         paths
         |> List.map singleSpread
         |> List.concat
