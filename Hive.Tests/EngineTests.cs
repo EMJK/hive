@@ -48,5 +48,14 @@ namespace Hive.Tests
             Assert.Equal(1, moves.Count);
             Assert.True(moves.All(move => move.Count == 2));
         }
+
+        [Fact] 
+        public void PilBugMovementTest()
+        {
+            var game = new Game();
+            game.PlaceNewBug(PlayerColor.White, BugType.PillBug, new GridCoords(0, 0, 0));
+            game.PlaceNewBug(PlayerColor.Black, BugType.QueenBee, new GridCoords(1, -1, 0));
+            var allMoves = game.WhitePlayerMoves;
+        }
     }
 }
