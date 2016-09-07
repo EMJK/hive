@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive", "Hive\Hive.csproj", "{2A0389B4-38B9-4816-BB49-04E54C65E050}"
 EndProject
@@ -10,6 +10,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.Tests", "Hive.Tests\Hive.Tests.csproj", "{4DCD9BCD-45EE-4135-9181-6BE149BF6FF0}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Hive.Engine.Tests", "Hive.Engine.Tests\Hive.Engine.Tests.fsproj", "{794ADB9C-7372-4079-8026-8A026AC736EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics.CSharp", "Graphics\Graphics.CSharp.csproj", "{599D324C-E2F1-1F32-10DF-906945CE82CC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2A0389B4-38B9-4816-BB49-04E54C65E050} = {2A0389B4-38B9-4816-BB49-04E54C65E050}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +38,10 @@ Global
 		{794ADB9C-7372-4079-8026-8A026AC736EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{794ADB9C-7372-4079-8026-8A026AC736EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{794ADB9C-7372-4079-8026-8A026AC736EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{599D324C-E2F1-1F32-10DF-906945CE82CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{599D324C-E2F1-1F32-10DF-906945CE82CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{599D324C-E2F1-1F32-10DF-906945CE82CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{599D324C-E2F1-1F32-10DF-906945CE82CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
