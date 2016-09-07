@@ -1,5 +1,8 @@
-﻿namespace Hive.Common
+﻿using System;
+
+namespace Hive.Common
 {
+    [Serializable]
     public enum PlayerColor
     {
         Empty,
@@ -7,6 +10,7 @@
         White
     }
 
+    [Serializable]
     public enum Winner
     {
         None,
@@ -15,6 +19,7 @@
         Draw
     }
 
+    [Serializable]
     public enum BugType
     {
         Beetle,

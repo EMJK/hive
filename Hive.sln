@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.Tests", "Hive.Tests\Hi
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Hive.Engine.Tests", "Hive.Engine.Tests\Hive.Engine.Tests.fsproj", "{794ADB9C-7372-4079-8026-8A026AC736EB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2A09AE2B-31E3-4566-A4AE-D895A601AA52}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_test", "_test", "{2A09AE2B-31E3-4566-A4AE-D895A601AA52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.IpcServer", "Hive.IpcBridge\Hive.IpcServer.csproj", "{3B3BA155-94B2-4EDF-B2C9-C605C856E5B7}"
 EndProject
@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.IpcClient", "Hive.IpcC
 	ProjectSection(ProjectDependencies) = postProject
 		{3B3BA155-94B2-4EDF-B2C9-C605C856E5B7} = {3B3BA155-94B2-4EDF-B2C9-C605C856E5B7}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Graphics", "Graphics", "{9B84D51A-E062-410B-9715-7AFDE5FA34CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

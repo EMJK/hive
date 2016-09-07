@@ -1,5 +1,8 @@
-﻿namespace Hive.Common
+﻿using System;
+
+namespace Hive.Common
 {
+    [Serializable]
     public class Bug
     {
         public PlayerColor Color { get; set; }

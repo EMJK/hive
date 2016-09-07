@@ -18,12 +18,10 @@ namespace Hive.EngineWrapper
 
         public Game() : this(Engine.Engine.newGame())
         {
-            GameStateData = new GameStateData();
         }
 
         public Game(Types.GameState state)
         {
-            GameStateData = new GameStateData();
             _state = state;
             ReadState();
         }
@@ -48,8 +46,6 @@ namespace Hive.EngineWrapper
                 MapCsharpColor(color));
             ReadState();
         }
-
-        public void MoveBug(PlayerColor color, List<GridCoords> sequence) => MoveBug(color, sequence.First(), sequence.Last());
 
         private string GetStringRepresentation()
         {

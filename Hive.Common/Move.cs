@@ -1,5 +1,8 @@
-﻿namespace Hive.Common
+﻿using System;
+
+namespace Hive.Common
 {
+    [Serializable]
     public class Move
     {
         public GridCoords[] Sequence { get; set; }

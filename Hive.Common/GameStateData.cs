@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Hive.Common
 {
+    [Serializable]
     public class GameStateData
     {
         public Dictionary<GridCoords, List<Bug>> Bugs { get; set; }

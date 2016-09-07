@@ -1,5 +1,8 @@
+using System;
+
 namespace Hive.Common
 {
+    [Serializable]
     public class IpcResponse
     {
         public bool Error { get; set; }

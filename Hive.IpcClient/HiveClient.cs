@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using Hive.Common;
 using System.IO.Pipes;
-using Newtonsoft.Json;
+using System.Runtime.Serialization.Formatters;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Hive.IpcClient
 {
@@ -12,17 +14,15 @@ namespace Hive.IpcClient
     {
         private Process _engineProcess;
         private NamedPipeClientStream _pipe;
+        private BinaryFormatter _formatter;
 
         public GameStateData GameState { get; private set; }
 
         public HiveClient()
         {
+            _formatter = new BinaryFormatter();
+            _formatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
             StartProcess();
-        }
-
-        public void MoveBug(PlayerColor color, List<GridCoords> sequence)
-        {
-            SendMessageAndReadResponse(new IpcRequest(nameof(MoveBug), color, sequence));
         }
 
         public void MoveBug(PlayerColor color, GridCoords from, GridCoords to)
@@ -52,21 +52,32 @@ namespace Hive.IpcClient
         {
             _pipe = new NamedPipeClientStream(pipeId);
             _pipe.Connect();
+            ReadResponse();
         }
 
         private string CreatePipeId()
         {
+#if DEBUG
+            return "DEBUG_PIPE_NAME";
+#else
             return "HiveIpcPipe_" + Guid.NewGuid().ToString("N");
+#endif
         }
 
         private void Write(IpcRequest obj)
         {
-            var json = JsonConvert.SerializeObject(obj);
-            var bytes = Encoding.UTF8.GetBytes(json);
+            byte[] data;
+            using (var ms = new MemoryStream())
+            {
+                _formatter.Serialize(ms, obj);
+                data = ms.ToArray();
+            }
             var header = new byte[4];
-            Utils.WriteUInt32(header, bytes.Length, 0);
+            Utils.WriteUInt32(header, data.Length, 0);
             _pipe.Write(header, 0, header.Length);
-            _pipe.Write(bytes, 0, bytes.Length);
+            _pipe.Write(data, 0, data.Length);
+            _pipe.Flush();
+            _pipe.WaitForPipeDrain();
         }
 
         private IpcResponse Read()
@@ -82,14 +93,21 @@ namespace Hive.IpcClient
             {
                 throw new Exception("Protocol error");
             }
-            var json = Encoding.UTF8.GetString(body);
-            var obj = JsonConvert.DeserializeObject<IpcResponse>(json);
-            return obj;
+            using (var ms = new MemoryStream(body))
+            {
+                var obj = (IpcResponse)_formatter.Deserialize(ms);
+                return obj;
+            }
         }
 
         private void SendMessageAndReadResponse(IpcRequest message)
         {
             Write(message);
+            ReadResponse();
+        }
+
+        private void ReadResponse()
+        {
             var response = Read();
             if (response.Error)
             {

@@ -39,12 +39,11 @@
     <Compile Include="Bug.cs" />
     <Compile Include="GameStateData.cs" />
     <Compile Include="GridCoords.cs" />
-    <Compile Include="GameData.cs" />
     <Compile Include="IGameActions.cs" />
     <Compile Include="IpcRequest.cs" />
     <Compile Include="IpcResponse.cs" />
     <Compile Include="Move.cs" />
-    <Compile Include="PlayerColor.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>

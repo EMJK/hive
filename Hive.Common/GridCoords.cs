@@ -2,6 +2,7 @@
 
 namespace Hive.Common
 {
+    [Serializable]
     public class GridCoords: IEquatable<GridCoords>
     {
         public int X { get; set; }
@@ -34,11 +35,6 @@ namespace Hive.Common
         public override int GetHashCode()
         {
             return X ^ Y ^ Z;
-        }
-
-        public override string ToString()
-        {
-            return $"X:{X}, Y:{Y}, Z:{Z}";
         }
     }
 }

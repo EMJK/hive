@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Hive.Common
 {
+    [Serializable]
     public class IpcRequest
     {
         public string MethodName { get; set; }
