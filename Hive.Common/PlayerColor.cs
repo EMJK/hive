@@ -1,4 +1,4 @@
-﻿namespace Hive
+﻿namespace Hive.Common
 {
     public enum PlayerColor
     {
@@ -25,15 +25,5 @@
         QueenBee,
         SoldierAnt,
         Spider
-    }
-
-    static class PlayerColorExtensions
-    {
-        public static PlayerColor Opposite(this PlayerColor color)
-        {
-            if(color == PlayerColor.Black) return PlayerColor.White;
-            if(color == PlayerColor.White) return PlayerColor.Black;
-            return PlayerColor.Empty;
-        }
     }
 }

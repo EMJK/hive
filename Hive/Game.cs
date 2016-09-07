@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hive.Common;
 using Hive.Engine;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
-using Julas.Utils;
 
-namespace Hive
+namespace Hive.EngineWrapper
 {
-    public class Game
+    public class Game : IGameActions
     {
-        private Types.GameState _state;    
+        private Types.GameState _state;
 
-        public Dictionary<GridCoords, List<Bug>> Bugs { get; private set; }
-        public Dictionary<GridCoords, List<List<GridCoords>>> WhitePlayerMoves { get; private set; }
-        public Dictionary<GridCoords, List<List<GridCoords>>> BlackPlayerMoves { get; private set; }
-        public PlayerColor PreviousPlayer { get; private set; }
-        public Winner Winner { get; private set; }
         public string StringRepresentation => GetStringRepresentation();
 
+        public GameStateData GameStateData { get; private set; }
+
         public Game() : this(Engine.Engine.newGame())
-        { }
+        {
+            GameStateData = new GameStateData();
+        }
 
         public Game(Types.GameState state)
         {
+            GameStateData = new GameStateData();
             _state = state;
             ReadState();
         }
@@ -53,8 +53,8 @@ namespace Hive
 
         private string GetStringRepresentation()
         {
-            if (!Bugs.Any()) return "Board is empty";
-            var ret = Bugs
+            if (!GameStateData.Bugs.Any()) return "Board is empty";
+            var ret = GameStateData.Bugs
                 .OrderBy(x => x.Key.X)
                 .ThenBy(x => x.Key.Y)
                 .ThenBy(x => x.Key.Z)
@@ -65,7 +65,8 @@ namespace Hive
 
         private void ReadState()
         {
-            PreviousPlayer = MapFsharpColor(_state.Moves.LastOrDefault()?.Player);           
+            GameStateData = new GameStateData();
+            GameStateData.PreviousPlayer = MapFsharpColor(_state.Moves.LastOrDefault()?.Player);           
             ReadBugs();
             ReadWinner();
             ReadMoves();
@@ -74,13 +75,13 @@ namespace Hive
         private void ReadMoves()
         {
             var whiteMoves = Engine.Engine.getPossibleMovesForPlayer(_state.Board, Types.PlayerColor.White);
-            WhitePlayerMoves = whiteMoves.ToDictionary(
-                x => new GridCoords(x.Item1),
-                x => x.Item2.Select(t => t.Select(c => new GridCoords(c)).ToList()).ToList());
+            GameStateData.WhitePlayerMoves = whiteMoves.ToDictionary(
+                x => MapFsharpCoords(x.Item1),
+                x => x.Item2.Select(t => t.Select(MapFsharpCoords).ToList()).ToList());
             var blackMoves = Engine.Engine.getPossibleMovesForPlayer(_state.Board, Types.PlayerColor.Black);
-            BlackPlayerMoves = blackMoves.ToDictionary(
-                x => new GridCoords(x.Item1),
-                x => x.Item2.Select(t => t.Select(c => new GridCoords(c)).ToList()).ToList());
+            GameStateData.BlackPlayerMoves = blackMoves.ToDictionary(
+                x => MapFsharpCoords(x.Item1),
+                x => x.Item2.Select(t => t.Select(MapFsharpCoords).ToList()).ToList());
         }
 
         private void ReadWinner()
@@ -88,23 +89,23 @@ namespace Hive
             var winner = Engine.Engine.findWinner(_state);
             if (FSharpOption<Types.Winner>.get_IsNone(winner))
             {
-                Winner = Winner.None;
+                GameStateData.Winner = Winner.None;
             }
             else if (winner.Value.IsDraw)
             {
-                Winner = Winner.Draw;
+                GameStateData.Winner = Winner.Draw;
             }
             else
             {
                 var color = ((Types.Winner.Player)winner.Value).Item;
-                Winner = color.IsBlack ? Winner.Black : Winner.White;
+                GameStateData.Winner = color.IsBlack ? Winner.Black : Winner.White;
             }
         }
 
         private void ReadBugs()
         {
             var board = _state.Board.Map;
-            Bugs = board.ToDictionary(
+            GameStateData.Bugs = board.ToDictionary(
                 kvp => MapFsharpCoords(kvp.Key),
                 kvp => kvp.Value.Select(MapFsharpBug).ToList()
             );
@@ -131,19 +132,19 @@ namespace Hive
 
         private GridCoords MapFsharpCoords(Types.FieldCoords coords)
         {
-            return new GridCoords(coords);
+            return new GridCoords(coords.X, coords.Y, coords.Z);
         }
 
         private BugType MapFsharpBugType(Types.BugType type)
         {
-            if (type == Types.BugType.Beetle) return BugType.Beetle;
-            if (type == Types.BugType.Grasshopper) return BugType.Grasshopper;
-            if (type == Types.BugType.Ladybug) return BugType.Ladybug;
-            if (type == Types.BugType.Mosquito) return BugType.Mosquito;
-            if (type == Types.BugType.PillBug) return BugType.PillBug;
-            if (type == Types.BugType.QueenBee) return BugType.QueenBee;
-            if (type == Types.BugType.SoldierAnt) return BugType.SoldierAnt;
-            if (type == Types.BugType.Spider) return BugType.Spider;
+            if (Equals(type, Types.BugType.Beetle)) return BugType.Beetle;
+            if (Equals(type, Types.BugType.Grasshopper)) return BugType.Grasshopper;
+            if (Equals(type, Types.BugType.Ladybug)) return BugType.Ladybug;
+            if (Equals(type, Types.BugType.Mosquito)) return BugType.Mosquito;
+            if (Equals(type, Types.BugType.PillBug)) return BugType.PillBug;
+            if (Equals(type, Types.BugType.QueenBee)) return BugType.QueenBee;
+            if (Equals(type, Types.BugType.SoldierAnt)) return BugType.SoldierAnt;
+            if (Equals(type, Types.BugType.Spider)) return BugType.Spider;
             throw new ArgumentException();
         }
 
@@ -173,10 +174,10 @@ namespace Hive
 
         private FSharpList<Types.FieldCoords> FindMove(PlayerColor color, GridCoords from, GridCoords to)
         {
-            var moves = (color == PlayerColor.Black ? BlackPlayerMoves : color == PlayerColor.White ? WhitePlayerMoves : null)?.Select(x => x.Value)?.SelectMany(x => x);
+            var moves = (color == PlayerColor.Black ? GameStateData.BlackPlayerMoves : color == PlayerColor.White ? GameStateData.WhitePlayerMoves : null)?.Select(x => x.Value)?.SelectMany(x => x);
             var move = moves.FirstOrDefault(x => x.First().Equals(from) && x.Last().Equals(to));
             if (move == null) return null;
-            return ListModule.OfSeq(move.Select(x => MapCsharpCoords(x)));
+            return ListModule.OfSeq(move.Select(MapCsharpCoords));
         }
     }
 }

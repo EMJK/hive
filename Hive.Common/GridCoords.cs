@@ -1,13 +1,12 @@
-﻿using Hive.Engine;
-using System;
+﻿using System;
 
-namespace Hive
+namespace Hive.Common
 {
-    public struct GridCoords: IEquatable<GridCoords>
+    public class GridCoords: IEquatable<GridCoords>
     {
-        public int X { get; }
-        public int Y { get; }
-        public int Z { get; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
 
         public GridCoords(int x, int y, int z)
         {
@@ -15,13 +14,6 @@ namespace Hive
             X = x;
             Y = y;
             Z = z;
-        }
-
-        public GridCoords(Types.FieldCoords coords)
-        {
-            X = coords.X;
-            Y = coords.Y;
-            Z = coords.Z;
         }
 
         public bool Equals(GridCoords other)

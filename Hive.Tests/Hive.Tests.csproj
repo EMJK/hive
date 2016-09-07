@@ -69,9 +69,13 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hive\Hive.csproj">
+    <ProjectReference Include="..\Hive.Common\Hive.Common.csproj">
+      <Project>{E8109063-C42B-4877-BE1B-EA6EE3C53616}</Project>
+      <Name>Hive.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hive\Hive.EngineWrapper.csproj">
       <Project>{2a0389b4-38b9-4816-bb49-04e54c65e050}</Project>
-      <Name>Hive</Name>
+      <Name>Hive.EngineWrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

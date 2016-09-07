@@ -1,9 +1,9 @@
-﻿namespace Hive
+﻿namespace Hive.Common
 {
     public class Bug
     {
-        public PlayerColor Color { get; }
-        public BugType Type { get; }
+        public PlayerColor Color { get; set; }
+        public BugType Type { get; set; }
 
         public Bug(PlayerColor color, BugType type)
         {

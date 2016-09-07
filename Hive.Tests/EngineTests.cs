@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Hive;
+using Hive.Common;
+using Hive.EngineWrapper;
 
 namespace Hive.Tests
 {
@@ -16,7 +18,7 @@ namespace Hive.Tests
             var game = new Game();
             game.PlaceNewBug(PlayerColor.White, BugType.Beetle, new GridCoords(0, 0, 0));
             game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(1, 0, -1));
-            var beetleMoves = game.WhitePlayerMoves;
+            var beetleMoves = game.GameStateData.WhitePlayerMoves;
             Assert.Equal(1, beetleMoves.Count);
             var moves = beetleMoves[new GridCoords(0, 0, 0)];
             Assert.Equal(3, moves.Count);
@@ -29,7 +31,7 @@ namespace Hive.Tests
             var game = new Game();
             game.PlaceNewBug(PlayerColor.White, BugType.QueenBee, new GridCoords(0, 0, 0));
             game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(1, 0, -1));
-            var queenBeeMoves = game.WhitePlayerMoves;
+            var queenBeeMoves = game.GameStateData.WhitePlayerMoves;
             Assert.Equal(1, queenBeeMoves.Count);
             var moves = queenBeeMoves[new GridCoords(0, 0, 0)];
             Assert.Equal(2, moves.Count);
@@ -42,7 +44,7 @@ namespace Hive.Tests
             var game = new Game();
             game.PlaceNewBug(PlayerColor.White, BugType.Grasshopper, new GridCoords(0, 0, 0));
             game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(1, 0, -1));
-            var grasshopperMoves = game.WhitePlayerMoves;
+            var grasshopperMoves = game.GameStateData.WhitePlayerMoves;
             Assert.Equal(1, grasshopperMoves.Count);
             var moves = grasshopperMoves[new GridCoords(0, 0, 0)];
             Assert.Equal(1, moves.Count);
@@ -55,7 +57,7 @@ namespace Hive.Tests
             var game = new Game();
             game.PlaceNewBug(PlayerColor.White, BugType.PillBug, new GridCoords(0, 0, 0));
             game.PlaceNewBug(PlayerColor.Black, BugType.QueenBee, new GridCoords(1, -1, 0));
-            var allMoves = game.WhitePlayerMoves;
+            var allMoves = game.GameStateData.WhitePlayerMoves;
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Hive.EngineWrapper")]
+[assembly: AssemblyTitle("Hive.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Hive.EngineWrapper")]
+[assembly: AssemblyProduct("Hive.Common")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2a0389b4-38b9-4816-bb49-04e54c65e050")]
+[assembly: Guid("e8109063-c42b-4877-be1b-ea6ee3c53616")]
 
 // Version information for an assembly consists of the following four values:
 //
