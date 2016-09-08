@@ -59,5 +59,16 @@ namespace Hive.Tests
             game.PlaceNewBug(PlayerColor.Black, BugType.QueenBee, new GridCoords(1, -1, 0));
             var allMoves = game.GameStateData.WhitePlayerMoves;
         }
+
+        [Fact]
+        public void BugsShouldNotDuplicate()
+        {
+            var game = new Game();
+            game.PlaceNewBug(PlayerColor.White, BugType.Beetle, new GridCoords(0, 0, 0));
+            game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(1, -1, 0));
+            game.MoveBug(PlayerColor.White, new GridCoords(0, 0, 0), new GridCoords(1, 0, -1));
+            game.MoveBug(PlayerColor.Black, new GridCoords(1, -1, 0), new GridCoords(1, 0, -1));
+            Assert.Equal(2, game.GameStateData.Bugs.Select(x => x.Value.Count).Sum());
+        }
     }
 }

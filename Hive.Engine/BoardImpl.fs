@@ -80,7 +80,7 @@ module BoardImpl =
                 Board.placeBug bug coords board
             | Move move -> 
                 let (bug, tmpBoard) = Board.pickBug move.Head board
-                Board.placeBug bug (List.last move) board
+                Board.placeBug bug (List.last move) tmpBoard
 
 
 
