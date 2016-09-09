@@ -61,10 +61,15 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Hive.IpcClient">
+      <HintPath>Assets\Hive.IpcClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Hive.Common">
+      <HintPath>Assets\Hive.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Hex.cs" />
-    <Compile Include="Assets\Scripts\DarkQueenBee.cs" />
     <Compile Include="Assets\Scripts\Map.cs" />
     <Compile Include="Assets\Scripts\MouseManager.cs" />
     <Compile Include="Assets\Scripts\MoveCamera.cs" />

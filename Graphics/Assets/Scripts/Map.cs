@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Hive.IpcClient;
+using System;
 
 public class Map : MonoBehaviour {
 
@@ -9,18 +11,21 @@ public class Map : MonoBehaviour {
 	// This is NOT representative of the amount of 
 	// world space that we're going to take up.
 	// (i.e. our tiles might be more or less than 1 Unity World Unit)
-	int width = 15;
-	int height = 15;
+	int width = 21;
+	int height = 21;
 
 	float xOffset = 0.882f;
 	float zOffset = 0.764f;
 
 	// Use this for initialization
 	void Start () {
-	
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
 
+        int b = 5;
+
+		for (int x = 0, xbis = -10; x < width; x++, xbis++) {
+         
+			for (int y = 0, z = 10; y < height; y++, z--) {
+                
                 float xPos = x * xOffset;
 
 				// Are we on an odd row?
@@ -36,20 +41,30 @@ public class Map : MonoBehaviour {
 				// Make sure the hex is aware of its place on the map
 				hex_go.GetComponent<Hex>().x = x;
 				hex_go.GetComponent<Hex>().y = y;
+                hex_go.GetComponent<Hex>().c = z;
+                hex_go.GetComponent<Hex>().a = xbis - (z - (z & 1)) / 2;
+                hex_go.GetComponent<Hex>().b = -(hex_go.GetComponent<Hex>().a) - (hex_go.GetComponent<Hex>().c);
 
-				// For a cleaner hierachy, parent this hex to the map
-				hex_go.transform.SetParent(this.transform);
+
+                // if (y % 2 == 0)
+                //{
+                //   b++;
+                //}
+
+                // For a cleaner hierachy, parent this hex to the map
+                hex_go.transform.SetParent(this.transform);
 
 				// TODO: Quill needs to explain different optimization later...
 				hex_go.isStatic = true;
 
 			}
+           
 		}
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
 }

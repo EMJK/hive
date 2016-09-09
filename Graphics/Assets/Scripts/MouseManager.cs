@@ -109,7 +109,6 @@ public class MouseManager : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)) {
 			// We have click on the unit
 			selectedUnit = ourHitObject.GetComponent<Unit>();
-            Debug.Log("Clicked On: " + ourHitObject.name);
         }
 
     }
