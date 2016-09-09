@@ -7,6 +7,8 @@ public class Hex : MonoBehaviour {
 	public int x;
 	public int y;
 
+    public int a, b, c;
+  
 	public Hex[] GetNeighbours() {
 
 		// So if we are at x, y -- the neighbour to our left is at x-1, y

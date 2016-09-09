@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using Hive;
+using Hive.Common;
 
 public class Unit : MonoBehaviour {
 
@@ -8,8 +8,8 @@ public class Unit : MonoBehaviour {
 
 	float speed = 3;
 
-    //public BugType bug;
-    //public PlayerColor color;
+    public BugType bug;
+    public PlayerColor color;
 
 	// Use this for initialization
 	void Start () {
@@ -19,31 +19,38 @@ public class Unit : MonoBehaviour {
         int position = name.IndexOf('_');
         string bugName = name.Substring(0, position);
 
-        if (name.Contains("light")) ;
-        //color = White;
-        else if (name.Contains("dark")) ;
-            //Color = Black;
+        if (name.Contains("light"))
+            color = PlayerColor.White;
+        else if (name.Contains("dark"))
+            color = PlayerColor.Black;
 
         switch (bugName)
         {
             case "QueenBee":
+                bug = BugType.QueenBee;
                 break;
             case "Grasshopper":
+                bug = BugType.Grasshopper;
                 break;
             case "Ant":
+                bug = BugType.SoldierAnt;
                 break;
             case "Spider":
+                bug = BugType.Spider;
                 break;
             case "Beetle":
+                bug = BugType.Beetle;
                 break;
             case "Ladybird":
+                bug = BugType.Ladybug;
                 break;
             case "Millipede":
+                bug = BugType.PillBug;
                 break;
             case "Mosquito":
+                bug = BugType.Mosquito;
                 break;
-
-         }
+        }
     }
 	
 	// Update is called once per frame
