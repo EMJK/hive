@@ -14,15 +14,17 @@ namespace Hive.IpcClient
     {
         private Process _engineProcess;
         private NamedPipeClientStream _pipe;
-        private BinaryFormatter _formatter;
 
         public GameStateData GameState { get; private set; }
 
         public HiveClient()
         {
-            _formatter = new BinaryFormatter();
-            _formatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
-            StartProcess();
+            StartProcess(null);
+        }
+
+        public HiveClient(string debugPipeName)
+        {
+            StartProcess(debugPipeName);
         }
 
         public void MoveBug(PlayerColor color, GridCoords from, GridCoords to)
@@ -35,16 +37,19 @@ namespace Hive.IpcClient
             SendMessageAndReadResponse(new IpcRequest(nameof(PlaceNewBug), color, bug, coords));
         }
 
-        private void StartProcess()
+        private void StartProcess(string debugPipeName)
         {
-            var pipeId = CreatePipeId();
-            _engineProcess = new Process();
-            _engineProcess.StartInfo.FileName = "Hive.IpcServer.exe";
-            _engineProcess.StartInfo.CreateNoWindow = true;
-            _engineProcess.StartInfo.UseShellExecute = false;
-            _engineProcess.StartInfo.RedirectStandardOutput = true;
-            _engineProcess.StartInfo.Arguments = pipeId;
-            _engineProcess.Start();
+            var pipeId = debugPipeName ?? CreatePipeId();
+            if (debugPipeName == null)
+            {
+                _engineProcess = new Process();
+                _engineProcess.StartInfo.FileName = "Hive.IpcServer.exe";
+                _engineProcess.StartInfo.CreateNoWindow = true;
+                _engineProcess.StartInfo.UseShellExecute = false;
+                _engineProcess.StartInfo.RedirectStandardOutput = true;
+                _engineProcess.StartInfo.Arguments = pipeId;
+                _engineProcess.Start();
+            }
             OpenPipe(pipeId);
         }
 
@@ -57,21 +62,12 @@ namespace Hive.IpcClient
 
         private string CreatePipeId()
         {
-#if DEBUG
-            return "DEBUG_PIPE_NAME";
-#else
             return "HiveIpcPipe_" + Guid.NewGuid().ToString("N");
-#endif
         }
 
         private void Write(IpcRequest obj)
         {
-            byte[] data;
-            using (var ms = new MemoryStream())
-            {
-                _formatter.Serialize(ms, obj);
-                data = ms.ToArray();
-            }
+            var data = Json.Serialize(obj);
             var header = new byte[4];
             Utils.WriteUInt32(header, data.Length, 0);
             _pipe.Write(header, 0, header.Length);
@@ -93,11 +89,8 @@ namespace Hive.IpcClient
             {
                 throw new Exception("Protocol error");
             }
-            using (var ms = new MemoryStream(body))
-            {
-                var obj = (IpcResponse)_formatter.Deserialize(ms);
-                return obj;
-            }
+            var obj = Json.Deserialize<IpcResponse>(body);
+            return obj;
         }
 
         private void SendMessageAndReadResponse(IpcRequest message)

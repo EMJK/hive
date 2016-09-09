@@ -14,50 +14,30 @@ using Julas.Utils;
 
 namespace Hive.IpcServer
 {
-    class HiveServer
+    public class HiveServer
     {
         private readonly NamedPipeServerStream _pipe;
         private readonly Game _game = new Game();
-        private BinaryFormatter _formatter;
 
         public HiveServer(string pipeName)
         {
-            _formatter = new BinaryFormatter();
-            _formatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
             _pipe = new NamedPipeServerStream(pipeName);
         }
 
         public void Run()
         {
             _pipe.WaitForConnection();
-            try
-            {
-                var initialResponse = new IpcResponse();
-                initialResponse.GameState = _game.GameStateData;
-                Write(initialResponse);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var initialResponse = new IpcResponse();
+            initialResponse.GameState = _game.GameStateData;
+            Write(initialResponse);
 
             while (_pipe.IsConnected)
             {
-                try
-                {
-                    var request = Read();
-                    ProcessRequest(request);
-                    var response = new IpcResponse();
-                    response.GameState = _game.GameStateData;
-                    Write(response);
-                }
-                catch (Exception ex)
-                {
-                    var response = new IpcResponse();
-                    response.Error = true;
-                    response.ErrorDetails = ex.ToString();
-                    Write(response);
-                }
+                var request = Read();
+                ProcessRequest(request);
+                var response = new IpcResponse();
+                response.GameState = _game.GameStateData;
+                Write(response);
             }
         }
 
@@ -69,7 +49,7 @@ namespace Hive.IpcServer
                 {
                     if (request.Args.Length == 3)
                     {
-                        var arg1 = (PlayerColor)request.Args[0];
+                        var arg1 = (PlayerColor)request.Args[0].ConvertTo<PlayerColor>();
                         var arg2 = (GridCoords) request.Args[1];
                         var arg3 = (GridCoords) request.Args[2];
                         _game.MoveBug(arg1, arg2, arg3);
@@ -80,8 +60,8 @@ namespace Hive.IpcServer
                 {
                     if (request.Args.Length == 3)
                     {
-                        var arg1 = (PlayerColor)request.Args[0];
-                        var arg2 = (BugType)request.Args[1];
+                        var arg1 = (PlayerColor)request.Args[0].ConvertTo<PlayerColor>();
+                        var arg2 = (BugType)request.Args[1].ConvertTo<BugType>();
                         var arg3 = (GridCoords)request.Args[2];
                         _game.PlaceNewBug(arg1, arg2, arg3);
                         return;
@@ -93,7 +73,6 @@ namespace Hive.IpcServer
             {
                 throw new Exception("Invalid request", ex);
             }
-            
         }
 
         private IpcRequest Read()
@@ -109,21 +88,13 @@ namespace Hive.IpcServer
             {
                 throw new Exception("Protocol error");
             }
-            using (var ms = new MemoryStream(body))
-            {
-                var obj = (IpcRequest)_formatter.Deserialize(ms);
-                return obj;
-            }
+            var obj = Json.Deserialize<IpcRequest>(body);
+            return obj;
         }
 
         private void Write(IpcResponse obj)
         {
-            byte[] data;
-            using (var ms = new MemoryStream())
-            {
-                _formatter.Serialize(ms, obj);
-                data = ms.ToArray();
-            }
+            var data = Json.Serialize(obj);
             var header = new byte[4];
             Utils.WriteUInt32(header, data.Length, 0);
             _pipe.Write(header, 0, header.Length);

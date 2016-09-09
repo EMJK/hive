@@ -2,7 +2,6 @@
 
 namespace Hive.Common
 {
-    [Serializable]
     public class GridCoords: IEquatable<GridCoords>
     {
         public int X { get; set; }

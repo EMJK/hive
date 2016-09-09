@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.IpcClient", "Hive.IpcC
 		{3B3BA155-94B2-4EDF-B2C9-C605C856E5B7} = {3B3BA155-94B2-4EDF-B2C9-C605C856E5B7}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Graphics", "Graphics", "{9B84D51A-E062-410B-9715-7AFDE5FA34CA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Graphics", "Graphics", "{3D136A4D-7E3C-4362-82E0-E2324E8F5F03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

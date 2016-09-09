@@ -17,6 +17,14 @@ module BoardImpl =
             |> Seq.filter (fun (k,v) -> List.length v > 0)
             |> Seq.length
 
+
+        static member totalBugCount board =
+            board.Map
+            |> Map.toSeq
+            |> Seq.map snd
+            |> Seq.concat
+            |> Seq.length
+
         static member stackAt coords board =
             match Map.tryFind coords board.Map with
             | None -> None

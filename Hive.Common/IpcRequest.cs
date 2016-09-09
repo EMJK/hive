@@ -4,7 +4,6 @@ using System.Text;
 
 namespace Hive.Common
 {
-    [Serializable]
     public class IpcRequest
     {
         public string MethodName { get; set; }
@@ -20,5 +19,19 @@ namespace Hive.Common
             MethodName = methodName;
             Args = args;
         }
+    }
+
+    public class IpcMoveBugRequest
+    {
+        private PlayerColor Color { get; set; }
+        GridCoords From { get; set; }
+        GridCoords To { get; set; }
+    }
+
+    public class IpcPlaceNewBugRequest
+    {
+        PlayerColor Color { get; set; }
+        BugType Bug { get; set; }
+        GridCoords Coords { get; set; }
     }
 }

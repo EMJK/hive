@@ -49,3 +49,4 @@ module PlacementTest =
                 makeCoords 1 0 -1
             ] |> orderCoords
         Assert.True(listEquals options desiredOptions)
+

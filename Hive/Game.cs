@@ -51,10 +51,10 @@ namespace Hive.EngineWrapper
         {
             if (!GameStateData.Bugs.Any()) return "Board is empty";
             var ret = GameStateData.Bugs
-                .OrderBy(x => x.Key.X)
-                .ThenBy(x => x.Key.Y)
-                .ThenBy(x => x.Key.Z)
-                .Select(x => new { Coords = x.Key, Stack = x.Value })
+                .OrderBy(x => x.Item1.X)
+                .ThenBy(x => x.Item1.Y)
+                .ThenBy(x => x.Item1.Z)
+                .Select(x => new { Coords = x.Item1, Stack = x.Item2 })
                 .Select(x => $"[{x.Coords.ToString()}] {String.Join(">", x.Stack.Select(b => b.ToString()))}");
             return String.Join(Environment.NewLine, ret);
         }
@@ -66,18 +66,31 @@ namespace Hive.EngineWrapper
             ReadBugs();
             ReadWinner();
             ReadMoves();
+            ReadNewBugPlacement();
+        }
+
+        private void ReadNewBugPlacement()
+        {
+            var newBlack = Engine.Engine.getNewBugPlacementOptions(_state.Board, Types.PlayerColor.Black);
+            var newWhite = Engine.Engine.getNewBugPlacementOptions(_state.Board, Types.PlayerColor.White);
+
+            GameStateData.BlackNewBugPlacementOptions = newBlack.Select(MapFsharpCoords).ToList();
+            GameStateData.WhiteNewBugPlacementOptions = newWhite.Select(MapFsharpCoords).ToList();
         }
 
         private void ReadMoves()
         {
             var whiteMoves = Engine.Engine.getPossibleMovesForPlayer(_state.Board, Types.PlayerColor.White);
-            GameStateData.WhitePlayerMoves = whiteMoves.ToDictionary(
-                x => MapFsharpCoords(x.Item1),
-                x => x.Item2.Select(t => t.Select(MapFsharpCoords).ToList()).ToList());
+            GameStateData.WhitePlayerMoves = whiteMoves
+                .Select(x => x.Item2.Select(t => t.Select(MapFsharpCoords).ToList()))
+                .SelectMany(x => x)
+                .ToList();
+                
             var blackMoves = Engine.Engine.getPossibleMovesForPlayer(_state.Board, Types.PlayerColor.Black);
-            GameStateData.BlackPlayerMoves = blackMoves.ToDictionary(
-                x => MapFsharpCoords(x.Item1),
-                x => x.Item2.Select(t => t.Select(MapFsharpCoords).ToList()).ToList());
+            GameStateData.BlackPlayerMoves = blackMoves
+                .Select(x => x.Item2.Select(t => t.Select(MapFsharpCoords).ToList()))
+                .SelectMany(x => x)
+                .ToList();
         }
 
         private void ReadWinner()
@@ -101,10 +114,11 @@ namespace Hive.EngineWrapper
         private void ReadBugs()
         {
             var board = _state.Board.Map;
-            GameStateData.Bugs = board.ToDictionary(
-                kvp => MapFsharpCoords(kvp.Key),
-                kvp => kvp.Value.Select(MapFsharpBug).ToList()
-            );
+            GameStateData.Bugs = board
+                .Select(kvp => Pair.Create(
+                    MapFsharpCoords(kvp.Key),
+                    kvp.Value.Select(MapFsharpBug).ToList()))
+                .ToList();
         }
 
         private PlayerColor MapFsharpColor(Types.PlayerColor color)
@@ -170,7 +184,9 @@ namespace Hive.EngineWrapper
 
         private FSharpList<Types.FieldCoords> FindMove(PlayerColor color, GridCoords from, GridCoords to)
         {
-            var moves = (color == PlayerColor.Black ? GameStateData.BlackPlayerMoves : color == PlayerColor.White ? GameStateData.WhitePlayerMoves : null)?.Select(x => x.Value)?.SelectMany(x => x);
+            var moves = color == PlayerColor.Black
+                ? GameStateData.BlackPlayerMoves
+                : color == PlayerColor.White ? GameStateData.WhitePlayerMoves : null;
             var move = moves.FirstOrDefault(x => x.First().Equals(from) && x.Last().Equals(to));
             if (move == null) return null;
             return ListModule.OfSeq(move.Select(MapCsharpCoords));

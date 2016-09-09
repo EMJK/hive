@@ -76,7 +76,7 @@ module Rules =
         then true
         elif Board.isPopulated coords board
         then false
-        elif board.Map.Count = 1
+        elif (Board.totalBugCount board) = 1
         then 
             board.Map
             |> Map.toSeq
