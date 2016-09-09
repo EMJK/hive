@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Hive.Common;
+using Hive.Common.Communication;
 using Hive.EngineWrapper;
 using Julas.Utils;
 
@@ -16,22 +19,28 @@ namespace Hive.IpcServer
 {
     public class HiveServer
     {
-        private readonly NamedPipeServerStream _pipe;
         private readonly Game _game = new Game();
+        private Client _client;
 
-        public HiveServer(string pipeName)
+        public void Run(int port)
         {
-            _pipe = new NamedPipeServerStream(pipeName);
-        }
-
-        public void Run()
-        {
-            _pipe.WaitForConnection();
+            while (true)
+            {
+                try
+                {
+                    _client = new Client(port);
+                    break;
+                }
+                catch
+                {
+                    Thread.Sleep(100);
+                }
+            }
             var initialResponse = new IpcResponse();
             initialResponse.GameState = _game.GameStateData;
             Write(initialResponse);
 
-            while (_pipe.IsConnected)
+            while (true)
             {
                 var request = Read();
                 ProcessRequest(request);
@@ -77,30 +86,13 @@ namespace Hive.IpcServer
 
         private IpcRequest Read()
         {
-            var header = new byte[4];
-            if (_pipe.Read(header, 0, header.Length) != header.Length)
-            {
-                throw new Exception("Protocol error");
-            }
-            var bodyLength = Utils.ReadUInt32(header, 0);
-            var body = new byte[bodyLength];
-            if (_pipe.Read(body, 0, body.Length) != body.Length)
-            {
-                throw new Exception("Protocol error");
-            }
-            var obj = Json.Deserialize<IpcRequest>(body);
+            var obj = StdInOut.ReadLine<IpcRequest>(_client.Reader);
             return obj;
         }
 
         private void Write(IpcResponse obj)
         {
-            var data = Json.Serialize(obj);
-            var header = new byte[4];
-            Utils.WriteUInt32(header, data.Length, 0);
-            _pipe.Write(header, 0, header.Length);
-            _pipe.Write(data, 0, data.Length);
-            _pipe.Flush();
-            _pipe.WaitForPipeDrain();
+            StdInOut.WriteLine(_client.Writer, obj);
         }
     }
 }

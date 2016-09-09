@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bug.cs" />
+    <Compile Include="Communication\Client.cs" />
     <Compile Include="GameStateData.cs" />
     <Compile Include="GridCoords.cs" />
     <Compile Include="IGameActions.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Communication\StdInOut.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

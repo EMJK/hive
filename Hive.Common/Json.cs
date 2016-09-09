@@ -16,21 +16,20 @@ namespace Hive.Common
         static Json()
         {
             Settings = new JsonSerializerSettings();
-            Settings.Formatting = Formatting.Indented;
+            Settings.Formatting = Formatting.None;
             Settings.PreserveReferencesHandling = PreserveReferencesHandling.None;
             Settings.TypeNameHandling = TypeNameHandling.All;
             Settings.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
         }
 
-        public static byte[] Serialize(object obj)
+        public static string Serialize(object obj)
         {
             string json = JsonConvert.SerializeObject(obj, Settings);
-            return Encoding.UTF8.GetBytes(json);
+            return json;
         }
 
-        public static T Deserialize<T>(byte[] data)
+        public static T Deserialize<T>(string json)
         {
-            string json = Encoding.UTF8.GetString(data);
             return JsonConvert.DeserializeObject<T>(json, Settings);
         }
     }
