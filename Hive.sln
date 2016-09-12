@@ -13,7 +13,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Hive.Engine.Tests", "Hive.E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_test", "_test", "{2A09AE2B-31E3-4566-A4AE-D895A601AA52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.IpcServer", "Hive.IpcBridge\Hive.IpcServer.csproj", "{3B3BA155-94B2-4EDF-B2C9-C605C856E5B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.IpcServer", "Hive.IpcServer\Hive.IpcServer.csproj", "{3B3BA155-94B2-4EDF-B2C9-C605C856E5B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.Common", "Hive.Common\Hive.Common.csproj", "{E8109063-C42B-4877-BE1B-EA6EE3C53616}"
 EndProject

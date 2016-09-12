@@ -77,7 +77,7 @@
       <Project>{E8109063-C42B-4877-BE1B-EA6EE3C53616}</Project>
       <Name>Hive.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hive.IpcBridge\Hive.IpcServer.csproj">
+    <ProjectReference Include="..\Hive.IpcServer\Hive.IpcServer.csproj">
       <Project>{3b3ba155-94b2-4edf-b2c9-c605c856e5b7}</Project>
       <Name>Hive.IpcServer</Name>
     </ProjectReference>
