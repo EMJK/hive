@@ -78,7 +78,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy /Y $(TargetPath) $(SolutionDir)Graphics</PostBuildEvent>
+    <PostBuildEvent>copy /Y $(TargetPath) $(TargetDir)..\..\Graphics</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

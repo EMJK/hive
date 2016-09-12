@@ -60,10 +60,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y $(TargetPath) $(SolutionDir)Graphics\Assets\Engine
-copy /Y $(TargetPath) $(SolutionDir)Graphics
-copy /Y $(TargetDir)Newtonsoft.Json.dll $(SolutionDir)Graphics\Assets\Engine
-copy /Y $(TargetDir)Newtonsoft.Json.dll $(SolutionDir)Graphics</PostBuildEvent>
+    <PostBuildEvent>copy /Y $(TargetPath) $(TargetDir)..\..\Graphics\Assets\Engine
+copy /Y $(TargetPath) $(TargetDir)..\..\Graphics
+copy /Y $(TargetDir)Newtonsoft.Json.dll $(TargetDir)..\..\Graphics\Assets\Engine
+copy /Y $(TargetDir)Newtonsoft.Json.dll $(TargetDir)..\..\Graphics</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
