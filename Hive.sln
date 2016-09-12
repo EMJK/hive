@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.EngineWrapper", "Hive\Hive.EngineWrapper.csproj", "{2A0389B4-38B9-4816-BB49-04E54C65E050}"
 EndProject
@@ -20,13 +20,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hive.IpcClient", "Hive.IpcClient\Hive.IpcClient.csproj", "{CC069F5D-FE27-496D-8694-3FC122D7631D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3B3BA155-94B2-4EDF-B2C9-C605C856E5B7} = {3B3BA155-94B2-4EDF-B2C9-C605C856E5B7}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Graphics", "Graphics", "{3D136A4D-7E3C-4362-82E0-E2324E8F5F03}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics.CSharp", "Graphics\Graphics.CSharp.csproj", "{599D324C-E2F1-1F32-10DF-906945CE82CC}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CC069F5D-FE27-496D-8694-3FC122D7631D} = {CC069F5D-FE27-496D-8694-3FC122D7631D}
 	EndProjectSection
 EndProject
 Global
@@ -63,10 +56,6 @@ Global
 		{CC069F5D-FE27-496D-8694-3FC122D7631D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC069F5D-FE27-496D-8694-3FC122D7631D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC069F5D-FE27-496D-8694-3FC122D7631D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{599D324C-E2F1-1F32-10DF-906945CE82CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{599D324C-E2F1-1F32-10DF-906945CE82CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{599D324C-E2F1-1F32-10DF-906945CE82CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{599D324C-E2F1-1F32-10DF-906945CE82CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +63,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4DCD9BCD-45EE-4135-9181-6BE149BF6FF0} = {2A09AE2B-31E3-4566-A4AE-D895A601AA52}
 		{794ADB9C-7372-4079-8026-8A026AC736EB} = {2A09AE2B-31E3-4566-A4AE-D895A601AA52}
-		{599D324C-E2F1-1F32-10DF-906945CE82CC} = {9B84D51A-E062-410B-9715-7AFDE5FA34CA}
 	EndGlobalSection
 EndGlobal
