@@ -36,5 +36,5 @@ sysinfo.txt
 *.unitypackage
 
 # Excluded
-!Assets/UnityVS/Editor
-!Library/LibraryFormatVersion.txt
+!/Assets/UnityVS/Editor
+!/Library/LibraryFormatVersion.txt
