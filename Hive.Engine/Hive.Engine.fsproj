@@ -78,7 +78,10 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy /Y $(TargetPath) $(TargetDir)..\..\Graphics</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(SolutionDir)\Graphics" mkdir $(SolutionDir)\Graphics
+if not exist "$(SolutionDir)\Graphics\Assets" mkdir $(SolutionDir)\Graphics\Assets
+
+copy /Y $(TargetPath) $(SolutionDir)\Graphics\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
