@@ -38,6 +38,7 @@ namespace Hive.IpcClient
         {
             _engineProcess = new Process();
             _engineProcess.StartInfo.FileName = "Hive.IpcServer.exe";
+            _engineProcess.StartInfo.CreateNoWindow = true;
             _engineProcess.StartInfo.UseShellExecute = false;
             _engineProcess.StartInfo.RedirectStandardOutput = true;
             _engineProcess.StartInfo.RedirectStandardInput = true;
