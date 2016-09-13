@@ -1,25 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Hive.IpcClient;
 using System;
+using Hive.IpcClient;
 
-public class Map : MonoBehaviour {
+public class Map : MonoBehaviour
+{
 
-	public GameObject hexPrefab;
+    public GameObject hexPrefab;
 
-	// Size of the map in terms of number of hex tiles
-	// This is NOT representative of the amount of 
-	// world space that we're going to take up.
-	// (i.e. our tiles might be more or less than 1 Unity World Unit)
-	int width = 21;
-	int height = 21;
+    // Size of the map in terms of number of hex tiles
+    // This is NOT representative of the amount of 
+    // world space that we're going to take up.
+    // (i.e. our tiles might be more or less than 1 Unity World Unit)
+    int width = 21;
+    int height = 21;
 
-	float xOffset = 0.882f;
-	float zOffset = 0.764f;
+    float xOffset = 0.882f;
+    float zOffset = 0.764f;
 
-	// Use this for initialization
-	void Start () {
-
+    // Use this for initialization
+    void Start()
+    {
         int b = 5;
 
 		for (int x = 0, xbis = -10; x < width; x++, xbis++) {
