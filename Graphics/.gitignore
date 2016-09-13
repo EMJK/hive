@@ -34,7 +34,3 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-
-# Excluded
-!/Assets/UnityVS/Editor
-!/Library/LibraryFormatVersion.txt
