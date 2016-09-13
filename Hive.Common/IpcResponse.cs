@@ -1,3 +1,5 @@
+using System;
+
 namespace Hive.Common
 {
     public class IpcResponse

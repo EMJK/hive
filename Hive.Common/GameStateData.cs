@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,8 +16,10 @@ namespace Hive.Common
 
         public List<GridCoords> GetPossibleTargetsForBug(PlayerColor currentPlayer, GridCoords coords)
         {
-            if ((coords == null) || (currentPlayer == PlayerColor.Empty))
+            if (coords == null || currentPlayer == PlayerColor.Empty)
+            {
                 return new List<GridCoords>();
+            }
             return WhitePlayerMoves
                 .Where(x => x.FirstOrDefault()?.Equals(coords) == true)
                 .Select(x => x.LastOrDefault())
@@ -42,12 +45,14 @@ namespace Hive.Common
 
         public List<GridCoords> GetMoveSequenceForBug(PlayerColor currentPlayer, GridCoords from, GridCoords to)
         {
-            if ((currentPlayer == PlayerColor.Empty) || (from == null) || (to == null))
+            if (currentPlayer == PlayerColor.Empty || from == null || to == null)
+            {
                 return null;
+            }
             return GetMovesForPlayer(currentPlayer)
-                .FirstOrDefault(x =>
-                    (x.FirstOrDefault()?.Equals(from) == true) &&
-                    (x.LastOrDefault()?.Equals(to) == true));
+                .FirstOrDefault(x => 
+                    x.FirstOrDefault()?.Equals(from) == true && 
+                    x.LastOrDefault()?.Equals(to) == true);
         }
 
         private List<List<GridCoords>> GetMovesForPlayer(PlayerColor color)

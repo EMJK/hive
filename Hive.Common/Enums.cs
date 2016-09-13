@@ -1,4 +1,6 @@
-﻿namespace Hive.Common
+﻿using System;
+
+namespace Hive.Common
 {
     public enum PlayerColor
     {
@@ -6,7 +8,7 @@
         Black,
         White
     }
-
+    
     public enum Winner
     {
         None,
@@ -14,7 +16,7 @@
         White,
         Draw
     }
-
+    
     public enum BugType
     {
         Beetle,

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
 
@@ -7,11 +6,10 @@ public class MouseManager : MonoBehaviour {
 
 	Unit selectedUnit;
 
-    // Use this for initialization
-    void Start () 
-    {
-
-    }
+	// Use this for initialization
+	void Start () {
+	
+	}
 	
 	// Update is called once per frame
 	void Update () {
