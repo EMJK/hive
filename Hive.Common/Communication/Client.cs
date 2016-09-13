@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 
 namespace Hive.Common.Communication
 {
     public class Client
     {
-        TcpClient _client;
-        public TextReader Reader { get; private set; }
-        public TextWriter Writer { get; private set; }
+        private readonly TcpClient _client;
 
         public Client(int port)
         {
@@ -22,24 +16,27 @@ namespace Hive.Common.Communication
             Writer = new StreamWriter(stream);
             Reader = new StreamReader(stream);
         }
+
+        public TextReader Reader { get; private set; }
+        public TextWriter Writer { get; private set; }
     }
 
     public class Server
     {
-        private TcpListener _listener;
         private TcpClient _client;
-
-        public int LocalPort { get; }
-
-        public TextReader Reader { get; private set; }
-        public TextWriter Writer { get; private set; }
+        private readonly TcpListener _listener;
 
         public Server()
         {
             _listener = new TcpListener(IPAddress.Loopback, 0);
             _listener.Start();
-            LocalPort = ((IPEndPoint)_listener.LocalEndpoint).Port;
+            LocalPort = ((IPEndPoint) _listener.LocalEndpoint).Port;
         }
+
+        public int LocalPort { get; }
+
+        public TextReader Reader { get; private set; }
+        public TextWriter Writer { get; private set; }
 
         public void AcceptConnection()
         {

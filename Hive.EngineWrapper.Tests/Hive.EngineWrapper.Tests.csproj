@@ -8,8 +8,8 @@
     <ProjectGuid>{4DCD9BCD-45EE-4135-9181-6BE149BF6FF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hive.Tests</RootNamespace>
-    <AssemblyName>Hive.Tests</AssemblyName>
+    <RootNamespace>Hive.EngineWrapper.Tests</RootNamespace>
+    <AssemblyName>Hive.EngineWrapper.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -77,6 +77,10 @@
       <Project>{E8109063-C42B-4877-BE1B-EA6EE3C53616}</Project>
       <Name>Hive.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hive.EngineWrapper\Hive.EngineWrapper.csproj">
+      <Project>{2A0389B4-38B9-4816-BB49-04E54C65E050}</Project>
+      <Name>Hive.EngineWrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hive.IpcServer\Hive.IpcServer.csproj">
       <Project>{3b3ba155-94b2-4edf-b2c9-c605c856e5b7}</Project>
       <Name>Hive.IpcServer</Name>
@@ -84,10 +88,6 @@
     <ProjectReference Include="..\Hive.IpcClient\Hive.IpcClient.csproj">
       <Project>{cc069f5d-fe27-496d-8694-3fc122d7631d}</Project>
       <Name>Hive.IpcClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Hive\Hive.EngineWrapper.csproj">
-      <Project>{2a0389b4-38b9-4816-bb49-04e54c65e050}</Project>
-      <Name>Hive.EngineWrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

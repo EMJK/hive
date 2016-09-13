@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
+﻿using System.Runtime.Serialization.Formatters;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Hive.Common
 {
@@ -24,7 +18,7 @@ namespace Hive.Common
 
         public static string Serialize(object obj)
         {
-            string json = JsonConvert.SerializeObject(obj, Settings);
+            var json = JsonConvert.SerializeObject(obj, Settings);
             return json;
         }
 

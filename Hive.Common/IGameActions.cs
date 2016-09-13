@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Hive.Common
+﻿namespace Hive.Common
 {
     public interface IGameActions
     {

@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Hive.Common;
+﻿using Hive.Common;
 using Hive.IpcClient;
-using Hive.IpcServer;
 using Xunit;
 
-namespace Hive.Tests
+namespace Hive.EngineWrapper.Tests
 {
     public class IpcTests
     {

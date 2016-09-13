@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using Hive.Common;
-using System.IO.Pipes;
-using System.Runtime.Serialization.Formatters;
-using System.Runtime.Serialization.Formatters.Binary;
 using Hive.Common.Communication;
 
 namespace Hive.IpcClient
@@ -14,14 +8,20 @@ namespace Hive.IpcClient
     public class HiveClient : IGameActions, IDisposable
     {
         private Process _engineProcess;
-        private Server _server;
-
-        public GameStateData GameState { get; private set; }
+        private readonly Server _server;
 
         public HiveClient()
         {
             _server = new Server();
             StartProcess();
+        }
+
+        public GameStateData GameState { get; private set; }
+
+        public void Dispose()
+        {
+            Try(_engineProcess.Kill);
+            Try(_engineProcess.Dispose);
         }
 
         public void MoveBug(PlayerColor color, GridCoords from, GridCoords to)
@@ -50,12 +50,12 @@ namespace Hive.IpcClient
 
         private void Write(IpcRequest obj)
         {
-            StdInOut.WriteLine(_server.Writer, obj);
+            StreamHelper.WriteLine(_server.Writer, obj);
         }
 
         private IpcResponse Read()
         {
-            var obj = StdInOut.ReadLine<IpcResponse>(_server.Reader);
+            var obj = StreamHelper.ReadLine<IpcResponse>(_server.Reader);
             return obj;
         }
 
@@ -78,8 +78,6 @@ namespace Hive.IpcClient
             }
         }
 
-        private delegate void Action();
-
         private void Try(Action action)
         {
             try
@@ -91,10 +89,6 @@ namespace Hive.IpcClient
             }
         }
 
-        public void Dispose()
-        {
-            Try(_engineProcess.Kill);
-            Try(_engineProcess.Dispose);
-        }
+        private delegate void Action();
     }
 }

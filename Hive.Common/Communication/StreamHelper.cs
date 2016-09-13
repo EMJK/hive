@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Hive.Common.Communication
 {
-    public class StdInOut
+    public class StreamHelper
     {
         public static void WriteLine(TextWriter stream, object obj)
         {
@@ -15,15 +15,13 @@ namespace Hive.Common.Communication
 
         public static T ReadLine<T>(TextReader stream)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             while (true)
             {
-                char ch = Convert.ToChar(stream.Read());
+                var ch = Convert.ToChar(stream.Read());
                 sb.Append(ch);
                 if (ch == '\n')
-                {
                     break;
-                }
             }
             var json = sb.ToString().Trim();
             var obj = Json.Deserialize<T>(json);

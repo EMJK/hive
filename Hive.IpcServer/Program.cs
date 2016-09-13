@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Hive.IpcServer
 {
-    static class Program
+    internal static class Program
     {
         [STAThread]
         public static void Main(string[] args)
@@ -13,7 +13,7 @@ namespace Hive.IpcServer
             {
                 if (args.Length < 1) throw new ArgumentException("Invalid args");
                 TryMonitorParent(args);
-                new HiveServer().Run(Int32.Parse(args[0]));
+                new HiveServer().Run(int.Parse(args[0]));
             }
             catch
             {
@@ -25,14 +25,12 @@ namespace Hive.IpcServer
         {
             if (args.Length >= 2)
             {
-                var parent_proc = Process.GetProcessById(Int32.Parse(args[1]));
+                var parent_proc = Process.GetProcessById(int.Parse(args[1]));
                 var this_proc = Process.GetCurrentProcess();
                 Task.Run(() =>
                 {
                     while (!parent_proc.HasExited)
-                    {
                         Task.Delay(100);
-                    }
                     this_proc.Kill();
                 });
             }
