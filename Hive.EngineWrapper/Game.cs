@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Hive.Common;
 using Hive.Engine;
@@ -12,10 +11,6 @@ namespace Hive.EngineWrapper
     {
         private Types.GameState _state;
 
-        public string StringRepresentation => GetStringRepresentation();
-
-        public GameStateData GameStateData { get; private set; }
-
         public Game() : this(Engine.Engine.newGame())
         {
         }
@@ -25,15 +20,19 @@ namespace Hive.EngineWrapper
             _state = state;
             ReadState();
         }
-        
+
+        public string StringRepresentation => GetStringRepresentation();
+
+        public GameStateData GameStateData { get; private set; }
+
         public void PlaceNewBug(PlayerColor color, BugType bug, GridCoords coords)
         {
             _state = Engine.Engine.applyAction(
-                _state, 
+                _state,
                 Types.Action.NewNew(
                     new Types.NewBug(
-                        CreateBug(color, bug), 
-                        MapCsharpCoords(coords))), 
+                        CreateBug(color, bug),
+                        MapCsharpCoords(coords))),
                 MapCsharpColor(color));
             ReadState();
         }
@@ -54,15 +53,15 @@ namespace Hive.EngineWrapper
                 .OrderBy(x => x.Item1.X)
                 .ThenBy(x => x.Item1.Y)
                 .ThenBy(x => x.Item1.Z)
-                .Select(x => new { Coords = x.Item1, Stack = x.Item2 })
-                .Select(x => $"[{x.Coords.ToString()}] {String.Join(">", x.Stack.Select(b => b.ToString()))}");
-            return String.Join(Environment.NewLine, ret);
+                .Select(x => new {Coords = x.Item1, Stack = x.Item2})
+                .Select(x => $"[{x.Coords.ToString()}] {string.Join(">", x.Stack.Select(b => b.ToString()))}");
+            return string.Join(Environment.NewLine, ret);
         }
 
         private void ReadState()
         {
             GameStateData = new GameStateData();
-            GameStateData.PreviousPlayer = MapFsharpColor(_state.Moves.LastOrDefault()?.Player);           
+            GameStateData.PreviousPlayer = MapFsharpColor(_state.Moves.LastOrDefault()?.Player);
             ReadBugs();
             ReadWinner();
             ReadMoves();
@@ -85,7 +84,7 @@ namespace Hive.EngineWrapper
                 .Select(x => x.Item2.Select(t => t.Select(MapFsharpCoords).ToList()))
                 .SelectMany(x => x)
                 .ToList();
-                
+
             var blackMoves = Engine.Engine.getPossibleMovesForPlayer(_state.Board, Types.PlayerColor.Black);
             GameStateData.BlackPlayerMoves = blackMoves
                 .Select(x => x.Item2.Select(t => t.Select(MapFsharpCoords).ToList()))
@@ -106,7 +105,7 @@ namespace Hive.EngineWrapper
             }
             else
             {
-                var color = ((Types.Winner.Player)winner.Value).Item;
+                var color = ((Types.Winner.Player) winner.Value).Item;
                 GameStateData.Winner = color.IsBlack ? Winner.Black : Winner.White;
             }
         }
@@ -170,15 +169,24 @@ namespace Hive.EngineWrapper
         {
             switch (bug)
             {
-                case BugType.Beetle: return new Types.Bug(Types.BugType.Beetle, MapCsharpColor(color));
-                case BugType.Grasshopper: return new Types.Bug(Types.BugType.Grasshopper, MapCsharpColor(color));
-                case BugType.Ladybug: return new Types.Bug(Types.BugType.Ladybug, MapCsharpColor(color));
-                case BugType.Mosquito: return new Types.Bug(Types.BugType.Mosquito, MapCsharpColor(color));
-                case BugType.PillBug: return new Types.Bug(Types.BugType.PillBug, MapCsharpColor(color));
-                case BugType.QueenBee: return new Types.Bug(Types.BugType.QueenBee, MapCsharpColor(color));
-                case BugType.SoldierAnt: return new Types.Bug(Types.BugType.SoldierAnt, MapCsharpColor(color));
-                case BugType.Spider: return new Types.Bug(Types.BugType.Spider, MapCsharpColor(color));
-                default: return null;
+                case BugType.Beetle:
+                    return new Types.Bug(Types.BugType.Beetle, MapCsharpColor(color));
+                case BugType.Grasshopper:
+                    return new Types.Bug(Types.BugType.Grasshopper, MapCsharpColor(color));
+                case BugType.Ladybug:
+                    return new Types.Bug(Types.BugType.Ladybug, MapCsharpColor(color));
+                case BugType.Mosquito:
+                    return new Types.Bug(Types.BugType.Mosquito, MapCsharpColor(color));
+                case BugType.PillBug:
+                    return new Types.Bug(Types.BugType.PillBug, MapCsharpColor(color));
+                case BugType.QueenBee:
+                    return new Types.Bug(Types.BugType.QueenBee, MapCsharpColor(color));
+                case BugType.SoldierAnt:
+                    return new Types.Bug(Types.BugType.SoldierAnt, MapCsharpColor(color));
+                case BugType.Spider:
+                    return new Types.Bug(Types.BugType.Spider, MapCsharpColor(color));
+                default:
+                    return null;
             }
         }
 

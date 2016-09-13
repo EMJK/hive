@@ -2,12 +2,8 @@
 
 namespace Hive.Common
 {
-    public class GridCoords: IEquatable<GridCoords>
+    public class GridCoords : IEquatable<GridCoords>
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Z { get; set; }
-
         public GridCoords(int x, int y, int z)
         {
             if (x + y + z != 0) throw new ArgumentException("The sum of x, y and z must be equal to 0");
@@ -16,16 +12,20 @@ namespace Hive.Common
             Z = z;
         }
 
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
+
         public bool Equals(GridCoords other)
         {
-            return X == other.X && Y == other.Y && Z == other.Z;
+            return (X == other.X) && (Y == other.Y) && (Z == other.Z);
         }
 
         public override bool Equals(object obj)
         {
             if (obj is GridCoords)
             {
-                var other = (GridCoords)obj;
+                var other = (GridCoords) obj;
                 return Equals(other);
             }
             return false;
