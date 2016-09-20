@@ -50,9 +50,9 @@ namespace Hive.EngineWrapper
         {
             if (!GameStateData.Bugs.Any()) return "Board is empty";
             var ret = GameStateData.Bugs
-                .OrderBy(x => x.Item1.X)
-                .ThenBy(x => x.Item1.Y)
-                .ThenBy(x => x.Item1.Z)
+                .OrderBy(x => x.Item1.CX)
+                .ThenBy(x => x.Item1.CY)
+                .ThenBy(x => x.Item1.CZ)
                 .Select(x => new {Coords = x.Item1, Stack = x.Item2})
                 .Select(x => $"[{x.Coords.ToString()}] {string.Join(">", x.Stack.Select(b => b.ToString()))}");
             return string.Join(Environment.NewLine, ret);
@@ -136,7 +136,7 @@ namespace Hive.EngineWrapper
 
         private Types.FieldCoords MapCsharpCoords(GridCoords coords)
         {
-            return new Types.FieldCoords(coords.X, coords.Y, coords.Z);
+            return new Types.FieldCoords(coords.CX, coords.CY, coords.CZ);
         }
 
         private GridCoords MapFsharpCoords(Types.FieldCoords coords)
