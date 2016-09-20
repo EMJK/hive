@@ -19,6 +19,7 @@ namespace Hive.Common
                 return new List<GridCoords>();
             return WhitePlayerMoves
                 .Where(x => x.FirstOrDefault()?.Equals(coords) == true)
+                .Where(IsMoveInsideBoard)
                 .Select(x => x.LastOrDefault())
                 .Where(x => x != null)
                 .ToList();
@@ -46,16 +47,21 @@ namespace Hive.Common
 
         private List<List<GridCoords>> GetMovesForPlayer(PlayerColor color)
         {
-            if (color == PlayerColor.Black) return BlackPlayerMoves;
-            if (color == PlayerColor.White) return WhitePlayerMoves;
+            if (color == PlayerColor.Black) return BlackPlayerMoves.Where(IsMoveInsideBoard).ToList();
+            if (color == PlayerColor.White) return WhitePlayerMoves.Where(IsMoveInsideBoard).ToList();
             return null;
         }
 
         private List<GridCoords> GetPlacementOptionsForPlayer(PlayerColor color)
         {
-            if (color == PlayerColor.White) return WhiteNewBugPlacementOptions;
-            if (color == PlayerColor.Black) return BlackNewBugPlacementOptions;
+            if (color == PlayerColor.White) return WhiteNewBugPlacementOptions.Where(x => x.IsInsideBoard()).ToList();
+            if (color == PlayerColor.Black) return BlackNewBugPlacementOptions.Where(x => x.IsInsideBoard()).ToList();
             return null;
+        }
+
+        private bool IsMoveInsideBoard(IEnumerable<GridCoords> move)
+        {
+            return move.All(x => x.IsInsideBoard());
         }
     }
 }
