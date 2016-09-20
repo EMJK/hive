@@ -8,8 +8,9 @@ public class MouseManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        Assets.Engine.Reset();
+        //Assets.Engine.
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -47,6 +48,7 @@ public class MouseManager : MonoBehaviour {
 			if(ourHitObject.GetComponent<Hex>() != null) {
 				// Ah! We are over a hex!
 				MouseOver_Hex(ourHitObject);
+
 			}
 			else if (ourHitObject.GetComponent<Unit>() != null) {
 				// We are over a unit!
@@ -95,11 +97,13 @@ public class MouseManager : MonoBehaviour {
             // If we have a unit selected, let's move it to this tile!
 
             if (selectedUnit != null) {
+                //Assets.Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, );
                 selectedUnit.destination = ourHitObject.transform.position;
-			}
+                Debug.Log("destination: " + selectedUnit.destination);
+            }
 
 
-		}
+        }
 
 	}
 
@@ -109,6 +113,14 @@ public class MouseManager : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)) {
 			// We have click on the unit
 			selectedUnit = ourHitObject.GetComponent<Unit>();
+            MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
+            Material newMat = Resources.Load("HalfTransparent", typeof(Material)) as Material;
+            Material[] mats = new Material[2];
+            //  Fill in the materials array...
+            mats[1] = mr.material;
+            mats[0] = newMat;
+            mr.materials = mats;
+           
         }
 
     }

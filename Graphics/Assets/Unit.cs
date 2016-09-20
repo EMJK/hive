@@ -5,6 +5,7 @@ using Hive.Common;
 public class Unit : MonoBehaviour {
 
 	public Vector3 destination;
+    //public  position;
 
 	float speed = 3;
 
@@ -16,8 +17,8 @@ public class Unit : MonoBehaviour {
 		destination = transform.position;
         //Debug.Log("name: " + name);
 
-        int position = name.IndexOf('_');
-        string bugName = name.Substring(0, position);
+        int positionof_ = name.IndexOf('_');
+        string bugName = name.Substring(0, positionof_);
 
         if (name.Contains("light"))
             color = PlayerColor.White;
@@ -65,7 +66,7 @@ public class Unit : MonoBehaviour {
         // to hexes.
 
         //if (destination != transform.position)
-        //Debug.Log("dest: " + destination + ", pos: " + transform.position);
+        Debug.Log("dest: " + destination + ", pos: " + transform.position);
 
         Vector3 dir = destination - transform.position;
 		Vector3 velocity = dir.normalized * speed * Time.deltaTime;
