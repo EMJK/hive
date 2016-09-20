@@ -24,12 +24,6 @@ namespace Hive.Common
                 .ToList();
         }
 
-        public List<GridCoords> GetPossibleNewBugPlacements(PlayerColor color)
-        {
-            if (color == PlayerColor.Empty) return new List<GridCoords>();
-            return GetPossibleNewBugPlacements(color);
-        }
-
         public bool CheckNewBugPlacement(PlayerColor bugColor, GridCoords coords)
         {
             return GetPlacementOptionsForPlayer(bugColor).Contains(coords);
