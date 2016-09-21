@@ -11,100 +11,87 @@ public class MouseManager : MonoBehaviour {
         Assets.Engine.Reset();
         //Assets.Engine.
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-		// Is the mouse over a Unity UI Element?
-		if(EventSystem.current.IsPointerOverGameObject()) {
-			// It is, so let's not do any of our own custom
-			// mouse stuff, because that would be weird.
+    // Update is called once per frame
+    void Update()
+    {
 
-			// NOTE!  We might want to ask the system WHAT KIND
-			// of object we're over -- so for things that aren't
-			// buttons, we might not actually want to bail out early.
+        // Is the mouse over a Unity UI Element?
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            // It is, so let's not do any of our own custom
+            // mouse stuff, because that would be weird.
 
-			return;
-		}
-		// could also check if game is paused?
-		// if main menu is open?
-	
-		//Debug.Log( "Mouse Position: " + Input.mousePosition );
+            // NOTE!  We might want to ask the system WHAT KIND
+            // of object we're over -- so for things that aren't
+            // buttons, we might not actually want to bail out early.
 
-		// This only works in orthographic, and only gives us the
-		// world position on the same plane as the camera's
-		// near clipping play.  (i.e. It's not helpful for our application.)
-		//Vector3 worldPoint = Camera.main.ScreenToWorldPoint( Input.mousePosition );
-		//Debug.Log( "World Point: " + worldPoint );
+            return;
+        }
 
-		Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-		RaycastHit hitInfo;
+        RaycastHit hitInfo;
 
-		if( Physics.Raycast(ray, out hitInfo) ) {
-			GameObject ourHitObject = hitInfo.collider.transform.parent.gameObject;
+        if (Physics.Raycast(ray, out hitInfo))
+        {
+            GameObject ourHitObject = hitInfo.collider.transform.parent.gameObject;
 
-			// So...what kind of object are we over?
-			if(ourHitObject.GetComponent<Hex>() != null) {
-				// Ah! We are over a hex!
-				MouseOver_Hex(ourHitObject);
+            // So...what kind of object are we over?
+            if (ourHitObject.GetComponent<Hex>() != null)
+            {
+                // Ah! We are over a hex!
+                MouseOver_Hex(ourHitObject);
 
-			}
-			else if (ourHitObject.GetComponent<Unit>() != null) {
-				// We are over a unit!
-				MouseOver_Unit(ourHitObject);
+            }
+            else if (ourHitObject.GetComponent<Unit>() != null)
+            {
+                // We are over a unit!
+                MouseOver_Unit(ourHitObject);
 
-			}
+            }
+            return;
 
+        }
 
-		}
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (selectedUnit != null)
+            {
+                //deselect
+                MeshRenderer mrold = selectedUnit.GetComponentInChildren<MeshRenderer>();
+                Material[] matsold = new Material[1];
+                //  Fill in the materials array...
+                matsold[0] = mrold.materials[1];
+                mrold.materials = matsold;
+                selectedUnit = null;
+            }
 
-		// If this were an FPS, what you'd do is probably something like this:
-		// (This fires a ray out from the center of the camera's view.)
-		//Ray fpsRay = new Ray( Camera.main.transform.position, Camera.main.transform.forward );
+        }
 
+    }
 
-	}
-
-	void MouseOver_Hex(GameObject ourHitObject) {
-		//Debug.Log("Raycast hit: " + ourHitObject.name );
-
-		// We know what we're mousing over. 
-		// Maybe we want to show a tooltip?
-
-		// Do we have a unit selected?  Because that might change
-		// what we do on click.
-
-		// We could also check to see if we're clicking on the thing.
+        void MouseOver_Hex(GameObject ourHitObject) {
 
 		if(Input.GetMouseButtonDown(0)) {
 
-            // We have clicked on a hex.  Do something about it!
-            // This might involve calling a bunch of other functions
-            // depending on what mode you happen to be in, in your game.
-
-            // We're just gonna colorize the hex, as an example.
             MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
-
-            //if (mr.material.color == Color.red)
-            //{
-            //    mr.material.color = Color.white;
-            //}
-            //else {
-            //    mr.material.color = Color.red;
-            //}
-
             // If we have a unit selected, let's move it to this tile!
 
             if (selectedUnit != null) {
                 //Assets.Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, );
                 selectedUnit.destination = ourHitObject.transform.position;
-                Debug.Log("destination: " + selectedUnit.destination);
+                selectedUnit.x = ourHitObject.GetComponent<Hex>().x;
+                selectedUnit.y = ourHitObject.GetComponent<Hex>().y;
+                //deselect
+                MeshRenderer mrold = selectedUnit.GetComponentInChildren<MeshRenderer>();
+                Material[] matsold = new Material[1];
+                //  Fill in the materials array...
+                matsold[0] = mrold.materials[1];
+                mrold.materials = matsold;
+                selectedUnit = null;
             }
-
-
         }
-
 	}
 
 	void MouseOver_Unit(GameObject ourHitObject) {
@@ -112,7 +99,17 @@ public class MouseManager : MonoBehaviour {
 
 		if(Input.GetMouseButtonDown(0)) {
 			// We have click on the unit
-			selectedUnit = ourHitObject.GetComponent<Unit>();
+            //deselect
+            if (selectedUnit != null)
+            {
+                MeshRenderer mrold = selectedUnit.GetComponentInChildren<MeshRenderer>();
+                Material[] matsold = new Material[1];
+                //  Fill in the materials array...
+                matsold[0] = mrold.materials[1];
+                mrold.materials = matsold;
+            }
+            //select
+            selectedUnit = ourHitObject.GetComponent<Unit>();
             MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
             Material newMat = Resources.Load("HalfTransparent", typeof(Material)) as Material;
             Material[] mats = new Material[2];

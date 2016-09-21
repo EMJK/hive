@@ -12,6 +12,9 @@ public class Unit : MonoBehaviour {
     public BugType bug;
     public PlayerColor color;
 
+    public int x = 999;
+    public int y = 999;
+
 	// Use this for initialization
 	void Start () {
 		destination = transform.position;
@@ -66,8 +69,6 @@ public class Unit : MonoBehaviour {
         // to hexes.
 
         //if (destination != transform.position)
-        Debug.Log("dest: " + destination + ", pos: " + transform.position);
-
         Vector3 dir = destination - transform.position;
 		Vector3 velocity = dir.normalized * speed * Time.deltaTime;
 
