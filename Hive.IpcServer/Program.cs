@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hive.IpcServer
@@ -25,14 +26,30 @@ namespace Hive.IpcServer
         {
             if (args.Length >= 2)
             {
-                var parent_proc = Process.GetProcessById(int.Parse(args[1]));
-                var this_proc = Process.GetCurrentProcess();
-                Task.Run(() =>
+                int parentPid = Int32.Parse(args[1]);
+                Thread t = new Thread(() =>
                 {
-                    while (!parent_proc.HasExited)
-                        Task.Delay(100);
-                    this_proc.Kill();
+                    while (true)
+                    {
+                        Thread.Sleep(200);
+                        try
+                        {
+                            var proc = Process.GetProcessById(parentPid);
+                            if (proc.HasExited)
+                            {
+                                Process.GetCurrentProcess().Kill();
+                                break;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            Process.GetCurrentProcess().Kill();
+                            break;
+                        }
+                    }
                 });
+                t.IsBackground = true;
+                t.Start();
             }
         }
     }

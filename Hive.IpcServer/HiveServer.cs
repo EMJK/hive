@@ -15,6 +15,7 @@ namespace Hive.IpcServer
         public void Run(int port)
         {
             while (true)
+            {
                 try
                 {
                     _client = new Client(port);
@@ -24,6 +25,7 @@ namespace Hive.IpcServer
                 {
                     Thread.Sleep(100);
                 }
+            }
             var initialResponse = new IpcResponse();
             initialResponse.GameState = _game.GameStateData;
             Write(initialResponse);

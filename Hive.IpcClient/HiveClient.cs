@@ -43,7 +43,7 @@ namespace Hive.IpcClient
             _engineProcess.StartInfo.RedirectStandardOutput = true;
             _engineProcess.StartInfo.RedirectStandardInput = true;
             _engineProcess.StartInfo.RedirectStandardError = true;
-            _engineProcess.StartInfo.Arguments = _server.LocalPort.ToString();
+            _engineProcess.StartInfo.Arguments = _server.LocalPort + " " + Process.GetCurrentProcess().Id;
             _engineProcess.Start();
             _server.AcceptConnection();
             ReadResponse();
