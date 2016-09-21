@@ -16,9 +16,14 @@ public class Unit : MonoBehaviour {
     public int y = 999;
 
     public bool isOutOfBoard = true;
+    public GridCoords actualPosition;
+    public void fillActualPosition (int x, int y)
+    {
+        this.actualPosition = new GridCoords(x, y);
+    }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		destination = transform.position;
         //Debug.Log("name: " + name);
 

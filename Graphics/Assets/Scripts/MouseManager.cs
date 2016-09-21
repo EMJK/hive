@@ -82,18 +82,46 @@ public class MouseManager : MonoBehaviour {
 
             if (selectedUnit != null) {
 
-                GridCoords destination = new GridCoords(ourHitObject.GetComponent<Hex>().a, ourHitObject.GetComponent<Hex>().b, ourHitObject.GetComponent<Hex>().c);
+                int x = ourHitObject.GetComponent<Hex>().x;
+                int y = ourHitObject.GetComponent<Hex>().y;
+
+                GridCoords destination = new GridCoords(ourHitObject.GetComponent<Hex>().x, ourHitObject.GetComponent<Hex>().y);
+
                 Debug.Log("color: " + selectedUnit.color.ToString() + " x: " + destination.OX + " y: " + destination.OY + " isOutofboard " + selectedUnit.isOutOfBoard.ToString());
-                
-                if (selectedUnit.isOutOfBoard && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, destination))
-                {
-                    Debug.Log("wejszło");
-                    //move
-                    selectedUnit.destination = ourHitObject.transform.position;
-                    selectedUnit.x = ourHitObject.GetComponent<Hex>().x;
-                    selectedUnit.y = ourHitObject.GetComponent<Hex>().y;
-                    selectedUnit.isOutOfBoard = false;
-                }
+                Debug.Log("position: " + selectedUnit.actualPosition);
+
+                 if (selectedUnit.isOutOfBoard && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, destination))
+                 {
+                     Debug.Log("wejszło");
+                     //move
+                     selectedUnit.destination = ourHitObject.transform.position;
+                     selectedUnit.x = x;
+                     selectedUnit.y = y;
+                     selectedUnit.fillActualPosition(x, y);
+                     selectedUnit.isOutOfBoard = false;
+
+                     Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
+                 }
+
+                 else if (selectedUnit.isOutOfBoard == false && Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, destination))
+                     {
+                     //move
+                     selectedUnit.destination = ourHitObject.transform.position;
+                     selectedUnit.x = x;
+                     selectedUnit.y = y;
+                     selectedUnit.fillActualPosition(x, y);
+
+                    Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, destination);
+                 }
+                 /*
+                selectedUnit.destination = ourHitObject.transform.position;
+                selectedUnit.x = x;
+                selectedUnit.y = y;
+                selectedUnit.fillActualPosition(x, y);
+                selectedUnit.isOutOfBoard = false;
+                Debug.Log("position: " + selectedUnit.actualPosition);
+                */
+
                 //deselect
                 MeshRenderer mrold = selectedUnit.GetComponentInChildren<MeshRenderer>();
                 Material[] matsold = new Material[1];
