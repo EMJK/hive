@@ -15,6 +15,8 @@ public class Unit : MonoBehaviour {
     public int x = 999;
     public int y = 999;
 
+    public bool isOutOfBoard = true;
+
 	// Use this for initialization
 	void Start () {
 		destination = transform.position;
