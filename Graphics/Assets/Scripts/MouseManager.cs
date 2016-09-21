@@ -80,6 +80,7 @@ public class MouseManager : MonoBehaviour {
 
             if (selectedUnit != null) {
                 //Assets.Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, );
+                //move
                 selectedUnit.destination = ourHitObject.transform.position;
                 selectedUnit.x = ourHitObject.GetComponent<Hex>().x;
                 selectedUnit.y = ourHitObject.GetComponent<Hex>().y;
@@ -90,6 +91,8 @@ public class MouseManager : MonoBehaviour {
                 matsold[0] = mrold.materials[1];
                 mrold.materials = matsold;
                 selectedUnit = null;
+                //reset hex color
+                ourHitObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
             }
         }
 	}

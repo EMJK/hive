@@ -45,7 +45,8 @@ public class Map : MonoBehaviour {
                 hex_go.GetComponent<Hex>().a = xbis - (z - (z & 1)) / 2;
                 hex_go.GetComponent<Hex>().b = -(hex_go.GetComponent<Hex>().a) - (hex_go.GetComponent<Hex>().c);
 
-                
+                if (x == width / 2 && y == height / 2)
+                    hex_go.GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
                 // For a cleaner hierachy, parent this hex to the map
                 hex_go.transform.SetParent(this.transform);
 
