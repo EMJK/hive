@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
+using Newtonsoft.Json;
 
 namespace Hive.Common
 {
@@ -12,6 +13,9 @@ namespace Hive.Common
         public int CZ { get; set; }
         public int OX { get; set; }
         public int OY { get; set; }
+        
+        [JsonConstructor]
+        private GridCoords() : this(0,0,0) { }
 
         public GridCoords(int cx, int cy, int cz)
         {

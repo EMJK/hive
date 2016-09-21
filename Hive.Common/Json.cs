@@ -14,6 +14,7 @@ namespace Hive.Common
             Settings.PreserveReferencesHandling = PreserveReferencesHandling.None;
             Settings.TypeNameHandling = TypeNameHandling.All;
             Settings.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
+            Settings.ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor;
         }
 
         public static string Serialize(object obj)
