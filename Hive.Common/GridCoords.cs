@@ -97,12 +97,12 @@ namespace Hive.Common
 
         public static bool operator ==(GridCoords a, GridCoords b)
         {
-            if (object.ReferenceEquals(a, b))
+            if (ReferenceEquals(a, b))
             {
                 return true;
             }
 
-            if (a == null || b == null) return false;
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null)) return false;
 
             return a.Equals(b);
         }

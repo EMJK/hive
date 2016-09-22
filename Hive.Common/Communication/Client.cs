@@ -26,9 +26,9 @@ namespace Hive.Common.Communication
         private TcpClient _client;
         private readonly TcpListener _listener;
 
-        public Server()
+        public Server(int serverPort)
         {
-            _listener = new TcpListener(IPAddress.Loopback, 0);
+            _listener = new TcpListener(IPAddress.Loopback, serverPort);
             _listener.Start();
             LocalPort = ((IPEndPoint) _listener.LocalEndpoint).Port;
         }

@@ -13,11 +13,18 @@ namespace Hive.IpcClient
 
         public GameStateData GameState { get; private set; }
 
-        public HiveClient(Action<string> logger)
+        public HiveClient(Action<string> logger) : this(logger, 0)
+        {
+        }
+
+        public HiveClient(Action<string> logger, int serverPort)
         {
             _logger = logger ?? (s => { });
-            _server = new Server();
-            StartProcess();
+            _server = new Server(serverPort);
+            if (serverPort == 0)
+            {
+                StartProcess();
+            }
         }
 
         public void Dispose()

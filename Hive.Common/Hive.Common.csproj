@@ -57,8 +57,11 @@
     <PostBuildEvent>if not exist "$(SolutionDir)\Graphics" mkdir $(SolutionDir)\Graphics
 if not exist "$(SolutionDir)\Graphics\Assets" mkdir $(SolutionDir)\Graphics\Assets
 
-copy /Y $(TargetPath) $(SolutionDir)\Graphics\$(TargetFileName)
-copy /Y $(TargetPath) $(SolutionDir)\Graphics\Assets\$(TargetFileName)
+copy /Y $(TargetPath) $(SolutionDir)\Graphics\$(TargetName).dll
+copy /Y $(TargetPath) $(SolutionDir)\Graphics\$(TargetName).pdb
+copy /Y $(TargetPath) $(SolutionDir)\Graphics\Assets\$(TargetName).dll
+copy /Y $(TargetPath) $(SolutionDir)\Graphics\Assets\$(TargetName).pdb
+
 copy /Y $(TargetDir)Newtonsoft.Json.dll $(SolutionDir)\Graphics\Newtonsoft.Json.dll
 copy /Y $(TargetDir)Newtonsoft.Json.dll $(SolutionDir)\Graphics\Assets\Newtonsoft.Json.dll</PostBuildEvent>
   </PropertyGroup>
