@@ -9,11 +9,13 @@ namespace Hive.IpcClient
     {
         private Process _engineProcess;
         private readonly Server _server;
+        private readonly Action<string> _logger;
 
         public GameStateData GameState { get; private set; }
 
-        public HiveClient()
+        public HiveClient(Action<string> logger)
         {
+            _logger = logger ?? (s => { });
             _server = new Server();
             StartProcess();
         }
@@ -28,7 +30,9 @@ namespace Hive.IpcClient
         {
             if (GameState.CurrentPlayer == color && GameState.CheckIfBugCanMove(color, from, to))
             {
+                _logger($"{color} is trying to move {GameState.GetTopBugAtCoords(from)?.ToString() ?? "NULL"} {color} from {from} to {to}");
                 SendMessageAndReadResponse(new IpcRequest(nameof(MoveBug), color, from, to));
+                _logger($"{color} moved {GameState.GetTopBugAtCoords(from)?.ToString() ?? "NULL"} {color} from {from} to {to}");
             }
             else
             {
@@ -40,7 +44,9 @@ namespace Hive.IpcClient
         {
             if (GameState.CurrentPlayer == color && GameState.CheckNewBugPlacement(color, coords))
             {
+                _logger($"{color} is trying to place {color} {bug} at {coords}");
                 SendMessageAndReadResponse(new IpcRequest(nameof(PlaceNewBug), color, bug, coords));
+                _logger($"{color} placed {color} {bug} at {coords}");
             }
             else
             {

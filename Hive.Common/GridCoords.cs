@@ -56,9 +56,10 @@ namespace Hive.Common
 
         public override bool Equals(object obj)
         {
-            if (obj is GridCoords)
+            var coords = obj as GridCoords;
+            if (coords != null)
             {
-                var other = (GridCoords) obj;
+                var other = coords;
                 return Equals(other);
             }
             return false;
@@ -92,6 +93,23 @@ namespace Hive.Common
             var az = oy;
             var ay = -ax - az;
             return new[] {ax, ay, az};
+        }
+
+        public static bool operator ==(GridCoords a, GridCoords b)
+        {
+            if (object.ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            if (a == null || b == null) return false;
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(GridCoords a, GridCoords b)
+        {
+            return !(a == b);
         }
     }
 }

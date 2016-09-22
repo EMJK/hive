@@ -26,6 +26,12 @@ namespace Hive.Common
                 .ToList();
         }
 
+        public BugType? GetTopBugAtCoords(GridCoords coords)
+        {
+            var stack = Bugs.FirstOrDefault(x => x.Item1 == coords);
+            return stack?.Item2?.FirstOrDefault()?.Type;
+        }
+
         public bool CheckNewBugPlacement(PlayerColor bugColor, GridCoords coords)
         {
             return GetPlacementOptionsForPlayer(bugColor).Contains(coords);

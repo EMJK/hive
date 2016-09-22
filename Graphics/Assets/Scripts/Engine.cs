@@ -20,7 +20,7 @@ namespace Assets
         {
             Stop();
             Debug.Log("Starting engine...");
-            Client = new HiveClient();
+            Client = new HiveClient(Debug.Log);
             Debug.Log("Engine started.");
         }
 
