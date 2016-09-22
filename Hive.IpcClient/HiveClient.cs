@@ -43,7 +43,7 @@ namespace Hive.IpcClient
             }
             else
             {
-                throw new InvalidOperationException($"Cannot move {color} from {from} to {to}");
+                throw new InvalidOperationException($"{color} cannot move {color} from {from} to {to}");
             }
         }
 
@@ -57,7 +57,7 @@ namespace Hive.IpcClient
             }
             else
             {
-                throw new InvalidOperationException($"Cannot place {color} {bug} at {coords}");
+                throw new InvalidOperationException($"{color} cannot place {color} {bug} at {coords}");
             }
         }
 

@@ -39,9 +39,9 @@ module Movement =
         let lastStep path = List.rev path |> (fun x -> (x.Tail.Head, x.Head))
 
         let checkLastStepFreedomOfMovement board path =
-            let (src, dst) = lastStep path
-            let tmpBoard = Board.moveBug src dst board
-            Rules.freedomOfMovement [src; dst] board
+            let (src, dst) = lastStep path            
+            let tmpBoard = Board.moveBug path.Head src board
+            Rules.freedomOfMovement [src; dst] tmpBoard
 
         let checkOneHiveRule board path =
             let (src, dst) = firstAndLast path

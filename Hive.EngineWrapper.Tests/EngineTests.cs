@@ -64,6 +64,15 @@ namespace Hive.EngineWrapper.Tests
         }
 
         [Fact]
+        public void NewBugSequence()
+        {
+            var game = new Game();
+            game.PlaceNewBug(PlayerColor.White, BugType.Grasshopper, new GridCoords(0, 0, 0));
+            game.PlaceNewBug(PlayerColor.Black, BugType.Beetle, new GridCoords(-1, 1, 0));
+            game.PlaceNewBug(PlayerColor.White, BugType.SoldierAnt, new GridCoords(1, -1, 0));
+        }
+
+        [Fact]
         public void GridCoordsCubeToAxialTranslationTest()
         {
             GridCoords c;
