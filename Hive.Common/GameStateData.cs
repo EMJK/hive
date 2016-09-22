@@ -11,6 +11,7 @@ namespace Hive.Common
         public List<GridCoords> BlackNewBugPlacementOptions { get; set; }
         public List<GridCoords> WhiteNewBugPlacementOptions { get; set; }
         public PlayerColor PreviousPlayer { get; set; }
+        public PlayerColor CurrentPlayer => GetCurrentPlayer();
         public Winner Winner { get; set; }
 
         public List<GridCoords> GetPossibleTargetsForBug(PlayerColor currentPlayer, GridCoords coords)
@@ -62,6 +63,24 @@ namespace Hive.Common
         private bool IsMoveInsideBoard(IEnumerable<GridCoords> move)
         {
             return move.All(x => x.IsInsideBoard());
+        }
+
+        private PlayerColor GetCurrentPlayer()
+        {
+            if (PreviousPlayer == PlayerColor.Empty) return PlayerColor.White;
+            var possibleNextPlayer = OppositeColor(PreviousPlayer);
+            if (GetMovesForPlayer(possibleNextPlayer).Any() || GetPlacementOptionsForPlayer(possibleNextPlayer).Any())
+            {
+                return possibleNextPlayer;
+            }
+            return PreviousPlayer;
+        }
+
+        private PlayerColor OppositeColor(PlayerColor color)
+        {
+            if (color == PlayerColor.White) return PlayerColor.Black;
+            if (color == PlayerColor.Black) return PlayerColor.White;
+            return PlayerColor.Empty;
         }
     }
 }

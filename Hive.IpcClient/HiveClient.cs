@@ -10,13 +10,13 @@ namespace Hive.IpcClient
         private Process _engineProcess;
         private readonly Server _server;
 
+        public GameStateData GameState { get; private set; }
+
         public HiveClient()
         {
             _server = new Server();
             StartProcess();
         }
-
-        public GameStateData GameState { get; private set; }
 
         public void Dispose()
         {
