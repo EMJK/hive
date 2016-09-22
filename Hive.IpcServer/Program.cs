@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,8 +18,9 @@ namespace Hive.IpcServer
                 TryMonitorParent(args);
                 new HiveServer().Run(int.Parse(args[0]));
             }
-            catch
+            catch(Exception ex)
             {
+                Log(ex.ToString());
                 Process.GetCurrentProcess().Kill();
             }
         }
@@ -41,8 +44,9 @@ namespace Hive.IpcServer
                                 break;
                             }
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            Log(ex.ToString());
                             Process.GetCurrentProcess().Kill();
                             break;
                         }
@@ -51,6 +55,11 @@ namespace Hive.IpcServer
                 t.IsBackground = true;
                 t.Start();
             }
+        }
+
+        public static void Log(string s)
+        {
+            File.AppendAllLines("HiveServerLog.txt", new[] {s});
         }
     }
 }

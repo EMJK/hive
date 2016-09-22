@@ -26,12 +26,26 @@ namespace Hive.IpcClient
 
         public void MoveBug(PlayerColor color, GridCoords from, GridCoords to)
         {
-            SendMessageAndReadResponse(new IpcRequest(nameof(MoveBug), color, from, to));
+            if (GameState.CurrentPlayer == color && GameState.CheckIfBugCanMove(color, from, to))
+            {
+                SendMessageAndReadResponse(new IpcRequest(nameof(MoveBug), color, from, to));
+            }
+            else
+            {
+                throw new InvalidOperationException($"Cannot move {color} from {from} to {to}");
+            }
         }
 
         public void PlaceNewBug(PlayerColor color, BugType bug, GridCoords coords)
         {
-            SendMessageAndReadResponse(new IpcRequest(nameof(PlaceNewBug), color, bug, coords));
+            if (GameState.CurrentPlayer == color && GameState.CheckNewBugPlacement(color, coords))
+            {
+                SendMessageAndReadResponse(new IpcRequest(nameof(PlaceNewBug), color, bug, coords));
+            }
+            else
+            {
+                throw new InvalidOperationException($"Cannot place {color} {bug} at {coords}");
+            }
         }
 
         private void StartProcess()
@@ -71,7 +85,7 @@ namespace Hive.IpcClient
             var response = Read();
             if (response.Error)
             {
-                //something wrong happened
+                throw new InvalidOperationException($"Engine returned error: {response.ErrorDetails}");
             }
             else
             {

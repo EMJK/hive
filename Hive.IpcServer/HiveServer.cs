@@ -21,8 +21,9 @@ namespace Hive.IpcServer
                     _client = new Client(port);
                     break;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Program.Log(ex.ToString());
                     Thread.Sleep(100);
                 }
             }
@@ -66,6 +67,7 @@ namespace Hive.IpcServer
             }
             catch (Exception ex)
             {
+                Program.Log(ex.ToString());
                 throw new Exception("Invalid request", ex);
             }
         }

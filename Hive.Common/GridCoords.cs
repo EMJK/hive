@@ -71,7 +71,7 @@ namespace Hive.Common
 
         public override string ToString()
         {
-            return $"CX: {CX}, CY: {CY}, CZ: {CZ}";
+            return $"{{{CX},{CY},{CZ}}}-{{{OX},{OY}}}";
         }
 
         private int[] ConvertCubeToOffset(int cx, int cy, int cz)
