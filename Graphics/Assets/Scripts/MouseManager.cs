@@ -128,7 +128,7 @@ public class MouseManager : MonoBehaviour
                 catch (Exception ex)
                 {
                     DeselectUnit();
-                    Debug.LogException(ex);
+                    Debug.LogError(ex.Message);
                 }
             }
         }

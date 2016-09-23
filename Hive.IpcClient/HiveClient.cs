@@ -35,26 +35,30 @@ namespace Hive.IpcClient
 
         public void MoveBug(PlayerColor color, GridCoords from, GridCoords to)
         {
+            var bug = GameState.GetTopBugAtCoords(from);
+            var bugType = bug?.Type.ToString() ?? "NULL";
+            var bugColor = bug?.Color.ToString() ?? "NULL";
+            _logger($"{color} is trying to move {bugColor} {bugType} from {from} to {to}");
+
             if (GameState.CurrentPlayer == color && GameState.CheckIfBugCanMove(color, from, to))
             {
-                var bugType = GameState.GetTopBugAtCoords(from)?.ToString() ?? "NULL";
-                _logger($"{color} is trying to move {color} {bugType} from {from} to {to}");
                 SendMessageAndReadResponse(new IpcRequest(nameof(MoveBug), color, from, to));
-                _logger($"{color} moved {color} {bugType} from {from} to {to}");
+                _logger($"{color} moved {bugColor} {bugType} from {from} to {to}");
             }
             else
             {
-                throw new InvalidOperationException($"{color} cannot move {color} from {from} to {to}");
+                throw new InvalidOperationException($"{color} cannot move {bugColor} {bugType} from {from} to {to}");
             }
         }
 
         public void PlaceNewBug(PlayerColor color, BugType bug, GridCoords coords)
         {
+            _logger($"{color} is trying to place new {color} {bug} at {coords}");
+
             if (GameState.CurrentPlayer == color && GameState.CheckNewBugPlacement(color, coords))
             {
-                _logger($"{color} is trying to place {color} {bug} at {coords}");
                 SendMessageAndReadResponse(new IpcRequest(nameof(PlaceNewBug), color, bug, coords));
-                _logger($"{color} placed {color} {bug} at {coords}");
+                _logger($"{color} placed new {color} {bug} at {coords}");
             }
             else
             {
