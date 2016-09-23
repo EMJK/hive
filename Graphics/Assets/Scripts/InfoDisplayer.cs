@@ -3,14 +3,14 @@ using System.Collections;
 
 public class InfoDisplayer : MonoBehaviour {
 
-    private bool showInfo = false;
+    private static bool showInfo = false;
     private float timer = 0;
-    public float infoTime = 3;
-    public GUIText infoGUI;
+    private float infoTime = 3;
+    private static GUIText infoGUI;
 
     // Use this for initialization
     void Start () {
-	
+	    Debug.Log("InfoDisplayer started");
 	}
 	
 	// Update is called once per frame
@@ -30,11 +30,11 @@ public class InfoDisplayer : MonoBehaviour {
         }
     }
 
-    public void displayInfoMessage(string infoText)
+    public static void DisplayInfoMessage(string infoText)
     {
         infoGUI.text = infoText;
         infoGUI.enabled = true;
-        this.showInfo = true;
+        showInfo = true;
     }
 }
 

@@ -37,9 +37,10 @@ namespace Hive.IpcClient
         {
             if (GameState.CurrentPlayer == color && GameState.CheckIfBugCanMove(color, from, to))
             {
-                _logger($"{color} is trying to move {GameState.GetTopBugAtCoords(from)?.ToString() ?? "NULL"} {color} from {from} to {to}");
+                var bugType = GameState.GetTopBugAtCoords(from)?.ToString() ?? "NULL";
+                _logger($"{color} is trying to move {color} {bugType} from {from} to {to}");
                 SendMessageAndReadResponse(new IpcRequest(nameof(MoveBug), color, from, to));
-                _logger($"{color} moved {GameState.GetTopBugAtCoords(from)?.ToString() ?? "NULL"} {color} from {from} to {to}");
+                _logger($"{color} moved {color} {bugType} from {from} to {to}");
             }
             else
             {

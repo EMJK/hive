@@ -7,13 +7,11 @@ using UnityEngine.EventSystems;
 public class MouseManager : MonoBehaviour
 {
     private Unit selectedUnit;
-    public InfoDisplayer displayer;
     SendMessageOptions options = SendMessageOptions.DontRequireReceiver; 
 
     // Use this for initialization
     private void Start()
     {
-        displayer = new InfoDisplayer();
         Engine.Reset();
         //Assets.Engine.
     }
@@ -77,7 +75,7 @@ public class MouseManager : MonoBehaviour
         {
             MeshRenderer meshr = ourHitObject.GetComponentInChildren<MeshRenderer>();
             meshr.material.color = Color.red;
-            displayer.SendMessage("displayInfoMessage","tekst testowy");
+            //InfoDisplayer.DisplayInfoMessage("tekst testowy");
 
             if (selectedUnit != null)
             {
@@ -127,10 +125,10 @@ public class MouseManager : MonoBehaviour
                     //reset hex color
                     ourHitObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     DeselectUnit();
-                    throw;
+                    Debug.LogException(ex);
                 }
             }
         }
