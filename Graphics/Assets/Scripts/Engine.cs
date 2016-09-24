@@ -20,6 +20,8 @@ namespace Assets
         {
             Stop();
             Debug.Log("Starting engine...");
+            Debug.Log(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            Debug.Log(System.Environment.CurrentDirectory);
             Client = new HiveClient(Debug.Log, 0);
             Debug.Log("Engine started.");
         }
