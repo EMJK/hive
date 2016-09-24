@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class MouseManager : MonoBehaviour
 {
     private Unit selectedUnit;
-    SendMessageOptions options = SendMessageOptions.DontRequireReceiver; 
 
     // Use this for initialization
     private void Start()
@@ -56,16 +55,7 @@ public class MouseManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (selectedUnit != null)
-            {
-                //deselect
-                MeshRenderer mrold = selectedUnit.GetComponentInChildren<MeshRenderer>();
-                Material[] matsold = new Material[1];
-                //  Fill in the materials array...
-                matsold[0] = mrold.materials[1];
-                mrold.materials = matsold;
-                selectedUnit = null;
-            }
+            DeselectUnit();
         }
     }
 
@@ -73,8 +63,6 @@ public class MouseManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            MeshRenderer meshr = ourHitObject.GetComponentInChildren<MeshRenderer>();
-            meshr.material.color = Color.red;
             //InfoDisplayer.DisplayInfoMessage("tekst testowy");
 
             if (selectedUnit != null)
@@ -88,13 +76,13 @@ public class MouseManager : MonoBehaviour
 
                     GridCoords destination = new GridCoords(ourHitObject.GetComponent<Hex>().x, ourHitObject.GetComponent<Hex>().y);
 
+                    //
                     Debug.Log("color: " + selectedUnit.color.ToString() + " x: " + destination.OX + " y: " + destination.OY + " isOutofboard " + selectedUnit.isOutOfBoard.ToString());
-                    Debug.Log("position: " + selectedUnit.actualPosition);
 
                 
                     if (selectedUnit.isOutOfBoard)// && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, destination))
                     {
-                        Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
+                        //Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
                         Debug.Log("wejszło");
                         //move
                         selectedUnit.destination = ourHitObject.transform.position;
@@ -107,7 +95,7 @@ public class MouseManager : MonoBehaviour
                     {
                         //move
 
-                        Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, destination);
+                        //Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, destination);
 
                         selectedUnit.destination = ourHitObject.transform.position;
                         selectedUnit.x = x;

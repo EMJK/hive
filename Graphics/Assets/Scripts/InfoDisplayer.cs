@@ -10,7 +10,7 @@ public class InfoDisplayer : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	    Debug.Log("InfoDisplayer started");
+	    //Debug.Log("InfoDisplayer started");
 	}
 	
 	// Update is called once per frame
