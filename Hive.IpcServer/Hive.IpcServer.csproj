@@ -66,7 +66,7 @@
     <PostBuildEvent>if not exist "$(SolutionDir)\Graphics" mkdir $(SolutionDir)\Graphics
 if not exist "$(SolutionDir)\Graphics\Assets" mkdir $(SolutionDir)\Graphics\Assets
 
-copy /Y $(TargetPath) $(SolutionDir)\Graphics\$(TargetName).dll
+copy /Y $(TargetPath) $(SolutionDir)\Graphics\$(TargetName).exe
 copy /Y $(TargetPath) $(SolutionDir)\Graphics\$(TargetName).pdb
 copy /Y $(TargetDir)Julas.Utils.dll $(SolutionDir)\Graphics\Julas.Utils.dll</PostBuildEvent>
   </PropertyGroup>
