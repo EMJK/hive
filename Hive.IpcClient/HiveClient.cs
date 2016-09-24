@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using Hive.Common;
 using Hive.Common.Communication;
 
@@ -69,7 +70,7 @@ namespace Hive.IpcClient
         private void StartProcess()
         {
             _engineProcess = new Process();
-            _engineProcess.StartInfo.FileName = "Hive.IpcServer.exe";
+            _engineProcess.StartInfo.FileName = Path.Combine(Environment.CurrentDirectory, "Hive.IpcServer.exe");
             _engineProcess.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
             _engineProcess.StartInfo.CreateNoWindow = true;
             _engineProcess.StartInfo.UseShellExecute = false;
