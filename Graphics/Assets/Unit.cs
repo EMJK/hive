@@ -7,7 +7,7 @@ public class Unit : MonoBehaviour {
 	public Vector3 destination;
     //public  position;
 
-	float speed = 3;
+	float speed = 6;
 
     public BugType bug;
     public PlayerColor color;
@@ -17,6 +17,8 @@ public class Unit : MonoBehaviour {
 
     public bool isOutOfBoard = true;
     public GridCoords actualPosition;
+    public Unit unitAbove = null;
+    public Unit unitBelow = null;
     public void fillActualPosition (int x, int y)
     {
         this.actualPosition = new GridCoords(x, y);

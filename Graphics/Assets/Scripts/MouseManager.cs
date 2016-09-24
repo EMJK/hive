@@ -77,13 +77,12 @@ public class MouseManager : MonoBehaviour
                     GridCoords destination = new GridCoords(ourHitObject.GetComponent<Hex>().x, ourHitObject.GetComponent<Hex>().y);
 
                     //
-                    Debug.Log("color: " + selectedUnit.color.ToString() + " x: " + destination.OX + " y: " + destination.OY + " isOutofboard " + selectedUnit.isOutOfBoard.ToString());
+                    //Debug.Log("color: " + selectedUnit.color.ToString() + " x: " + destination.OX + " y: " + destination.OY + " isOutofboard " + selectedUnit.isOutOfBoard.ToString());
 
                 
-                    if (selectedUnit.isOutOfBoard)// && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, destination))
+                    if (selectedUnit.isOutOfBoard && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, destination))
                     {
-                        //Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
-                        Debug.Log("wejszło");
+                        Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
                         //move
                         selectedUnit.destination = ourHitObject.transform.position;
                         selectedUnit.x = x;
@@ -91,25 +90,23 @@ public class MouseManager : MonoBehaviour
                         selectedUnit.fillActualPosition(x, y);
                         selectedUnit.isOutOfBoard = false;
                     }
-                    else if (selectedUnit.isOutOfBoard == false)// && Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, destination))
+                    else if (selectedUnit.isOutOfBoard == false && Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, destination))
                     {
                         //move
 
-                        //Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, destination);
+                        Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, destination);
 
                         selectedUnit.destination = ourHitObject.transform.position;
                         selectedUnit.x = x;
                         selectedUnit.y = y;
                         selectedUnit.fillActualPosition(x, y);
+                        if (selectedUnit.unitBelow != null)
+                            selectedUnit.unitBelow.unitAbove = null;
+                        selectedUnit.unitBelow = null;
                     }
 
                     //deselect
-                    MeshRenderer mrold = selectedUnit.GetComponentInChildren<MeshRenderer>();
-                    Material[] matsold = new Material[1];
-                    //  Fill in the materials array...
-                    matsold[0] = mrold.materials[1];
-                    mrold.materials = matsold;
-                    selectedUnit = null;
+                    DeselectUnit();
                     //reset hex color
                     ourHitObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
                 }
@@ -129,17 +126,42 @@ public class MouseManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // We have click on the unit
-            //deselect
-            DeselectUnit();
-            //select
-            selectedUnit = ourHitObject.GetComponent<Unit>();
-            MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
-            Material newMat = Resources.Load("HalfTransparent", typeof(Material)) as Material;
-            Material[] mats = new Material[2];
-            //  Fill in the materials array...
-            mats[1] = mr.material;
-            mats[0] = newMat;
-            mr.materials = mats;
+            if (selectedUnit != null && selectedUnit.isOutOfBoard == false)
+            {
+                //try to jump on the unit
+                Unit targetUnit = ourHitObject.GetComponent<Unit>();
+                if (Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, targetUnit.actualPosition))
+                {
+                    //move
+
+                    Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, targetUnit.actualPosition);
+                    Vector3 dest = new Vector3(ourHitObject.transform.position.x, ourHitObject.transform.position.y+0.2f, ourHitObject.transform.position.z);
+                    selectedUnit.destination = dest;
+                    if (selectedUnit.unitBelow != null)
+                        selectedUnit.unitBelow.unitAbove = null;
+                    targetUnit.unitAbove = selectedUnit;
+                    selectedUnit.unitBelow = targetUnit;
+                    selectedUnit.x = targetUnit.x;
+                    selectedUnit.y = targetUnit.y;
+                    selectedUnit.fillActualPosition(targetUnit.x, targetUnit.y);
+                }
+                //deselect
+                DeselectUnit();
+            }
+            else
+            {
+                //deselect
+                DeselectUnit();
+                //select
+                selectedUnit = ourHitObject.GetComponent<Unit>();
+                MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
+                Material newMat = Resources.Load("HalfTransparent", typeof(Material)) as Material;
+                Material[] mats = new Material[2];
+                //  Fill in the materials array...
+                mats[1] = mr.material;
+                mats[0] = newMat;
+                mr.materials = mats;
+            }
         }
     }
 
