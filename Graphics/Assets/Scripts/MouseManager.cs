@@ -3,21 +3,30 @@ using Assets;
 using Hive.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class MouseManager : MonoBehaviour
 {
     private Unit selectedUnit;
+    public Text displayedText;
+    private List<GridCoords> movesForBug = null;
+    private bool showTip = false;
+    private float timer = 0;
+    public float tipTime = 4;
 
     // Use this for initialization
     private void Start()
     {
         Engine.Reset();
+        displayText();
         //Assets.Engine.
     }
 
     // Update is called once per frame
     private void Update()
     {
+        manageDisplayedText();
         // Is the mouse over a Unity UI Element?
         if (EventSystem.current.IsPointerOverGameObject())
         {
@@ -63,23 +72,16 @@ public class MouseManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            //InfoDisplayer.DisplayInfoMessage("tekst testowy");
-
             if (selectedUnit != null)
             {
                 try
                 {
-                    MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
                     // If we have a unit selected, let's move it to this tile!
                     int x = ourHitObject.GetComponent<Hex>().x;
                     int y = ourHitObject.GetComponent<Hex>().y;
 
                     GridCoords destination = new GridCoords(ourHitObject.GetComponent<Hex>().x, ourHitObject.GetComponent<Hex>().y);
 
-                    //
-                    //Debug.Log("color: " + selectedUnit.color.ToString() + " x: " + destination.OX + " y: " + destination.OY + " isOutofboard " + selectedUnit.isOutOfBoard.ToString());
-
-                
                     if (selectedUnit.isOutOfBoard && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, destination))
                     {
                         Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
@@ -89,9 +91,11 @@ public class MouseManager : MonoBehaviour
                         selectedUnit.y = y;
                         selectedUnit.fillActualPosition(x, y);
                         selectedUnit.isOutOfBoard = false;
+                        displayText();
                     }
                     else if (selectedUnit.isOutOfBoard == false && Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, destination))
                     {
+
                         //move
 
                         Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, destination);
@@ -103,6 +107,7 @@ public class MouseManager : MonoBehaviour
                         if (selectedUnit.unitBelow != null)
                             selectedUnit.unitBelow.unitAbove = null;
                         selectedUnit.unitBelow = null;
+                        displayText();
                     }
 
                     //deselect
@@ -121,21 +126,27 @@ public class MouseManager : MonoBehaviour
 
     private void MouseOver_Unit(GameObject ourHitObject)
     {
-        //Debug.Log("Raycast hit: " + ourHitObject.name );
 
         if (Input.GetMouseButtonDown(0))
         {
-            // We have click on the unit
+            // We have clicked on the unit
             if (selectedUnit != null && selectedUnit.isOutOfBoard == false)
             {
+
                 //try to jump on the unit
                 Unit targetUnit = ourHitObject.GetComponent<Unit>();
+                
+                while (targetUnit.unitAbove != null)
+                {
+                    targetUnit = targetUnit.unitAbove;
+                }
+
                 if (Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, targetUnit.actualPosition))
                 {
                     //move
 
                     Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, targetUnit.actualPosition);
-                    Vector3 dest = new Vector3(ourHitObject.transform.position.x, ourHitObject.transform.position.y+0.2f, ourHitObject.transform.position.z);
+                    Vector3 dest = new Vector3(targetUnit.transform.position.x, targetUnit.transform.position.y+0.2f, targetUnit.transform.position.z);
                     selectedUnit.destination = dest;
                     if (selectedUnit.unitBelow != null)
                         selectedUnit.unitBelow.unitAbove = null;
@@ -144,6 +155,7 @@ public class MouseManager : MonoBehaviour
                     selectedUnit.x = targetUnit.x;
                     selectedUnit.y = targetUnit.y;
                     selectedUnit.fillActualPosition(targetUnit.x, targetUnit.y);
+                    displayText();
                 }
                 //deselect
                 DeselectUnit();
@@ -154,13 +166,28 @@ public class MouseManager : MonoBehaviour
                 DeselectUnit();
                 //select
                 selectedUnit = ourHitObject.GetComponent<Unit>();
-                MeshRenderer mr = ourHitObject.GetComponentInChildren<MeshRenderer>();
+                while (selectedUnit.unitAbove != null)
+                {
+                    selectedUnit = selectedUnit.unitAbove;
+                }
+
+                MeshRenderer mr = selectedUnit.GetComponentInChildren<MeshRenderer>();
                 Material newMat = Resources.Load("HalfTransparent", typeof(Material)) as Material;
                 Material[] mats = new Material[2];
                 //  Fill in the materials array...
                 mats[1] = mr.material;
                 mats[0] = newMat;
                 mr.materials = mats;
+
+                movesForBug = Engine.Client.GameState.GetPossibleTargetsForBug(selectedUnit.color, selectedUnit.actualPosition);
+
+                foreach (GridCoords move in movesForBug)
+                {
+                    GameObject hex = GameObject.Find("Hex_" + move.OX + "_" + move.OY);
+                    hex.GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+                }
+
+
             }
         }
     }
@@ -169,6 +196,15 @@ public class MouseManager : MonoBehaviour
     {
         if (selectedUnit != null)
         {
+            if (movesForBug != null)
+            {
+                foreach (GridCoords move in movesForBug)
+                {
+                    GameObject hex = GameObject.Find("Hex_" + move.OX + "_" + move.OY);
+                    hex.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+                }
+                movesForBug = null;
+            }
             MeshRenderer mrold = selectedUnit.GetComponentInChildren<MeshRenderer>();
             Material[] matsold = new Material[1];
             //  Fill in the materials array...
@@ -177,4 +213,54 @@ public class MouseManager : MonoBehaviour
             selectedUnit = null;
         }
     }
+
+
+    private void displayText()
+    {
+        if (Engine.Client.GameState.CurrentPlayer == PlayerColor.White)
+            setDisplayText("Ruch białych");
+        else if (Engine.Client.GameState.CurrentPlayer == PlayerColor.Black)
+            setDisplayText("Ruch czarnych");
+        else
+            setDisplayText("Błąd silnika gry");
+
+        switch ((int)Engine.Client.GameState.Winner)
+        {
+            case 1:
+                displayedText.text = "Czarne wygrały!";
+                break;
+            case 2:
+                displayedText.text = "Białe wygrały!";
+                break;
+            case 3:
+                displayedText.text = "Remis!";
+                break;
+            default:
+                break;
+                
+        }
+    }
+
+    private void setDisplayText (string text)
+    {
+        displayedText.text = text;
+        displayedText.enabled = true;
+        this.showTip = true;
+    }
+
+    private void manageDisplayedText()
+    {
+        if ((int)Engine.Client.GameState.Winner != 0)
+            timer = 600;
+        if (showTip) {
+			if(timer<tipTime) {
+				timer += Time.deltaTime;
+			} else {
+				displayedText.enabled = false;
+				showTip = false;
+				timer = 0;
+			}
+		}
+	}
+
 }

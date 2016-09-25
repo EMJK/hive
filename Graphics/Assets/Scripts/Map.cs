@@ -20,8 +20,6 @@ public class Map : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        int b = 5;
-
 		for (int x = 0, xbis = -10; x < width; x++, xbis++) {
          
 			for (int y = 0, z = 10; y < height; y++, z--) {
