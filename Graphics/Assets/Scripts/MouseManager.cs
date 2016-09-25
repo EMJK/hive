@@ -250,7 +250,7 @@ public class MouseManager : MonoBehaviour
 
     private void manageDisplayedText()
     {
-        if ((int)Engine.Client.GameState.Winner != 0)
+        if (Engine.Client.GameState.Winner != 0)
             timer = 600;
         if (showTip) {
 			if(timer<tipTime) {
