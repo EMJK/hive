@@ -68,3 +68,19 @@ module Tree =
                 | ls -> ls |> List.map (fun x -> Node(x, t)))
             |> Seq.concat
         { root = tree.root; tips = newTips }
+
+    let distinctTips tree = { 
+        root = tree.root;
+        tips = 
+            tree.tips
+            |> Seq.distinctBy(fun x ->
+                match x with
+                | Root(v) -> v
+                | Node(v, p) -> v)
+    }
+
+    let maxPathLength tree =
+        tree.tips
+        |> Seq.map assemblePath
+        |> Seq.map List.length
+        |> Seq.max

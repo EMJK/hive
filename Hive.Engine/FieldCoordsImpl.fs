@@ -29,8 +29,15 @@ module FieldCoordsImpl =
         static member neighborOffsets = List.ofArray FieldCoords.neighborMap
 
         static member sidesOf src dst =
+            let left idx = if idx = 0 then 5 else idx - 1
+            let right idx = if idx = 5 then 0 else idx + 1
+
             let offset = FieldCoords.offset src dst
-            let targetIndex = Array.findIndex (fun x -> x = offset) FieldCoords.neighborMap
-            let leftIndex = FieldCoords.round (targetIndex - 1) FieldCoords.neighborMap.Length
-            let rightIndex = FieldCoords.round (targetIndex + 1) FieldCoords.neighborMap.Length
-            (FieldCoords.neighborMap.[leftIndex], FieldCoords.neighborMap.[rightIndex])
+            let offsetIndex = Array.findIndex (fun x -> x = offset) FieldCoords.neighborMap
+            let leftOffsetIndex = left offsetIndex
+            let rightOffsetIndex = right offsetIndex
+            let leftOffset = FieldCoords.neighborMap.[leftOffsetIndex]
+            let rightOffset = FieldCoords.neighborMap.[rightOffsetIndex]
+            let left = FieldCoords.add src leftOffset
+            let right = FieldCoords.add src rightOffset
+            (left, right)

@@ -64,6 +64,7 @@ module Movement =
                 |> List.filter (fun x ->                    
                     let freedomOfMovement = Rules.freedomOfMovement path.Head x tmpBoard
                     let oneHive = Rules.oneHive path.Head x tmpBoard
-                    freedomOfMovement && oneHive)
+                    let canMove = freedomOfMovement && oneHive
+                    canMove)
             nextFields
-        Tree.expandTips tree expandNode
+        Tree.expandTips tree expandNode |> Tree.distinctTips

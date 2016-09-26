@@ -7,10 +7,10 @@ open Movement
 module SoldierAnt = 
     let movementGenerator (coords: FieldCoords) (board: Board) =
         let rec spread tree =
-            let oldCount = Tree.nodeCount tree
+            let oldLength = Tree.maxPathLength tree
             let newTree = Movement.spreadTree board tree StepType.ToGround
-            let newCount = Tree.nodeCount newTree
-            if newCount = oldCount
+            let newLength = Tree.maxPathLength newTree
+            if newLength = oldLength
             then newTree
             else spread newTree
 
