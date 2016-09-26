@@ -24,3 +24,4 @@ module Grasshopper =
         targets
         |> List.map (fun target -> [coords; target])
         |> Seq.ofList
+        |> Seq.filter (fun x -> Rules.oneHive (List.head x) (List.last x) board)
