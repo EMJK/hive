@@ -34,7 +34,7 @@ module Movement =
         let movesToPillbugs = 
             neighborFriendlyPillBugCoords
             |> List.map (fun x -> (coords, x))
-            |> List.filter (fun (a, b) -> Rules.freedomOfMovement [a; b] board)
+            |> List.filter (fun (a, b) -> Rules.freedomOfMovement a b board)
             |> List.filter (fun (a, b) -> Rules.oneHive a b board)
 
         let movesToTargets =
@@ -62,7 +62,7 @@ module Movement =
                     | ToGround -> not (Board.isPopulated x tmpBoard)
                     | ToHive -> Board.isPopulated x tmpBoard)
                 |> List.filter (fun x ->                    
-                    let freedomOfMovement = Rules.freedomOfMovement [path.Head; x] tmpBoard
+                    let freedomOfMovement = Rules.freedomOfMovement path.Head x tmpBoard
                     let oneHive = Rules.oneHive path.Head x tmpBoard
                     freedomOfMovement && oneHive)
             nextFields

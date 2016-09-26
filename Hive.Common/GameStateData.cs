@@ -23,6 +23,7 @@ namespace Hive.Common
                 .Where(IsMoveInsideBoard)
                 .Select(x => x.LastOrDefault())
                 .Where(x => x != null)
+                .Distinct()
                 .ToList();
         }
 
@@ -54,15 +55,15 @@ namespace Hive.Common
 
         private List<List<GridCoords>> GetMovesForPlayer(PlayerColor color)
         {
-            if (color == PlayerColor.Black) return BlackPlayerMoves.Where(IsMoveInsideBoard).ToList();
-            if (color == PlayerColor.White) return WhitePlayerMoves.Where(IsMoveInsideBoard).ToList();
+            if (color == PlayerColor.Black) return BlackPlayerMoves.Where(IsMoveInsideBoard).Distinct(GetPathComparer()).ToList();
+            if (color == PlayerColor.White) return WhitePlayerMoves.Where(IsMoveInsideBoard).Distinct(GetPathComparer()).ToList();
             return null;
         }
 
         private List<GridCoords> GetPlacementOptionsForPlayer(PlayerColor color)
         {
-            if (color == PlayerColor.White) return WhiteNewBugPlacementOptions.Where(x => x.IsInsideBoard()).ToList();
-            if (color == PlayerColor.Black) return BlackNewBugPlacementOptions.Where(x => x.IsInsideBoard()).ToList();
+            if (color == PlayerColor.White) return WhiteNewBugPlacementOptions.Where(x => x.IsInsideBoard()).Distinct().ToList();
+            if (color == PlayerColor.Black) return BlackNewBugPlacementOptions.Where(x => x.IsInsideBoard()).Distinct().ToList();
             return null;
         }
 
@@ -87,6 +88,13 @@ namespace Hive.Common
             if (color == PlayerColor.White) return PlayerColor.Black;
             if (color == PlayerColor.Black) return PlayerColor.White;
             return PlayerColor.Empty;
+        }
+
+        private IEqualityComparer<List<GridCoords>> GetPathComparer()
+        {
+            return new FuncEqualityComparer<List<GridCoords>>((x, y) =>
+                x.FirstOrDefault() == y.FirstOrDefault() &&
+                x.LastOrDefault() == y.LastOrDefault());
         }
     }
 }

@@ -6,70 +6,20 @@ open BoardImpl
 module Rules = 
 
     let oneHive (src: FieldCoords) (dst: FieldCoords) (board: Board) =
-        let getGroupAt (coords:FieldCoords) (board:Board) =
-            let rec expandGroup (group: FieldCoords list) (board: Board) =
-                let newFields =
-                    group
-                    |> List.map FieldCoords.neighbors
-                    |> List.concat
-                    |> List.except group
-                    |> List.distinct
-                    |> List.filter (fun x -> Board.isPopulated x board)
-                match newFields with
-                | [] -> group
-                | fields -> 
-                    let newGroup =
-                        group
-                        |> List.append fields
-                        |> List.distinct
-                    expandGroup newGroup board
-            
-            expandGroup [coords] board
-
-        let isSingleGroup (group: FieldCoords list) (board: Board) =
-            List.length group = Board.populatedFieldCount board
-
-        let isSingleGroupAt coords board =
-            let group = getGroupAt coords board
-            isSingleGroup group board
-
-        let isOneHive (board: Board) =
-            let bugCoords = 
-                board.Map
-                |> Map.toSeq
-                |> Seq.filter (fun (_, stack) -> not (List.isEmpty stack))
-                |> Seq.map fst
-                |> Seq.tryHead
-            match bugCoords with
-            | Some coords -> isSingleGroupAt coords board
-            | None -> true
-
-        let (movedBug, stateAfterPickup) = (Board.pickBug src board)
-        let stateAfterPlacement = Board.placeBug movedBug dst stateAfterPickup
-
-        let canPick = isOneHive stateAfterPickup
-
-        let canPlace = isOneHive stateAfterPlacement
-
+        let (bug, step1) = Board.pickBug src board
+        let step2 = Board.placeBug bug dst step1
+        let canPick = Board.hasExactlyOneGroup step1
+        let canPlace = Board.hasExactlyOneGroup step2
         let result = canPick && canPlace
         result
                     
 
-    let freedomOfMovement (sequence: FieldCoords list) (board:Board) =
-        let canMove src dst board =
-            let maxHeight = max (Board.stackHeight src board) (Board.stackHeight dst board)
-            let left, right = FieldCoords.sidesOf src dst
-            let leftHeight = Board.stackHeight left board
-            let rightHeight = Board.stackHeight right board
-            leftHeight <= maxHeight || rightHeight <= maxHeight
-
-        let newState = Board.removeBug (List.head sequence) board
-        sequence
-        |> List.windowed 2
-        |> List.forall (fun list -> 
-            match list with
-            | [src;dst] -> canMove src dst newState
-            | _ -> false)
+    let freedomOfMovement (src: FieldCoords) (dst: FieldCoords) (board: Board) =
+        let maxHeight = max ((Board.stackHeight src board) - 1) (Board.stackHeight dst board)
+        let left, right = FieldCoords.sidesOf src dst
+        let leftHeight = Board.stackHeight left board
+        let rightHeight = Board.stackHeight right board
+        leftHeight <= maxHeight || rightHeight <= maxHeight
 
     let teamPlacement (color: PlayerColor) (coords: FieldCoords) (board: Board) =
         if Board.isEmpty board 

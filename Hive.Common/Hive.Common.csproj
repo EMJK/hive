@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Bug.cs" />
     <Compile Include="Communication\Client.cs" />
+    <Compile Include="FuncEqualityComparer.cs" />
     <Compile Include="GameStateData.cs" />
     <Compile Include="GridCoords.cs" />
     <Compile Include="IGameActions.cs" />

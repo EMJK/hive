@@ -1,5 +1,6 @@
 ﻿namespace Hive.Engine
 open Types
+open FieldCoordsImpl
 
 module BoardImpl =
     type Board with
@@ -89,6 +90,39 @@ module BoardImpl =
             | Move move -> 
                 let (bug, tmpBoard) = Board.pickBug move.Head board
                 Board.placeBug bug (List.last move) tmpBoard
+
+        static member hasExactlyOneGroup board =
+            let getGroupAt (coords:FieldCoords) =
+                let rec expandGroup (group: FieldCoords list) =
+                    let newFields =
+                        group
+                        |> List.map FieldCoords.neighbors
+                        |> List.concat
+                        |> List.except group
+                        |> List.distinct
+                        |> List.filter (fun x -> Board.isPopulated x board)
+                    match newFields with
+                    | [] -> group
+                    | fields -> 
+                        let newGroup =
+                            group
+                            |> List.append fields
+                            |> List.distinct
+                        expandGroup newGroup            
+                expandGroup [coords]
+
+            if Board.isEmpty board 
+            then false
+            else    
+                let coords = 
+                    board.Map
+                    |> Map.toSeq
+                    |> Seq.filter (fun (_, s) -> s.Length > 0)
+                    |> Seq.head
+                    |> fst
+                let group = getGroupAt coords
+                group.Length = Board.populatedFieldCount board
+
 
 
 

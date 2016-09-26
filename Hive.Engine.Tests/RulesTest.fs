@@ -18,12 +18,12 @@ module RulesTest =
                     makeBug Beetle PlayerColor.White
                 ]
             ]
-        Assert.True(Hive.Engine.Rules.freedomOfMovement [(makeCoords 0 0 0); (makeCoords 1 -1 0)] board)
-        Assert.True(Hive.Engine.Rules.freedomOfMovement [(makeCoords 0 0 0); (makeCoords 0 -1 1)] board)
-        Assert.True(Hive.Engine.Rules.freedomOfMovement [(makeCoords 0 0 0); (makeCoords -1 0 1)] board)
-        Assert.True(Hive.Engine.Rules.freedomOfMovement [(makeCoords 0 0 0); (makeCoords -1 1 0)] board)
-        Assert.True(Hive.Engine.Rules.freedomOfMovement [(makeCoords 0 0 0); (makeCoords 0 1 -1)] board)
-        Assert.False(Hive.Engine.Rules.freedomOfMovement [(makeCoords 0 0 0); (makeCoords 1 0 -1)] board)
+        Assert.True(Hive.Engine.Rules.freedomOfMovement  (makeCoords 0 0 0) (makeCoords 1 -1 0) board)
+        Assert.True(Hive.Engine.Rules.freedomOfMovement  (makeCoords 0 0 0) (makeCoords 0 -1 1) board)
+        Assert.True(Hive.Engine.Rules.freedomOfMovement  (makeCoords 0 0 0) (makeCoords -1 0 1) board)
+        Assert.True(Hive.Engine.Rules.freedomOfMovement  (makeCoords 0 0 0) (makeCoords -1 1 0) board)
+        Assert.True(Hive.Engine.Rules.freedomOfMovement  (makeCoords 0 0 0) (makeCoords 0 1 -1) board)
+        Assert.False(Hive.Engine.Rules.freedomOfMovement (makeCoords 0 0 0) (makeCoords 1 0 -1) board)
 
     [<Fact>]
     let oneHiveRuleTest() = 
