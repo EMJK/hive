@@ -178,7 +178,7 @@ public class MouseManager : MonoBehaviour
                 mats[0] = newMat;
                 mr.materials = mats;
 
-                movesForBug = Engine.Client.GameState.GetPossibleTargetsForBug(selectedUnit.color, selectedUnit.actualPosition);
+                movesForBug = Engine.Client.GameState.GetPossibleTargetsForBug(Engine.Client.GameState.CurrentPlayer, selectedUnit.actualPosition);
 
                 foreach (GridCoords move in movesForBug)
                 {
