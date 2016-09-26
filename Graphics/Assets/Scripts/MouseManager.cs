@@ -97,7 +97,7 @@ public class MouseManager : MonoBehaviour
 
                         //move
 
-                        Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, destination);
+                        Engine.Client.MoveBug(Engine.Client.GameState.CurrentPlayer, selectedUnit.actualPosition, destination);
 
                         selectedUnit.destination = ourHitObject.transform.position;
                         selectedUnit.x = x;
