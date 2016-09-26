@@ -1,10 +1,12 @@
 ﻿namespace Hive.Engine
 module Types =
     type StepType = 
-        | Jump 
+        | Any 
         | ToHive 
         | ToGround
         override x.ToString() = sprintf "%A" x
+
+
 
     type BugType = 
         | Beetle 
@@ -56,4 +58,4 @@ module Types =
         | Player of PlayerColor
         override x.ToString() = sprintf "%A" x
 
-    type MovementGenerator = FieldCoords -> Board -> FieldCoords list list
+    type MovementGenerator = FieldCoords -> Board -> FieldCoords list seq

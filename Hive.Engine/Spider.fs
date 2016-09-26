@@ -6,9 +6,9 @@ open Movement
 
 module Spider = 
     let movementGenerator (coords: FieldCoords) (board: Board) =
-        let pool = [[coords]]
-        let step1 = Movement.spread board pool false
-        let step2 = Movement.spread board step1 false
-        let step3 = Movement.spread board step2 false
-        step3
-        |> List.filter(fun path -> path.Length = 3)
+        let root = Tree.singleton coords
+        let step1 = Movement.spreadTree board root StepType.ToGround
+        let step2 = Movement.spreadTree board step1 StepType.ToGround
+        let step3 = Movement.spreadTree board step2 StepType.ToGround
+        Tree.allPathsTopDown step3
+        |> Seq.filter (fun x -> x.Length = 4)

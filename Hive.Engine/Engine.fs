@@ -67,23 +67,23 @@ module Engine =
                 let generator = getGenerator b
                 let moves = generator c board
                 moves)
-            |> List.concat
+            |> Seq.concat
 
         let playerBugMovesOverPillBug =
             playerBugs
             |> List.map (fun (c,_) -> Movement.movesOverPillBug c board color)
-            |> List.concat
+            |> Seq.concat
 
         let enemyBugMovesOverPillBug =
             enemyBugs
             |> List.map (fun (c,_) -> Movement.movesOverPillBug c board color)
-            |> List.concat
+            |> Seq.concat
 
-        let allMoves = 
-            playerBugMoves @ playerBugMovesOverPillBug @ enemyBugMovesOverPillBug
-            |> List.distinctBy (fun x -> (List.head x, List.last x))
-            |> List.groupBy (fun x -> List.head x)
-            |> Set.ofList
+        let allMoves =
+            playerBugMoves 
+            |> Seq.append playerBugMovesOverPillBug 
+            |> Seq.append enemyBugMovesOverPillBug
+            |> Seq.groupBy (fun x -> List.head x)
 
         allMoves
 

@@ -6,7 +6,7 @@ open Movement
 
 module Beetle = 
     let movementGenerator (coords: FieldCoords) (board: Board) =
-        let pool = [[coords]]
-        let step1 = Movement.spread board pool true
-        step1
+        let root = Tree.singleton coords
+        let step1 = Movement.spreadTree board root StepType.Any
+        Tree.allPathsTopDown step1
         

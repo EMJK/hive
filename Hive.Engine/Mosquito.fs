@@ -6,6 +6,11 @@ open Movement
 
 module Mosquito = 
     let movementGenerator (coords: FieldCoords) (board: Board) =
+        let listComparer l1 l2 =
+            if (List.length l1) = (List.length l2)
+            then List.forall2 (fun x y -> x = y) l1 l2
+            else false
+
         if Board.stackHeight coords board > 1
         then Beetle.movementGenerator coords board
         else
@@ -29,5 +34,5 @@ module Mosquito =
                 |> List.choose (fun x -> x)
                 |> List.map (fun x -> x coords board)
             availableMovesets
-            |> List.concat
-            |> Movement.clean
+            |> Seq.concat
+            |> Seq.distinct

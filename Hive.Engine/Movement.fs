@@ -4,73 +4,66 @@ open FieldCoordsImpl
 open BoardImpl
 
 module Movement =
-    let clean (movements: FieldCoords list list) =
-        movements
-        |> List.sortBy List.length
-        |> List.distinctBy (fun x -> (List.head x, List.last x))       
+    let movesOverPillBug (coords: FieldCoords) (board: Board) (player: PlayerColor) =
+        let neighborFriendlyPillBugCoords =
+            let isNearPillBug coords =
+                let neighbors = 
+                    FieldCoords.neighbors coords
+                    |> List.map (fun x -> Board.topBugAt x board)
+                    |> List.choose id
+                    |> List.map (fun x -> x.BugType)
+                neighbors |> List.contains BugType.PillBug
+            FieldCoords.neighbors coords
+            |> List.map (fun x -> (x, Board.stackAt x board))
+            |> List.map (fun (c, s) ->
+                match s with
+                | None -> None
+                | Some(x) -> Some(c, x))
+            |> List.choose id
+            |> List.filter (fun (_, s) -> s.Length = 1)
+            |> List.map (fun (c, s) -> (c, s.Head))
+            |> List.filter (fun (c, b) -> b.Color = player)
+            |> List.map (fun (c, b) -> (c, b.BugType))
+            |> List.filter (fun (c, b) ->
+                match b with
+                | PillBug -> true
+                | Mosquito -> isNearPillBug c
+                | _ -> false)
+            |> List.map fst
 
-    let movesOverPillBug (coords: FieldCoords) (board: Board) (pillBugColor: PlayerColor) =
         let movesToPillbugs = 
-            FieldCoords.neighbors coords 
-            |> List.filter (fun x ->
-                match Board.topBugAt x board with
-                | None -> false
-                | Some bug -> bug.BugType = PillBug && bug.Color = pillBugColor)
-            |> List.map (fun x -> [coords;x])
-        let movesToTargets = 
+            neighborFriendlyPillBugCoords
+            |> List.map (fun x -> (coords, x))
+            |> List.filter (fun (a, b) -> Rules.freedomOfMovement [a; b] board)
+            |> List.filter (fun (a, b) -> Rules.oneHive a b board)
+
+        let movesToTargets =
+            let emptyNeighbors coords =
+                FieldCoords.neighbors coords
+                |> List.filter (fun x -> not (Board.isPopulated x board))
             movesToPillbugs
-            |> List.map (fun move -> 
-                let pillBug = List.last move
-                let emptyNeighbors =
-                    FieldCoords.neighbors pillBug
-                    |> List.filter (fun x -> not (Board.isPopulated x board))
-                emptyNeighbors
-                |> List.map (fun x -> move @ [x]))
-        let result = clean (List.concat movesToTargets)
-        result
-        |> List.filter (fun x ->
-            match x with
-            | [src;middle;_] -> Rules.oneHive src middle board
-            | _ -> false)
+            |> List.map (fun (a, b) -> (a, b, emptyNeighbors b |> List.except [a]))
+            |> List.map (fun (a, b, l) -> l |> List.map (fun x -> [a; b; x]))
+            |> List.concat
 
+        movesToTargets
 
-    let spread (board: Board) (paths: FieldCoords list list) (canClimb: bool) =
-        let firstAndLast path = (List.head path, List.last path)
-        let lastStep path = List.rev path |> (fun x -> (x.Tail.Head, x.Head))
-
-        let checkLastStepFreedomOfMovement board path =
-            let (src, dst) = lastStep path            
-            let tmpBoard = Board.moveBug path.Head src board
-            Rules.freedomOfMovement [src; dst] tmpBoard
-
-        let checkOneHiveRule board path =
-            let (src, dst) = firstAndLast path
-            Rules.oneHive src dst board
-
-        let checkClimbing board path =
-            match canClimb with
-            | true -> true
-            | false ->
-                let (_, dst) = lastStep path
-                not (Board.isPopulated dst board)
-            
-        let singleSpread (path: FieldCoords list) =
+    let spreadTree (board: Board) (tree: Tree<FieldCoords>) (stepType: StepType) =
+        let root = tree.root
+        let expandNode node =
+            let path = Tree.getPath node
+            let tmpBoard = Board.moveBug (List.last path) path.Head board
             let nextFields = 
-                FieldCoords.neighbors (List.last path)
-                |> List.filter (fun x -> not <| List.contains x path) // filtrujemy pola znajdujące się już na ścieżce
-            let newPaths = 
-                nextFields
-                |> List.map (fun x -> path @ [x])
-
-            newPaths
-                |> List.filter (fun path -> checkOneHiveRule board path)
-                |> List.filter (fun path -> checkLastStepFreedomOfMovement board path)
-                |> List.filter (fun path -> checkClimbing board path)
-
-        let spreadPaths = paths |> List.map singleSpread
-        paths
-        |> List.map singleSpread
-        |> List.concat
-        |> clean
-
-    
+                FieldCoords.neighbors path.Head 
+                |> List.except path.Tail
+                |> List.filter (fun x ->
+                    match stepType with
+                    | Any -> true
+                    | ToGround -> not (Board.isPopulated x tmpBoard)
+                    | ToHive -> Board.isPopulated x tmpBoard)
+                |> List.filter (fun x ->                    
+                    let freedomOfMovement = Rules.freedomOfMovement [path.Head; x] tmpBoard
+                    let oneHive = Rules.oneHive path.Head x tmpBoard
+                    freedomOfMovement && oneHive)
+            nextFields
+        Tree.expandTips tree expandNode

@@ -6,20 +6,14 @@ open Movement
 
 module SoldierAnt = 
     let movementGenerator (coords: FieldCoords) (board: Board) =
-        let totalSteps (moves: FieldCoords list list) =
-            moves
-            |> List.map List.length
-            |> Seq.sum
+        let rec spread tree =
+            let oldCount = Tree.nodeCount tree
+            let newTree = Movement.spreadTree board tree StepType.ToGround
+            let newCount = Tree.nodeCount newTree
+            if newCount = oldCount
+            then newTree
+            else spread newTree
 
-        let rec spread (moves: FieldCoords list list) =
-            let newMoves = Movement.spread board moves false
-            let allMoves = 
-                newMoves @ moves
-                |> Movement.clean
-
-            if moves.Length = allMoves.Length
-            then allMoves
-            else 
-                spread newMoves @ allMoves
-                |> Movement.clean
-        spread [[coords]]
+        let tree = spread (Tree.singleton coords)
+        let moves = Tree.allPathsTopDown tree
+        moves

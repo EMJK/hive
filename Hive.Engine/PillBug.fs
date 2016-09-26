@@ -6,6 +6,6 @@ open Movement
 
 module PillBug = 
     let movementGenerator (coords: FieldCoords) (board: Board) =
-        let pool = [[coords]]
-        let step1 = Movement.spread board pool false
-        step1
+        let root = Tree.singleton coords
+        let step1 = Movement.spreadTree board root StepType.ToGround
+        Tree.allPathsTopDown step1

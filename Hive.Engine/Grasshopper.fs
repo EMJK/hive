@@ -23,3 +23,4 @@ module Grasshopper =
             |> List.choose id
         targets
         |> List.map (fun target -> [coords; target])
+        |> Seq.ofList
