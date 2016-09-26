@@ -26,7 +26,6 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        manageDisplayedText();
         // Is the mouse over a Unity UI Element?
         if (EventSystem.current.IsPointerOverGameObject())
         {
@@ -218,11 +217,11 @@ public class MouseManager : MonoBehaviour
     private void displayText()
     {
         if (Engine.Client.GameState.CurrentPlayer == PlayerColor.White)
-            setDisplayText("Ruch białych");
+            displayedText.text = "Ruch białych";
         else if (Engine.Client.GameState.CurrentPlayer == PlayerColor.Black)
-            setDisplayText("Ruch czarnych");
+            displayedText.text = "Ruch czarnych";
         else
-            setDisplayText("Błąd silnika gry");
+            displayedText.text = "Błąd silnika gry";
 
         switch ((int)Engine.Client.GameState.Winner)
         {
@@ -240,27 +239,4 @@ public class MouseManager : MonoBehaviour
                 
         }
     }
-
-    private void setDisplayText (string text)
-    {
-        displayedText.text = text;
-        displayedText.enabled = true;
-        this.showTip = true;
-    }
-
-    private void manageDisplayedText()
-    {
-        if (Engine.Client.GameState.Winner != 0)
-            timer = 600;
-        if (showTip) {
-			if(timer<tipTime) {
-				timer += Time.deltaTime;
-			} else {
-				displayedText.enabled = false;
-				showTip = false;
-				timer = 0;
-			}
-		}
-	}
-
 }
