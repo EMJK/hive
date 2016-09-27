@@ -20,7 +20,7 @@ Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Manage
 Loading H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\Hive.IpcClient.dll into Unity Child Domain
 Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\Newtonsoft.Json.dll (this message is harmless)
 Loading H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\Newtonsoft.Json.dll into Unity Child Domain
-- Completed reload, in  0.079 seconds
+- Completed reload, in  0.119 seconds
 Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\System.dll (this message is harmless)
 desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
@@ -28,6 +28,29 @@ desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.112049 ms
+UnloadTime: 1.183895 ms
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1f0c -> priority: 1 
+  Thread -> id: 1a3c -> priority: 1 
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.093471 ms
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 493.
+Total: 0.491318 ms (FindLiveObjects: 0.040162 ms CreateObjectMapping: 0.030791 ms MarkObjects: 0.333347 ms  DeleteObjects: 0.085679 ms)
+
+Starting engine...
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\System.Configuration.dll (this message is harmless)
+Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\System.Xml.dll (this message is harmless)
+Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\System.Data.dll (this message is harmless)
+Engine started.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.534322 ms
+
+Unloading 56 unused Assets to reduce memory usage. Loaded Objects now: 242.
+Total: 1.283408 ms (FindLiveObjects: 0.091480 ms CreateObjectMapping: 0.027221 ms MarkObjects: 0.876430 ms  DeleteObjects: 0.287383 ms)
+

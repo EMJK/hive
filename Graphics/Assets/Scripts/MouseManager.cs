@@ -11,9 +11,8 @@ public class MouseManager : MonoBehaviour
     private Unit selectedUnit;
     public Text displayedText;
     private List<GridCoords> movesForBug = null;
-    private bool showTip = false;
-    private float timer = 0;
     public float tipTime = 4;
+    public DateTime date;
 
     // Use this for initialization
     private void Start()
@@ -84,6 +83,7 @@ public class MouseManager : MonoBehaviour
                     if (selectedUnit.isOutOfBoard && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, selectedUnit.bug, destination))
                     {
                         Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
+
                         //move
                         selectedUnit.destination = ourHitObject.transform.position;
                         selectedUnit.x = x;
@@ -92,9 +92,9 @@ public class MouseManager : MonoBehaviour
                         selectedUnit.isOutOfBoard = false;
                         displayText();
                     }
+
                     else if (selectedUnit.isOutOfBoard == false && Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, destination))
                     {
-
                         //move
 
                         Engine.Client.MoveBug(Engine.Client.GameState.CurrentPlayer, selectedUnit.actualPosition, destination);
