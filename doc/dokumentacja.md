@@ -58,3 +58,39 @@ czas w aplikacji widoczna jest informacja o tym który gracz aktualnie wykonuje 
 
 
 ## Dokumentacja techniczna
+Najważniejszym zagadnieniem dotyczącym gry *Rój* jest plansza - siatka złożona z sześciokątów
+foremnych. Położenie pionków na planszy można określić przy pomocy dwóch rodzajów układów
+współrzędnych:
+
+* Układ trójosiowy
+
+![](./images/3axis2.png) ![](./images/3axis1.png)
+
+* Układ dwuosiowy
+
+![](./images/2axis.png)
+
+Kod napisany w F# posługuje się ukłądem trójosiowym, łatwiejszym w użyciu przy obliczaniu
+ścieżek poruszania się pionków. Kod napisany w C# posługuje się układem dwuosiowym, łatwiejszym
+do wykorystania przy przedstawianiu położenia pionków w grafice 3D.
+
+### Opis ważniejszych klas
+W języku F# pojęcie *klasy* dotyczy tylko klas zaimportowanych z kodu napisanego w języku obiektowym
+takim jak C#. Odpowiednikiem klas w języku F# są *moduły* - konstrukcje semantyczne grupujące
+funkcje pod względem zastosowania lub tematyki.
+
+Najważniejsze moduły w języku F#:
+* *Tree*: moduł opisujący strukturę drzewa - acyklicznego grafu skierowanego - wykorzystywanego do
+  wyznaczania ruchów pionków.
+* *Engine*: *Silnik* gry, zawiera operacje słuące do wykonywania czynności takich jak ruch pionków
+  po planszy lub umieszczanie na niej nowych pionków.
+
+
+## Dokumentacja użytkowa
+[Instrukcja do gry planszowej dostępna jest tutaj.](http://www.gen42.com/downloads/rules/Hive_Carbon_English_Rules.pdf)
+
+
+## Testowanie i wyniki testów
+
+
+## Instrukcja instalacji
