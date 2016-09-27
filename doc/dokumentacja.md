@@ -80,6 +80,7 @@ takim jak C#. Odpowiednikiem klas w języku F# są *moduły* - konstrukcje seman
 funkcje pod względem zastosowania lub tematyki.
 
 Najważniejsze moduły w języku F#:
+
 * *Tree*: moduł opisujący strukturę drzewa - acyklicznego grafu skierowanego - wykorzystywanego do
   wyznaczania ruchów pionków.
 * *Engine*: *Silnik* gry, zawiera operacje słuące do wykonywania czynności takich jak ruch pionków
