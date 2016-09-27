@@ -59,6 +59,7 @@
     <Compile Include="RulesTest.fs" />
     <Compile Include="PlacementTest.fs" />
     <Compile Include="TreeTest.fs" />
+    <Compile Include="WinnerTest.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -96,7 +96,7 @@ module Engine =
         let board = state.Board
         let queenCoords = 
             Map.toSeq board.Map
-                |> Seq.filter (fun (_, bugs) -> hasQueen bugs PlayerColor.White)
+                |> Seq.filter (fun (_, bugs) -> hasQueen bugs color)
                 |> Seq.map fst
                 |> Seq.tryHead
         match queenCoords with
