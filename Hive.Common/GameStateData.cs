@@ -13,6 +13,8 @@ namespace Hive.Common
         public PlayerColor PreviousPlayer { get; set; }
         public PlayerColor CurrentPlayer => GetCurrentPlayer();
         public Winner Winner { get; set; }
+        public int MoveNumber { get; set; }
+        public GridCoords PreviouslyMovedBug { get; set; }
 
         public List<GridCoords> GetPossibleTargetsForBug(PlayerColor currentPlayer, GridCoords coords)
         {
@@ -33,8 +35,12 @@ namespace Hive.Common
             return stack?.Item2?.FirstOrDefault();
         }
 
-        public bool CheckNewBugPlacement(PlayerColor bugColor, GridCoords coords)
+        public bool CheckNewBugPlacement(PlayerColor bugColor, BugType bugType, GridCoords coords)
         {
+            if (MoveNumber >= 5 && !PlayerHasPlacedQueen(bugColor))
+            {
+                return bugType == BugType.QueenBee && GetPlacementOptionsForPlayer(bugColor).Contains(coords);
+            }
             return GetPlacementOptionsForPlayer(bugColor).Contains(coords);
         }
 
@@ -55,9 +61,17 @@ namespace Hive.Common
 
         private List<List<GridCoords>> GetMovesForPlayer(PlayerColor color)
         {
-            if (color == PlayerColor.Black) return BlackPlayerMoves.Where(IsMoveInsideBoard).Distinct(GetPathComparer()).ToList();
-            if (color == PlayerColor.White) return WhitePlayerMoves.Where(IsMoveInsideBoard).Distinct(GetPathComparer()).ToList();
-            return null;
+            if (!PlayerHasPlacedQueen(color)) return new List<List<GridCoords>>();
+            List<List<GridCoords>> pool = null;
+            if (color == PlayerColor.Black) pool = BlackPlayerMoves; 
+            if (color == PlayerColor.White) pool = WhitePlayerMoves;
+            if (pool == null) return null;
+
+            return pool
+                .Where(IsMoveInsideBoard)
+                .Distinct(GetPathComparer())
+                .Where(x => PreviouslyMovedBug == null || x.FirstOrDefault() != PreviouslyMovedBug)
+                .ToList();
         }
 
         private List<GridCoords> GetPlacementOptionsForPlayer(PlayerColor color)
@@ -65,6 +79,12 @@ namespace Hive.Common
             if (color == PlayerColor.White) return WhiteNewBugPlacementOptions.Where(x => x.IsInsideBoard()).Distinct().ToList();
             if (color == PlayerColor.Black) return BlackNewBugPlacementOptions.Where(x => x.IsInsideBoard()).Distinct().ToList();
             return null;
+        }
+
+        private bool PlayerHasPlacedQueen(PlayerColor color)
+        {
+            var bugs = Bugs.Select(x => x.Item2).SelectMany(x => x);
+            return bugs.Any(x => x.Type == BugType.QueenBee && x.Color == color);
         }
 
         private bool IsMoveInsideBoard(IEnumerable<GridCoords> move)

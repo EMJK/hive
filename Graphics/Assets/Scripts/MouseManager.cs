@@ -81,7 +81,7 @@ public class MouseManager : MonoBehaviour
 
                     GridCoords destination = new GridCoords(ourHitObject.GetComponent<Hex>().x, ourHitObject.GetComponent<Hex>().y);
 
-                    if (selectedUnit.isOutOfBoard && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, destination))
+                    if (selectedUnit.isOutOfBoard && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, selectedUnit.bug, destination))
                     {
                         Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
                         //move

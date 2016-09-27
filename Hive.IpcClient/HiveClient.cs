@@ -11,6 +11,7 @@ namespace Hive.IpcClient
         private Process _engineProcess;
         private readonly Server _server;
         private readonly Action<string> _logger;
+        private int _moveNumber = 0;
 
         public GameStateData GameState { get; private set; }
 
@@ -56,7 +57,7 @@ namespace Hive.IpcClient
         {
             _logger($"{color} is trying to place new {color} {bug} at {coords}");
 
-            if (GameState.CurrentPlayer == color && GameState.CheckNewBugPlacement(color, coords))
+            if (GameState.CurrentPlayer == color && GameState.CheckNewBugPlacement(color, bug, coords))
             {
                 SendMessageAndReadResponse(new IpcRequest(nameof(PlaceNewBug), color, bug, coords));
                 _logger($"{color} placed new {color} {bug} at {coords}");
@@ -110,6 +111,8 @@ namespace Hive.IpcClient
             else
             {
                 GameState = response.GameState;
+                _moveNumber++;
+                GameState.MoveNumber = _moveNumber;
             }
         }
 
