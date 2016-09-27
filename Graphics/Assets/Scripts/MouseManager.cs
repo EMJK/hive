@@ -29,22 +29,10 @@ public class MouseManager : MonoBehaviour
     {
         // Is the mouse over a Unity UI Element?
         if (EventSystem.current.IsPointerOverGameObject())
-        {
-            // It is, so let's not do any of our own custom
-            // mouse stuff, because that would be weird.
-
-            // NOTE!  We might want to ask the system WHAT KIND
-            // of object we're over -- so for things that aren't
-            // buttons, we might not actually want to bail out early.
-
             return;
-        }
 
         if (ended)
-        {
-            Engine.Stop();
-            Time.timeScale = 0;
-        }
+            return;
          
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

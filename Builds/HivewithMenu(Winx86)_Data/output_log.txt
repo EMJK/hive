@@ -20,7 +20,7 @@ Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Manage
 Loading H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\Hive.IpcClient.dll into Unity Child Domain
 Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\Newtonsoft.Json.dll (this message is harmless)
 Loading H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\Newtonsoft.Json.dll into Unity Child Domain
-- Completed reload, in  0.064 seconds
+- Completed reload, in  0.088 seconds
 Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: H:\Programowanie\hive\Builds\HivewithMenu(Winx86)_Data\Managed\System.dll (this message is harmless)
 desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
@@ -28,14 +28,14 @@ desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.106248 ms
+UnloadTime: 1.120527 ms
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1984 -> priority: 1 
+  Thread -> id: 1e7c -> priority: 1 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.856959 ms
+UnloadTime: 5.160408 ms
 
 Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 493.
-Total: 0.620730 ms (FindLiveObjects: 0.050872 ms CreateObjectMapping: 0.043286 ms MarkObjects: 0.415010 ms  DeleteObjects: 0.110669 ms)
+Total: 0.612698 ms (FindLiveObjects: 0.074523 ms CreateObjectMapping: 0.073630 ms MarkObjects: 0.373509 ms  DeleteObjects: 0.089695 ms)
 
 Starting engine...
  
@@ -48,11 +48,11 @@ Engine started.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White is trying to place new White Grasshopper at {0,0,0}-{10,10}
+White is trying to place new White QueenBee at {0,0,0}-{10,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White placed new White Grasshopper at {0,0,0}-{10,10}
+White placed new White QueenBee at {0,0,0}-{10,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
@@ -64,55 +64,27 @@ Black placed new Black SoldierAnt at {-1,1,0}-{9,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black is trying to place new Black QueenBee at {-1,2,-1}-{8,11}
+Black is trying to place new Black QueenBee at {-2,2,0}-{8,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black cannot place Black QueenBee at {-1,2,-1}-{8,11}
+Black cannot place Black QueenBee at {-2,2,0}-{8,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.757892 ms
-
-Unloading 64 unused Assets to reduce memory usage. Loaded Objects now: 242.
-Total: 1.286085 ms (FindLiveObjects: 0.105314 ms CreateObjectMapping: 0.028113 ms MarkObjects: 0.907667 ms  DeleteObjects: 0.244097 ms)
-
-Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.689898 ms
-
-Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 494.
-Total: 1.086166 ms (FindLiveObjects: 0.062920 ms CreateObjectMapping: 0.041501 ms MarkObjects: 0.895619 ms  DeleteObjects: 0.084340 ms)
-
-Stopping engine...
+White is trying to place new White Grasshopper at {1,-1,0}-{11,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Engine stopped.
+White placed new White Grasshopper at {1,-1,0}-{11,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Starting engine...
+Black is trying to place new Black QueenBee at {-2,2,0}-{8,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Engine started.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White is trying to place new White QueenBee at {0,0,0}-{10,10}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White placed new White QueenBee at {0,0,0}-{10,10}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black is trying to place new Black QueenBee at {-1,1,0}-{9,10}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black placed new Black QueenBee at {-1,1,0}-{9,10}
+Black placed new Black QueenBee at {-2,2,0}-{8,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
@@ -124,179 +96,115 @@ White placed new White SoldierAnt at {1,0,-1}-{10,11}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black is trying to place new Black SoldierAnt at {-1,2,-1}-{8,11}
+White is trying to place new White Spider at {0,-1,1}-{10,9}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black placed new Black SoldierAnt at {-1,2,-1}-{8,11}
+White cannot place White Spider at {0,-1,1}-{10,9}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White is trying to place new White Grasshopper at {2,0,-2}-{11,12}
+Black is trying to place new Black Grasshopper at {-2,3,-1}-{7,11}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White placed new White Grasshopper at {2,0,-2}-{11,12}
+Black placed new Black Grasshopper at {-2,3,-1}-{7,11}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black is trying to place new Black Grasshopper at {-1,3,-2}-{8,12}
+White is trying to place new White Spider at {0,-1,1}-{10,9}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black placed new Black Grasshopper at {-1,3,-2}-{8,12}
+White placed new White Spider at {0,-1,1}-{10,9}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White is trying to place new White SoldierAnt at {2,-1,-1}-{11,11}
+Black is trying to place new Black Mosquito at {-1,2,-1}-{8,11}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White placed new White SoldierAnt at {2,-1,-1}-{11,11}
+Black placed new Black Mosquito at {-1,2,-1}-{8,11}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black is trying to place new Black SoldierAnt at {-2,4,-2}-{7,12}
+White is trying to move White Grasshopper from {1,-1,0}-{11,10} to {-3,3,0}-{7,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black placed new Black SoldierAnt at {-2,4,-2}-{7,12}
+White moved White Grasshopper from {1,-1,0}-{11,10} to {-3,3,0}-{7,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White is trying to place new White Spider at {3,-2,-1}-{12,11}
+Black is trying to place new Black SoldierAnt at {-1,3,-2}-{8,12}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White placed new White Spider at {3,-2,-1}-{12,11}
+Black placed new Black SoldierAnt at {-1,3,-2}-{8,12}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black is trying to place new Black Spider at {-3,5,-2}-{6,12}
+White is trying to move White Spider from {0,-1,1}-{10,9} to {-3,2,1}-{7,9}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black placed new Black Spider at {-3,5,-2}-{6,12}
+White moved White Spider from {0,-1,1}-{10,9} to {-3,2,1}-{7,9}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White is trying to place new White Beetle at {0,-1,1}-{10,9}
+Black is trying to move Black SoldierAnt from {-1,3,-2}-{8,12} to {-2,1,1}-{8,9}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White placed new White Beetle at {0,-1,1}-{10,9}
+Black moved Black SoldierAnt from {-1,3,-2}-{8,12} to {-2,1,1}-{8,9}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black is trying to place new Black Beetle at {-2,1,1}-{8,9}
+Stopping engine...
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black placed new Black Beetle at {-2,1,1}-{8,9}
+Engine stopped.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White is trying to place new White PillBug at {-1,-1,2}-{10,8}
+NullReferenceException: Object reference not set to an instance of an object
+  at MouseManager.MouseOver_Unit (UnityEngine.GameObject ourHitObject) [0x00000] in <filename unknown>:0 
+  at MouseManager.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MouseManager.MouseOver_Unit (UnityEngine.GameObject ourHitObject) [0x00000] in <filename unknown>:0 
+  at MouseManager.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.259880 ms
+
+Unloading 107 unused Assets to reduce memory usage. Loaded Objects now: 242.
+Total: 1.507424 ms (FindLiveObjects: 0.088357 ms CreateObjectMapping: 0.025436 ms MarkObjects: 0.955416 ms  DeleteObjects: 0.437768 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.648844 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 494.
+Total: 1.025923 ms (FindLiveObjects: 0.052210 ms CreateObjectMapping: 0.037931 ms MarkObjects: 0.847870 ms  DeleteObjects: 0.086572 ms)
+
+Starting engine...
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-White placed new White PillBug at {-1,-1,2}-{10,8}
+Engine started.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black is trying to place new Black Spider at {-4,5,-1}-{5,11}
+White is trying to place new White Grasshopper at {0,0,0}-{10,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Black placed new Black Spider at {-4,5,-1}-{5,11}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White is trying to move White PillBug from {-1,-1,2}-{10,8} to {-1,0,1}-{9,9}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White moved White PillBug from {-1,-1,2}-{10,8} to {-1,0,1}-{9,9}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black is trying to move Black Spider from {-4,5,-1}-{5,11} to {-2,2,0}-{8,10}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black moved Black Spider from {-4,5,-1}-{5,11} to {-2,2,0}-{8,10}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White is trying to move Black Beetle from {-2,1,1}-{8,9} to {-2,0,2}-{9,8}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White moved Black Beetle from {-2,1,1}-{8,9} to {-2,0,2}-{9,8}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black is trying to move Black Beetle from {-2,0,2}-{9,8} to {-2,1,1}-{8,9}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black moved Black Beetle from {-2,0,2}-{9,8} to {-2,1,1}-{8,9}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White is trying to move White Spider from {3,-2,-1}-{12,11} to {1,-1,0}-{11,10}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White moved White Spider from {3,-2,-1}-{12,11} to {1,-1,0}-{11,10}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black is trying to move Black Spider from {-3,5,-2}-{6,12} to {0,3,-3}-{8,13}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black moved Black Spider from {-3,5,-2}-{6,12} to {0,3,-3}-{8,13}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White is trying to move White SoldierAnt from {2,-1,-1}-{11,11} to {0,1,-1}-{9,11}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White moved White SoldierAnt from {2,-1,-1}-{11,11} to {0,1,-1}-{9,11}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black is trying to move White QueenBee from {0,0,0}-{10,10} to {-1,-1,2}-{10,8}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black cannot move White QueenBee from {0,0,0}-{10,10} to {-1,-1,2}-{10,8}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black is trying to move White Grasshopper from {2,0,-2}-{11,12} to {-2,0,2}-{9,8}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black cannot move White Grasshopper from {2,0,-2}-{11,12} to {-2,0,2}-{9,8}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black is trying to place new Black SoldierAnt at {-3,4,-1}-{6,11}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Black placed new Black SoldierAnt at {-3,4,-1}-{6,11}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White is trying to place new White Spider at {1,-2,1}-{11,9}
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-White placed new White Spider at {1,-2,1}-{11,9}
+White placed new White Grasshopper at {0,0,0}-{10,10}
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
