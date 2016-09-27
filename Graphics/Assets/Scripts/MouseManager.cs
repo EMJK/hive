@@ -13,13 +13,15 @@ public class MouseManager : MonoBehaviour
     private List<GridCoords> movesForBug = null;
     public float tipTime = 4;
     public DateTime date;
+    public bool ended = false;
+  
 
     // Use this for initialization
     private void Start()
     {
         Engine.Reset();
         displayText();
-        //Assets.Engine.
+        ended = false;
     }
 
     // Update is called once per frame
@@ -38,6 +40,12 @@ public class MouseManager : MonoBehaviour
             return;
         }
 
+        if (ended)
+        {
+            Engine.Stop();
+            Time.timeScale = 0;
+        }
+         
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hitInfo;
@@ -227,16 +235,18 @@ public class MouseManager : MonoBehaviour
         {
             case 1:
                 displayedText.text = "Czarne wygrały!";
+                ended = true;
                 break;
             case 2:
                 displayedText.text = "Białe wygrały!";
+                ended = true;
                 break;
             case 3:
                 displayedText.text = "Remis!";
+                ended = true;
                 break;
             default:
                 break;
-                
         }
     }
 }
