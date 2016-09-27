@@ -34,3 +34,15 @@ System.OverflowException: Wartość jest za duża albo za mała dla znaku.
    w Hive.IpcServer.HiveServer.Read()
    w Hive.IpcServer.HiveServer.Run(Int32 port)
    w Hive.IpcServer.Program.Main(String[] args)
+System.OverflowException: Wartość jest za duża albo za mała dla znaku.
+   w System.Convert.ToChar(Int32 value)
+   w Hive.Common.Communication.StreamHelper.ReadLine[T](TextReader stream)
+   w Hive.IpcServer.HiveServer.Read()
+   w Hive.IpcServer.HiveServer.Run(Int32 port)
+   w Hive.IpcServer.Program.Main(String[] args)
+System.OverflowException: Wartość jest za duża albo za mała dla znaku.
+   w System.Convert.ToChar(Int32 value)
+   w Hive.Common.Communication.StreamHelper.ReadLine[T](TextReader stream)
+   w Hive.IpcServer.HiveServer.Read()
+   w Hive.IpcServer.HiveServer.Run(Int32 port)
+   w Hive.IpcServer.Program.Main(String[] args)

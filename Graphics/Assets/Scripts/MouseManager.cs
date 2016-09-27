@@ -11,16 +11,17 @@ public class MouseManager : MonoBehaviour
     private Unit selectedUnit;
     public Text displayedText;
     private List<GridCoords> movesForBug = null;
-    private bool showTip = false;
-    private float timer = 0;
     public float tipTime = 4;
+    public DateTime date;
+    public bool ended = false;
+  
 
     // Use this for initialization
     private void Start()
     {
         Engine.Reset();
         displayText();
-        //Assets.Engine.
+        ended = false;
     }
 
     // Update is called once per frame
@@ -39,6 +40,12 @@ public class MouseManager : MonoBehaviour
             return;
         }
 
+        if (ended)
+        {
+            Engine.Stop();
+            Time.timeScale = 0;
+        }
+         
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hitInfo;
@@ -84,6 +91,7 @@ public class MouseManager : MonoBehaviour
                     if (selectedUnit.isOutOfBoard && Engine.Client.GameState.CheckNewBugPlacement(selectedUnit.color, selectedUnit.bug, destination))
                     {
                         Engine.Client.PlaceNewBug(selectedUnit.color, selectedUnit.bug, destination);
+
                         //move
                         selectedUnit.destination = ourHitObject.transform.position;
                         selectedUnit.x = x;
@@ -92,9 +100,9 @@ public class MouseManager : MonoBehaviour
                         selectedUnit.isOutOfBoard = false;
                         displayText();
                     }
+
                     else if (selectedUnit.isOutOfBoard == false && Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, destination))
                     {
-
                         //move
 
                         Engine.Client.MoveBug(Engine.Client.GameState.CurrentPlayer, selectedUnit.actualPosition, destination);
@@ -227,16 +235,18 @@ public class MouseManager : MonoBehaviour
         {
             case 1:
                 displayedText.text = "Czarne wygrały!";
+                ended = true;
                 break;
             case 2:
                 displayedText.text = "Białe wygrały!";
+                ended = true;
                 break;
             case 3:
                 displayedText.text = "Remis!";
+                ended = true;
                 break;
             default:
                 break;
-                
         }
     }
 }
