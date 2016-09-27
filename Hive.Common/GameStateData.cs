@@ -20,7 +20,7 @@ namespace Hive.Common
         {
             if ((coords == null) || (currentPlayer == PlayerColor.Empty))
                 return new List<GridCoords>();
-            return WhitePlayerMoves
+            return GetMovesForPlayer(currentPlayer)
                 .Where(x => x.FirstOrDefault()?.Equals(coords) == true)
                 .Where(IsMoveInsideBoard)
                 .Select(x => x.LastOrDefault())
