@@ -8,9 +8,6 @@ public class Map : MonoBehaviour {
 	public GameObject hexPrefab;
 
 	// Size of the map in terms of number of hex tiles
-	// This is NOT representative of the amount of 
-	// world space that we're going to take up.
-	// (i.e. our tiles might be more or less than 1 Unity World Unit)
 	int width = 21;
 	int height = 21;
 
@@ -48,7 +45,6 @@ public class Map : MonoBehaviour {
                 // For a cleaner hierachy, parent this hex to the map
                 hex_go.transform.SetParent(this.transform);
 
-				// TODO: Quill needs to explain different optimization later...
 				hex_go.isStatic = true;
 
 			}

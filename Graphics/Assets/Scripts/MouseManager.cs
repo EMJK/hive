@@ -92,7 +92,6 @@ public class MouseManager : MonoBehaviour
                     else if (selectedUnit.isOutOfBoard == false && Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, destination))
                     {
                         //move
-
                         Engine.Client.MoveBug(Engine.Client.GameState.CurrentPlayer, selectedUnit.actualPosition, destination);
 
                         selectedUnit.destination = ourHitObject.transform.position;
@@ -127,7 +126,6 @@ public class MouseManager : MonoBehaviour
             // We have clicked on the unit
             if (selectedUnit != null && selectedUnit.isOutOfBoard == false)
             {
-
                 //try to jump on the unit
                 Unit targetUnit = ourHitObject.GetComponent<Unit>();
                 
@@ -139,7 +137,6 @@ public class MouseManager : MonoBehaviour
                 if (Engine.Client.GameState.CheckIfBugCanMove(selectedUnit.color, selectedUnit.actualPosition, targetUnit.actualPosition))
                 {
                     //move
-
                     Engine.Client.MoveBug(selectedUnit.color, selectedUnit.actualPosition, targetUnit.actualPosition);
                     Vector3 dest = new Vector3(targetUnit.transform.position.x, targetUnit.transform.position.y+0.2f, targetUnit.transform.position.z);
                     selectedUnit.destination = dest;

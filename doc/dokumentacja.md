@@ -10,8 +10,8 @@
 
 ## Uzasadnienie wyboru tematu
 Gra planszowa *Rój* (ang. *Hive*) jest prostą w konstrukcji grą planszową dla dwóch osób.
-Pozornie proste zasady gy stanowią jednak spore wyzwanie dla programisty implementującego
-je w aplikacji. Dodatkowym utrudnieniem było przedstawienie rozgrywki pry wykorzystaniu
+Pozornie proste zasady gry stanowią jednak spore wyzwanie dla programisty implementującego
+je w aplikacji. Dodatkowym utrudnieniem było przedstawienie rozgrywki przy wykorzystaniu
 grafiki 3D.
 
 Trudno jest wskazać cechy wyróżniające aplikację spośród podobnych produktów dostępnych
@@ -85,6 +85,12 @@ Najważniejsze moduły w języku F#:
   wyznaczania ruchów pionków.
 * *Engine*: *Silnik* gry, zawiera operacje słuące do wykonywania czynności takich jak ruch pionków
   po planszy lub umieszczanie na niej nowych pionków.
+
+Najważniejsze funkcje w języku C# po stronie obsługi graficznej:
+
+* *MouseManager*: klasa odpowiedzialna za obsługę gry, interakcję z użytkownikiem poprzez interpretację zachowań myszy.
+* *Map*: klasa, w której tworzona jest plansza do gry, poszczególne pola otrzymują swoje współrzędne.
+
 
 
 ## Dokumentacja użytkowa
