@@ -1,4 +1,4 @@
-# <div style="text-align:center;">Implementacja gry planszowej "Rój"</div>
+m# <div style="text-align:center;">Implementacja gry planszowej "Rój"</div>
 ### <div style="text-align:center;">Emilia Marczyńska, Julian Kwieciński</div>
 ----
 
@@ -98,6 +98,8 @@ Najważniejsze funkcje w języku C# po stronie obsługi graficznej:
 
 
 ## Testowanie i wyniki testów
+  * Testy jednostkowe
+  * Testy manualne
 
 
 ## Instrukcja instalacji
